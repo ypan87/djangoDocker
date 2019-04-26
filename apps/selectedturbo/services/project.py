@@ -5,7 +5,7 @@ from .air import FlowDefAir
 
 class Project(object):
 
-    def __init__(self, max_flow_coef, pressure_coef, altitude=0, inlet_pressure=0.988, grid_freq=50,
+    def __init__(self, name, serial_num, max_flow_coef, pressure_coef, altitude=0, inlet_pressure=0.988, grid_freq=50,
                  num=0, volt=400, mat="ALU", safe_coef=1, ei_rating=3,
                  amb_temp=45, stand_flow=3486.0, stand_pressure=1.0133,
                  stand_temp=20, stand_rh=70):
@@ -27,6 +27,8 @@ class Project(object):
         stand_temp      rating temperature of the turbo
         stand_rh        rating relative humidity
         """
+        self.name = name
+        self.serial_num = serial_num
         self.altitude = altitude
         self.inlet_pressure = inlet_pressure
         self.grid_freq = grid_freq

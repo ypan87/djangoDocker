@@ -25,241 +25,241 @@ $('#selectButton').on('click', function() {
         },
         success: function(data) {
             let table = document.createElement('div');
+            tableData = data.tableData;
             table.className = "row";
-            table.innerHTML=[
-                    '<div class="table-responsive col-12">',
-                        '<table class="table table-bordered table-hover" style="text-align: center; max-width: 100%">',
-                        '<thead class="thead-dark" style="max-width: 100%">',
-                        '<tr>',
-                            '<th scope="col">风机型号：GL1</th>',
-                            '<th scope="col" colspan="3">40C/90%</th>',
-                            '<th scope="col" colspan="3">20C/70%</th>',
-                            '<th scope="col" colspan="3">0C/60%</th>',
-                        '</tr>',
-                        '</thead>',
-                        '<tbody style="max-width: 100%">',
-                        '<tr>',
-                            '<th scope="row">进气压力</th>',
-                            '<td colspan="3">0.988 bara</td>',
-                            '<td colspan="3">0.988 bara</td>',
-                            '<td colspan="3">0.988 bara</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">相对流量</th>',
-                            '<td>ΔP</td>',
-                            '<td>流量</td>',
-                            '<td>轴功率</td>',
-                            '<td>ΔP</td>',
-                            '<td>流量</td>',
-                            '<td>轴功率</td>',
-                            '<td>ΔP</td>',
-                            '<td>流量</td>',
-                            '<td>轴功率</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">%</th>',
-                            '<td>barG</td>',
-                            '<td>m<sup>3</sup>/h</td>',
-                            '<td>kW</td>',
-                            '<td>barG</td>',
-                            '<td>m<sup>3</sup>/h</td>',
-                            '<td>kW</td>',
-                            '<td>barG</td>',
-                            '<td>m<sup>3</sup>/h</td>',
-                            '<td>kW</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">100%</th>',
-                            '<td>0.6</td>',
-                            '<td>4028.1</td>',
-                            '<td>78.8</td>',
-                            '<td>0.6</td>',
-                            '<td>3576.8</td>',
-                            '<td>68.8</td>',
-                            '<td>0.6</td>',
-                            '<td>3289.8</td>',
-                            '<td>65.9</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">90%</th>',
-                            '<td>0.6</td>',
-                            '<td>3625.3</td>',
-                            '<td>67.7</td>',
-                            '<td>0.6</td>',
-                            '<td>3219.1</td>',
-                            '<td>62.7</td>',
-                            '<td>0.6</td>',
-                            '<td>2960.8</td>',
-                            '<td>59.8</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">80%</th>',
-                            '<td>0.6</td>',
-                            '<td>3222.5</td>',
-                            '<td>60.3</td>',
-                            '<td>0.6</td>',
-                            '<td>2861.4</td>',
-                            '<td>56.2</td>',
-                            '<td>0.6</td>',
-                            '<td>2631.8</td>',
-                            '<td>53.8</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">70%</th>',
-                            '<td>0.6</td>',
-                            '<td>2819.7</td>',
-                            '<td>53.8</td>',
-                            '<td>0.6</td>',
-                            '<td>2503.7</td>',
-                            '<td>50.1</td>',
-                            '<td>0.6</td>',
-                            '<td>2302.9</td>',
-                            '<td>48.1</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">60%</th>',
-                            '<td>0.6</td>',
-                            '<td>2416.9</td>',
-                            '<td>47.3</td>',
-                            '<td>0.6</td>',
-                            '<td>2146.1</td>',
-                            '<td>44.1</td>',
-                            '<td>0.6</td>',
-                            '<td>1973.9</td>',
-                            '<td>42.5</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">45%</th>',
-                            '<td>0.6</td>',
-                            '<td>1812.6</td>',
-                            '<td>37.7</td>',
-                            '<td>0.6</td>',
-                            '<td>1609.5</td>',
-                            '<td>35.5</td>',
-                            '<td>0.6</td>',
-                            '<td>1480.4</td>',
-                            '<td>34.9</td>',
-                        '</tr>',
-                        '</tbody>',
-                    '</table>',
-                    '</div>',
-                    '<div class="table-responsive col-12">',
-                        '<table class="table table-bordered table-hover" style="text-align: center; max-width: 100%">',
-                        '<thead class="thead-dark" style="max-width: 100%">',
-                        '<tr>',
-                            '<th scope="col">风机型号：GL1</th>',
-                            '<th scope="col" colspan="3">40C/90%</th>',
-                            '<th scope="col" colspan="3">20C/70%</th>',
-                            '<th scope="col" colspan="3">0C/60%</th>',
-                        '</tr>',
-                        '</thead>',
-                        '<tbody style="max-width: 100%">',
-                        '<tr>',
-                            '<th scope="row">进气压力</th>',
-                            '<td colspan="3">0.988 bara</td>',
-                            '<td colspan="3">0.988 bara</td>',
-                            '<td colspan="3">0.988 bara</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">相对流量</th>',
-                            '<td>ΔP</td>',
-                            '<td>流量</td>',
-                            '<td>进线功率</td>',
-                            '<td>ΔP</td>',
-                            '<td>流量</td>',
-                            '<td>进线功率</td>',
-                            '<td>ΔP</td>',
-                            '<td>流量</td>',
-                            '<td>进线功率</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">%</th>',
-                            '<td>barG</td>',
-                            '<td>m<sup>3</sup>/h</td>',
-                            '<td>kW</td>',
-                            '<td>barG</td>',
-                            '<td>m<sup>3</sup>/h</td>',
-                            '<td>kW</td>',
-                            '<td>barG</td>',
-                            '<td>m<sup>3</sup>/h</td>',
-                            '<td>kW</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">100%</th>',
-                            '<td>0.6</td>',
-                            '<td>4028.1</td>',
-                            '<td>78.8</td>',
-                            '<td>0.6</td>',
-                            '<td>3576.8</td>',
-                            '<td>68.8</td>',
-                            '<td>0.6</td>',
-                            '<td>3289.8</td>',
-                            '<td>65.9</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">90%</th>',
-                            '<td>0.6</td>',
-                            '<td>3625.3</td>',
-                            '<td>67.7</td>',
-                            '<td>0.6</td>',
-                            '<td>3219.1</td>',
-                            '<td>62.7</td>',
-                            '<td>0.6</td>',
-                            '<td>2960.8</td>',
-                            '<td>59.8</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">80%</th>',
-                            '<td>0.6</td>',
-                            '<td>3222.5</td>',
-                            '<td>60.3</td>',
-                            '<td>0.6</td>',
-                            '<td>2861.4</td>',
-                            '<td>56.2</td>',
-                            '<td>0.6</td>',
-                            '<td>2631.8</td>',
-                            '<td>53.8</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">70%</th>',
-                            '<td>0.6</td>',
-                            '<td>2819.7</td>',
-                            '<td>53.8</td>',
-                            '<td>0.6</td>',
-                            '<td>2503.7</td>',
-                            '<td>50.1</td>',
-                            '<td>0.6</td>',
-                            '<td>2302.9</td>',
-                            '<td>48.1</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">60%</th>',
-                            '<td>0.6</td>',
-                            '<td>2416.9</td>',
-                            '<td>47.3</td>',
-                            '<td>0.6</td>',
-                            '<td>2146.1</td>',
-                            '<td>44.1</td>',
-                            '<td>0.6</td>',
-                            '<td>1973.9</td>',
-                            '<td>42.5</td>',
-                        '</tr>',
-                        '<tr>',
-                            '<th scope="row">45%</th>',
-                            '<td>0.6</td>',
-                            '<td>1812.6</td>',
-                            '<td>37.7</td>',
-                            '<td>0.6</td>',
-                            '<td>1609.5</td>',
-                            '<td>35.5</td>',
-                            '<td>0.6</td>',
-                            '<td>1480.4</td>',
-                            '<td>34.9</td>',
-                        '</tr>',
-                        '</tbody>',
-                    '</table>',
-                    '</div>'
-            ].join('');
+            table.innerHTML=
+                    '<div class="table-responsive col-12">'+
+                        '<table class="table table-bordered table-hover" style="text-align: center; max-width: 100%">'+
+                        '<thead class="thead-dark" style="max-width: 100%">'+
+                        '<tr>'+
+                            '<th scope="col">风机型号：'+ tableData.turbo + '</th>'+
+                            '<th scope="col" colspan="3">' + tableData.condition1.temp + 'C/' + tableData.condition1.humidity +'%</th>'+
+                            '<th scope="col" colspan="3">' + tableData.condition2.temp + 'C/' + tableData.condition2.humidity +'%</th>'+
+                            '<th scope="col" colspan="3">' + tableData.condition3.temp + 'C/' + tableData.condition3.humidity +'%</th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody style="max-width: 100%">'+
+                        '<tr>'+
+                            '<th scope="row">进气压力</th>'+
+                            '<td colspan="3">' + tableData.condition1.baraPressure + ' bara</td>'+
+                            '<td colspan="3">' + tableData.condition2.baraPressure + ' bara</td>'+
+                            '<td colspan="3">' + tableData.condition3.baraPressure + ' bara</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">相对流量</th>'+
+                            '<td>ΔP</td>'+
+                            '<td>流量</td>'+
+                            '<td>轴功率</td>'+
+                            '<td>ΔP</td>'+
+                            '<td>流量</td>'+
+                            '<td>轴功率</td>'+
+                            '<td>ΔP</td>'+
+                            '<td>流量</td>'+
+                            '<td>轴功率</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">%</th>'+
+                            '<td>barG</td>'+
+                            '<td>m<sup>3</sup>/h</td>'+
+                            '<td>kW</td>'+
+                            '<td>barG</td>'+
+                            '<td>m<sup>3</sup>/h</td>'+
+                            '<td>kW</td>'+
+                            '<td>barG</td>'+
+                            '<td>m<sup>3</sup>/h</td>'+
+                            '<td>kW</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[0].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[0].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[0].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[0].shaftPower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[0].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[0].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[0].shaftPower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[0].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[0].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[0].shaftPower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[1].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[1].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[1].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[1].shaftPower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[1].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[1].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[1].shaftPower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[1].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[1].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[1].shaftPower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[2].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[2].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[2].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[2].shaftPower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[2].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[2].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[2].shaftPower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[2].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[2].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[2].shaftPower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[3].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[3].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[3].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[3].shaftPower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[3].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[3].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[3].shaftPower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[3].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[3].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[3].shaftPower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[4].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[4].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[4].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[4].shaftPower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[4].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[4].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[4].shaftPower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[4].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[4].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[4].shaftPower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[5].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[5].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[5].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[5].shaftPower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[5].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[5].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[5].shaftPower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[5].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[5].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[5].shaftPower + '</td>'+
+                        '</tr>'+
+                        '</tbody>'+
+                    '</table>'+
+                    '</div>'+
+                    '<div class="table-responsive col-12">'+
+                        '<table class="table table-bordered table-hover" style="text-align: center; max-width: 100%">'+
+                        '<thead class="thead-dark" style="max-width: 100%">'+
+                        '<tr>'+
+                            '<th scope="col">风机型号：'+ tableData.turbo + '</th>'+
+                            '<th scope="col" colspan="3">' + tableData.condition1.temp + 'C/' + tableData.condition1.humidity +'%</th>'+
+                            '<th scope="col" colspan="3">' + tableData.condition2.temp + 'C/' + tableData.condition2.humidity +'%</th>'+
+                            '<th scope="col" colspan="3">' + tableData.condition3.temp + 'C/' + tableData.condition3.humidity +'%</th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody style="max-width: 100%">'+
+                        '<tr>'+
+                            '<th scope="row">进气压力</th>'+
+                            '<td colspan="3">' + tableData.condition1.baraPressure + ' bara</td>'+
+                            '<td colspan="3">' + tableData.condition2.baraPressure + ' bara</td>'+
+                            '<td colspan="3">' + tableData.condition3.baraPressure + ' bara</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">相对流量</th>'+
+                            '<td>ΔP</td>'+
+                            '<td>流量</td>'+
+                            '<td>进线功率</td>'+
+                            '<td>ΔP</td>'+
+                            '<td>流量</td>'+
+                            '<td>进线功率</td>'+
+                            '<td>ΔP</td>'+
+                            '<td>流量</td>'+
+                            '<td>进线功率</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">%</th>'+
+                            '<td>barG</td>'+
+                            '<td>m<sup>3</sup>/h</td>'+
+                            '<td>kW</td>'+
+                            '<td>barG</td>'+
+                            '<td>m<sup>3</sup>/h</td>'+
+                            '<td>kW</td>'+
+                            '<td>barG</td>'+
+                            '<td>m<sup>3</sup>/h</td>'+
+                            '<td>kW</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[0].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[0].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[0].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[0].wirePower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[0].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[0].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[0].wirePower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[0].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[0].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[0].wirePower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[1].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[1].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[1].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[1].wirePower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[1].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[1].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[1].wirePower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[1].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[1].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[1].wirePower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[2].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[2].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[2].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[2].wirePower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[2].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[2].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[2].wirePower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[2].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[2].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[2].wirePower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[3].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[3].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[3].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[3].wirePower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[3].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[3].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[3].wirePower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[3].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[3].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[3].wirePower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[4].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[4].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[4].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[4].wirePower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[4].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[4].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[4].wirePower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[4].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[4].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[4].wirePower + '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<th scope="row">'+ tableData.condition1.dataSet[5].relativeFlow +'%</th>'+
+                            '<td>' + tableData.condition1.dataSet[5].outletPress + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[5].flowAmb + '</td>'+
+                            '<td>' + tableData.condition1.dataSet[5].wirePower + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[5].outletPress + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[5].flowAmb + '</td>'+
+                            '<td>' + tableData.condition2.dataSet[5].wirePower + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[5].outletPress + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[5].flowAmb + '</td>'+
+                            '<td>' + tableData.condition3.dataSet[5].wirePower + '</td>'+
+                        '</tr>'+
+                        '</tbody>'+
+                    '</table>'+
+                    '</div>';
             // let graphCardBody = document.getElementById('graphCardBody');
             // graphCardBody.insertBefore(table, graphCardBody.firstChild);
             let tableContent = document.getElementById("tableContent");

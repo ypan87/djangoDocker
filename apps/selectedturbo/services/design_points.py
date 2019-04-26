@@ -5,6 +5,7 @@ import math
 
 from .turbo_data import *
 from .air import *
+from .const import ORDEN
 
 class DesignPoints(object):
 
@@ -40,10 +41,11 @@ class DesignPoints(object):
         self.actual_blower_inlet_flow_icfm = self.water_content = 0.0
         self.air_mass = self.compressor_relt_eff = 0.0
         self.impeller_power = self.mechanical_losses = 0.0
-        self.shaft_power = self.motor_loss = self.terminal_power = 0.0
+        self.shaft_power = self.motor_loss = self.terminal_power = self.total_wire_power = 0.0
         self.inlet_press_loss = self.dis_cone_press_loss = self.dpr = 0.0
         self.press_ratio = self.relt_phi = self.relt_psi = self.rho = 0.0
         self.t2 = self.rho2 = self.v2 = 0.0
+
 
 class RatedPoint(DesignPoints):
     __mach = 0.0
@@ -62,7 +64,6 @@ class RatedPoint(DesignPoints):
         self.mach_correction = 0.0
         self.selected_turbo = TurboData()
         self.gear_loss_fix = self.gear_loss_var = 0.0
-        self.motor_rating = 0.0
         self.project = project_info
         self.press_ratio = self.p2 / (self.p0 - self.inlet_press_loss)
         self.relt_psi = 1.0
@@ -72,6 +73,8 @@ class RatedPoint(DesignPoints):
         self.rho = self.air_cond.air_rho_inlet
         self.__calc_pol()
         self.polytropic_eff_and_mach_iteration(0.5, 0)
+        self.de_rating = 1 if self.project.amb_temp <= 45 else (155-self.project.amb_temp)/110
+        self.motor_factor = 0.05
 
 
     # 计算额定工况点的相关数据
@@ -113,6 +116,7 @@ class RatedPoint(DesignPoints):
             if c < 0.0001:
                 break
         self.__update_pol_data(x0, y0, correction)
+
 
     # 更新工况中与polytropic efficiency 和 mach number相关的数据
     def __update_pol_data(self, poly_eff_val, mach_number_val, correction):
@@ -195,7 +199,7 @@ class DutyPoint(DesignPoints):
                           / (self.air_cond.air_p0-x1)*self.air_cond.air_rg/RAIR
             rho_inlet = (self.p0-x1)*100000/(self.air_cond.air_rg*(self.air_cond.air_t0+KEL))
             x0 = rated_point.inlet_press_loss*(blower_flow/rated_point.actual_blower_inlet_flow_cubic)**2*rho_inlet/rated_point.air_cond.air_rho_inlet
-            c = x1 - x0
+            c = abs(x1 - x0)
             if c < 0.001:
                 break
         self.__update_data_relt_to_inlet_press_loss(x0, rated_point)
@@ -209,7 +213,7 @@ class DutyPoint(DesignPoints):
             rho2 = self.p2 * 100000 / ((t2 + KEL) * self.gas_const)
             v2 = self.air_mass / rho2 * 3600
             x0 = rated_point.dis_cone_press_loss * (v2 / rated_point.v2) **2 * rho2 / rated_point.rho2
-            c = x1 - x0
+            c = abs(x1 - x0)
             if c < 0.001:
                 break
         self.__update_data_relt_to_dis_cone_press_loss(x0, rated_point)
@@ -252,3 +256,15 @@ class DutyPoint(DesignPoints):
 
     def update_rated_point(self, rated_point):
         rated_point.p0 = 1111
+
+
+    def calc_motor_data(self, motor_trend_func, motor_rating):
+        load_calc = self.shaft_power / motor_rating
+        loss_x = load_calc ** ORDEN
+        loss_y = motor_trend_func(loss_x)
+        self.motor_loss = loss_y
+        self.terminal_power = self.shaft_power + self.motor_loss
+
+    def update_total_wire_power(self, heat_loss):
+        self.total_wire_power = self.terminal_power + heat_loss
+

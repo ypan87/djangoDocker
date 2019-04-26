@@ -2,741 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6569e624-9d98-4f95-9d11-bfc4db1056a9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/readme.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/UEditorSnapscreen.exe" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_chm.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_default.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_doc.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_exe.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_jpg.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_mp3.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_mv.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_pdf.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_ppt.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_psd.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_txt.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/fileTypeImages/icon_xls.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/alignicon.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/alignicon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/file-icons.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/file-icons.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/icons.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/icons.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/image.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/progress.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/success.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/images/success.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/background/images/bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/background/images/success.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/images/charts0.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/images/charts1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/images/charts2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/images/charts3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/images/charts4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/images/charts5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/0.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/bface.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/cface.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/fface.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/jxface2.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/neweditor-tab-bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/tface.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/wface.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/images/yface.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/alignicon.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/icons.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/icons.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/image.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/progress.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/success.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/images/success.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/addimg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/brush.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/delimg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/delimgH.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/empty.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/emptyH.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/eraser.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/redo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/redoH.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/scale.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/scaleH.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/size.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/undo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/images/undoH.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/table/dragicon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/images/bg.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/images/pre0.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/images/pre1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/images/pre2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/images/pre3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/images/pre4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/center_focus.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/file-icons.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/file-icons.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/icons.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/icons.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/image.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/left_focus.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/none_focus.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/progress.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/right_focus.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/success.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/images/success.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/wordimage/fClipboard_ueditor.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/wordimage/imageUploader.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/addimage.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/alldeletebtnhoverskin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/alldeletebtnupskin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/background.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/button.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/copy.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/deletedisable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/deleteenable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/listbackground.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/localimage.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/music.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/rotateleftdisable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/rotateleftenable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/rotaterightdisable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/rotaterightenable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/images/upload.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/zh-cn/images/copy.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/zh-cn/images/localimage.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/zh-cn/images/music.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/zh-cn/images/upload.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/anchor.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/arrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/arrow_down.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/arrow_up.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/button-bg.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/cancelbutton.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/charts.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/cursor_h.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/cursor_h.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/cursor_v.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/cursor_v.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/dialog-title-bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/fileScan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/highlighted.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/icons-all.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/icons.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/icons.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/loaderror.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/loading.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/lock.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/neweditor-tab-bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/pagebreak.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/scale.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/sortable.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/spacer.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/sparator_v.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/table-cell-align.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/tangram-colorpicker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/toolbar_bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/unhighlighted.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/upload.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/videologo.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/word.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/images/wordpaste.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/snapscreen/UEditorSnapscreen.exe" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/font/vjs.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/font/vjs.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/font/vjs.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/video-js.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/Uploader.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/zeroclipboard/ZeroClipboard.swf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/de_DE/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/de_DE/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/en/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/en/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/es_MX/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/es_MX/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/eu/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/eu/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/id_ID/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/id_ID/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ja/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ja/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/lt/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/lt/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/nl_NL/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/nl_NL/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pl/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pl/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pt_BR/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pt_BR/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ru_RU/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ru_RU/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/zh_Hans/LC_MESSAGES/django.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/zh_Hans/LC_MESSAGES/djangojs.mo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-image-gallery/img/loading.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-modal/img/ajax-loader.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/fonts/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/fonts/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/fonts/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/fonts/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2-spinner.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2x2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/adminx.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/air.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/base_points.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/const.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/design_points.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/project.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/turbo_data.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/users/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/utils/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/utils/email_send.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/commands.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/models.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/settings.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/addCustomizeButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/addCustomizeCombox.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/addCustomizeDialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/charts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/completeDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/customPluginDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/customToolbarDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/customizeDialogPage.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/customizeToolbarUIDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/editor_api.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/filterRuleDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/highlightDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/jqueryCompleteDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/jqueryValidation.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/multiDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/multiEditorWithOneInstance.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/renderInTable.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/resetDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/sectiondemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/server/getContent.ashx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/server/getContent.asp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/server/getContent.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/server/getContent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/setWidthHeightDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/simpleDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/sortableDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/submitFormDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/textareaDemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/_examples/uparsedemo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/anchor/anchor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/attachment.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/attachment.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/attachment/attachment.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/background/background.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/background/background.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/background/background.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/chart.config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/charts.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/charts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/charts/charts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/emotion.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/emotion.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/emotion/emotion.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/gmap/gmap.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/help/help.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/help/help.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/help/help.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/image.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/image.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/image/image.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/insertframe/insertframe.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/internal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/link/link.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/map/map.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/map/show.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/music/music.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/music/music.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/music/music.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/preview/preview.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/scrawl.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/scrawl.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/scrawl/scrawl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/searchreplace/searchreplace.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/searchreplace/searchreplace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/snapscreen/snapscreen.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/spechars/spechars.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/spechars/spechars.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/table/edittable.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/table/edittable.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/table/edittable.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/table/edittd.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/table/edittip.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/template.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/template.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/template/template.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/video.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/video.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/video/video.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/webapp/webapp.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/wordimage/tangram.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/wordimage/wordimage.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/dialogs/wordimage/wordimage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/en/en.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/lang/zh-cn/zh-cn.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/php/Uploader.class.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/php/action_crawler.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/php/action_list.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/php/action_upload.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/php/config.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/php/controller.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/css/ueditor.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/css/ueditor.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/default/dialogbase.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/themes/iframe.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/SyntaxHighlighter/shCore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/codemirror/codemirror.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/codemirror/codemirror.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/adapters/mootools-adapter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/adapters/mootools-adapter.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/adapters/prototype-adapter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/adapters/prototype-adapter.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/adapters/standalone-framework.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/adapters/standalone-framework.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/highcharts-more.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/highcharts-more.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/highcharts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/highcharts.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/annotations.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/annotations.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/canvas-tools.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/canvas-tools.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/data.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/data.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/drilldown.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/drilldown.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/exporting.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/exporting.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/funnel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/funnel.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/heatmap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/heatmap.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/map.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/map.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/no-data-to-display.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/modules/no-data-to-display.src.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/themes/dark-blue.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/themes/dark-green.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/themes/gray.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/themes/grid.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/highcharts/themes/skies.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/jquery-1.10.2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/jquery-1.10.2.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/jquery-1.10.2.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/font/vjs.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/video-js.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/video-js.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/video.dev.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/video-js/video.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.custom.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.custom.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.flashonly.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.flashonly.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.html5only.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.html5only.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.withoutimage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/webuploader/webuploader.withoutimage.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/zeroclipboard/ZeroClipboard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/third-party/zeroclipboard/ZeroClipboard.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/ueditor.all.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/ueditor.all.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/ueditor.config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/ueditor.parse.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/static/ueditor/ueditor.parse.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/templates/ueditor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/templates/ueditor_old.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/test_try.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/DjangoUeditor/widgets.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/.tx/config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/adminx.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/apps.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/filters.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/layout.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/de_DE/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/de_DE/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/en/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/en/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/es_MX/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/es_MX/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/eu/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/eu/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/id_ID/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/id_ID/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ja/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ja/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/lt/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/lt/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/nl_NL/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/nl_NL/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pl/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pl/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pt_BR/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/pt_BR/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ru_RU/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/ru_RU/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/zh_Hans/LC_MESSAGES/django.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/locale/zh_Hans/LC_MESSAGES/djangojs.po" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/migrations/0001_initial.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/migrations/0002_log.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/migrations/0003_auto_20160715_0100.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/migrations/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/models.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/actions.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/aggregation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/ajax.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/auth.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/batch.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/bookmark.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/chart.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/comments.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/details.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/editable.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/export.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/filters.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/images.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/importexport.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/inline.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/language.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/layout.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/mobile.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/multiselect.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/passwords.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/portal.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/quickfilter.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/quickform.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/refresh.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/relate.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/relfield.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/sitemenu.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/sortablelist.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/themes.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/topnav.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/ueditor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/wizard.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/plugins/xversion.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/sites.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/component.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/themes/bootstrap-theme.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/themes/bootstrap-theme.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/themes/bootstrap-xadmin.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.form.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.main.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.mobile.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.page.dashboard.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.plugin.aggregation.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.plugin.formset.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.plugin.importexport.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.plugin.quickfilter.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.plugins.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.responsive.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.widget.editable.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/css/xadmin.widget.select-transfer.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.page.dashboard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.page.form.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.page.list.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.actions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.batch.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.bookmark.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.charts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.details.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.editable.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.filters.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.formset.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.importexport.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.portal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.quick-form.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.quickfilter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.refresh.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.revision.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.sortablelist.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.plugin.themes.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.responsive.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.widget.datetime.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.widget.multiselect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.widget.select-transfer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/js/xadmin.widget.select.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/autotype/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-clockpicker/bootstrap-clockpicker.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-clockpicker/bootstrap-clockpicker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-clockpicker/bootstrap-clockpicker.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-clockpicker/bootstrap-clockpicker.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/css/datepicker.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.bg.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.ca.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.cs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.da.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.de.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.el.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.fi.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.he.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.hr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.hu.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.is.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.it.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.ja.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.kr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.lt.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.lv.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.ms.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.nb.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.nl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.pl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.pt-BR.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.pt.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.ro.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.rs-latin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.rs.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.sk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.sl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.sv.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.sw.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.th.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.tr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.uk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-TW.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-image-gallery/css/bootstrap-image-gallery.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-image-gallery/js/bootstrap-image-gallery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-image-gallery/js/bootstrap-image-gallery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-modal/css/bootstrap-modal.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-modal/js/bootstrap-modal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-modal/js/bootstrap-modalmanager.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-multiselect/css/bootstrap-multiselect.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-multiselect/js/bootstrap-multiselect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap-timepicker/js/bootstrap-timepicker.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/css/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/fonts/glyphicons-halflings-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/js/bootstrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/bootstrap/js/bootstrap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/excanvas.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/excanvas.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.colorhelpers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.aggregate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.canvas.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.categories.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.crosshair.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.errorbars.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.fillbetween.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.image.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.navigate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.pie.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.resize.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.selection.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.stack.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.symbol.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.threshold.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/flot/jquery.flot.time.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/css/font-awesome.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/css/font-awesome.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/font-awesome/fonts/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.core.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.effect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.effect.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.mouse.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.mouse.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.sortable.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.sortable.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.widget.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery-ui/jquery.ui.widget.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/jquery/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/load-image/load-image.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/load-image/load-image.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_de.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_en.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_es.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_eu.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_fr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_hr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_hu.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_it.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_nl.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_pt-BR.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_pt-PT.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_ro.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_ru.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_sk.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_sv.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_tr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_ua.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_zh-CN.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/select2/select2_locale_zh-hans.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.bootstrap2.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.bootstrap3.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.default.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.legacy.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/selectize/selectize.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/snapjs/snap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/snapjs/snap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/static/xadmin/vendor/snapjs/snap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/404.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/500.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/password_reset/complete.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/password_reset/confirm.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/password_reset/done.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/password_reset/email.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/password_reset/form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/user/add_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/auth/user/change_password.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/base_site.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/comm.top.setlang.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/comm.top.theme.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/comm.top.topnav.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/modal_list.left_navbar.quickfilter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_form.before_fieldsets.wizard.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_form.submit_line.wizard.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.nav_form.search_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.nav_menu.bookmarks.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.nav_menu.filters.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.results_bottom.actions.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.results_top.charts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.results_top.date_hierarchy.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.top_toolbar.exports.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.top_toolbar.importexport.export.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.top_toolbar.importexport.import.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.top_toolbar.layouts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.top_toolbar.refresh.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/blocks/model_list.top_toolbar.saveorder.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/accordion.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/blank.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/one.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/stacked.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/tab.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/edit_inline/tabular.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/char.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/checklist.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/date.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/fk_search.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/number.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/quickfilter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/filters/rel.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/forms/transfer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/grids/thumbnails.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/import_export/export_action.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/import_export/import.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/box.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/pagination.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/sitemenu_accordion.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/sitemenu_default.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/submit_line.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/toggle_back.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/includes/toggle_menu.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/layout/field_value.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/layout/field_value_td.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/layout/fieldset.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/layout/input_group.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/layout/td-field.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/app_index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/batch_change_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/dashboard.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/invalid_setup.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/logged_out.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_dashboard.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_delete_confirm.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_delete_selected_confirm.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_detail.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_history.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/model_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/quick_detail.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/quick_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/recover_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/recover_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/revision_diff.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/views/revision_form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/widgets/addform.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/widgets/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/widgets/chart.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/widgets/list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templates/xadmin/widgets/qbutton.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templatetags/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/templatetags/xadmin_tags.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/util.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/vendors.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/base.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/dashboard.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/delete.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/detail.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/edit.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/form.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/list.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/views/website.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extra_apps/xadmin/widgets.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/forget_pwd.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/register_login.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/app.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/common.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/login.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/register.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/unslider.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/validateDialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/email_forget.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/email_register.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/forget_pwd.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/password_reset.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/register.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/turbo_selection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/turboselection/settings.py" afterPath="$PROJECT_DIR$/turboselection/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/turboselection/urls.py" afterPath="$PROJECT_DIR$/turboselection/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/selectedturbo/services/const.py" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/const.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/selectedturbo/services/design_points.py" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/design_points.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/selectedturbo/services/project.py" afterPath="$PROJECT_DIR$/apps/selectedturbo/services/project.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/selectedturbo/views.py" afterPath="$PROJECT_DIR$/apps/selectedturbo/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/common.js" afterPath="$PROJECT_DIR$/static/js/common.js" />
     </list>
     <ignored path="turboselection.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -763,7 +33,7 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/users/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="-1165">
               <caret line="112" column="26" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="26" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -772,51 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forget_pwd.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/forget_pwd.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1650">
-              <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="register_login.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/register_login.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/selectedturbo/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/selectedturbo/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="139" column="37" selection-start-line="139" selection-start-column="37" selection-end-line="139" selection-end-column="37" />
+            <state relative-caret-position="291">
+              <caret line="498" column="24" selection-start-line="498" selection-start-column="24" selection-end-line="498" selection-end-column="24" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -824,11 +54,46 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="common.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/js/common.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="219">
+              <caret line="248" column="96" selection-start-line="248" selection-start-column="96" selection-end-line="248" selection-end-column="96" />
+              <folding>
+                <element signature="e#0#42#0" expanded="false" />
+                <marker date="1556282440000" expanded="true" signature="1165:1200" ph="..." />
+                <marker date="1556282440000" expanded="true" signature="1263:1278" ph="..." />
+                <marker date="1556282440000" expanded="true" signature="1914:1929" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/envs/turboselection/lib/python3.7/site-packages/django/views/generic/base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="349">
+              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="project.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/project.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="413">
+              <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="turbo_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/turbo_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="210">
+              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -847,18 +112,30 @@
       <file leaf-file-name="const.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/const.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="design_points.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="design_points.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/design_points.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="64" column="24" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="25" />
+            <state relative-caret-position="405">
+              <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+              <folding>
+                <element signature="e#44#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="builtins.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Library/Caches/PyCharm2016.2/python_stubs/195583207/builtins.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="511" column="0" selection-start-line="511" selection-start-column="0" selection-end-line="511" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -888,8 +165,6 @@
         <option value="$PROJECT_DIR$/apps/selectedturbo/adminx.py" />
         <option value="$PROJECT_DIR$/apps/selectedturbo/urls.py" />
         <option value="$PROJECT_DIR$/apps/selectedturbo/service.py" />
-        <option value="$PROJECT_DIR$/apps/selectedturbo/services/project.py" />
-        <option value="$PROJECT_DIR$/apps/selectedturbo/services/const.py" />
         <option value="$PROJECT_DIR$/apps/selectedturbo/services/air.py" />
         <option value="$PROJECT_DIR$/apps/selectedturbo/services/turbo_data.py" />
         <option value="$PROJECT_DIR$/apps/selectedturbo/services/base_points.py" />
@@ -912,14 +187,16 @@
         <option value="$PROJECT_DIR$/templates/email_register.html" />
         <option value="$PROJECT_DIR$/static/css/login.css" />
         <option value="$PROJECT_DIR$/templates/turbo_selection.html" />
-        <option value="$PROJECT_DIR$/static/js/common.js" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/static/css/register_login.css" />
         <option value="$PROJECT_DIR$/apps/users/views.py" />
-        <option value="$PROJECT_DIR$/apps/selectedturbo/views.py" />
+        <option value="$PROJECT_DIR$/apps/selectedturbo/services/const.py" />
+        <option value="$PROJECT_DIR$/apps/selectedturbo/services/project.py" />
         <option value="$PROJECT_DIR$/apps/selectedturbo/services/design_points.py" />
+        <option value="$PROJECT_DIR$/apps/selectedturbo/views.py" />
+        <option value="$PROJECT_DIR$/static/js/common.js" />
       </list>
     </option>
   </component>
@@ -930,8 +207,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -986,34 +263,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1035,28 +284,6 @@
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="turboselection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1069,10 +296,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1441,10 +664,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2653791" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17252396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32891566" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1455,7 +678,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25301206" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29036143" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36138615" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1478,27 +701,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="43" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/apps/selectedturbo/views.py</url>
+          <line>594</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="54" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/anaconda3/envs/turboselection/lib/python3.7/site-packages/django/urls/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="26" column="19" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/turboselection/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/turboselection/lib/python3.7/site-packages/django/forms/fields.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
@@ -1675,14 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/turboselection/lib/python3.7/site-packages/django/views/generic/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/register.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1769,22 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4650">
-          <caret line="312" column="0" selection-start-line="312" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-            <marker date="1556092649000" expanded="true" signature="1126:1161" ph="..." />
-            <marker date="1556092649000" expanded="true" signature="1224:1239" ph="..." />
-            <marker date="1556092649000" expanded="true" signature="1660:1675" ph="..." />
-            <marker date="1556092649000" expanded="true" signature="6468:6503" ph="..." />
-            <marker date="1556092649000" expanded="true" signature="6566:6581" ph="..." />
-            <marker date="1556092649000" expanded="true" signature="7002:7017" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/email_forget.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-255">
@@ -1857,32 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/users/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="112" column="26" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/turbo_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/base_points.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1891,18 +1055,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/const.py">
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2016.2/python_stubs/195583207/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="252">
+          <caret line="511" column="0" selection-start-line="511" selection-start-column="0" selection-end-line="511" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/views.py">
+    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="139" column="37" selection-start-line="139" selection-start-column="37" selection-end-line="139" selection-end-column="37" />
+        <state relative-caret-position="120">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/project.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/const.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/turboselection/lib/python3.7/site-packages/django/views/generic/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/turbo_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/users/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1165">
+          <caret line="112" column="26" selection-start-line="112" selection-start-column="26" selection-end-line="112" selection-end-column="26" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -1911,9 +1115,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/selectedturbo/services/design_points.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="64" column="24" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="25" />
-          <folding />
+        <state relative-caret-position="405">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+          <folding>
+            <element signature="e#44#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/selectedturbo/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="498" column="24" selection-start-line="498" selection-start-column="24" selection-end-line="498" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="248" column="96" selection-start-line="248" selection-start-column="96" selection-end-line="248" selection-end-column="96" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+            <marker date="1556282440000" expanded="true" signature="1165:1200" ph="..." />
+            <marker date="1556282440000" expanded="true" signature="1263:1278" ph="..." />
+            <marker date="1556282440000" expanded="true" signature="1914:1929" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
