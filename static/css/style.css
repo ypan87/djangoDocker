@@ -1,0 +1,7 @@
+.no-display {
+    display: none;
+}
+
+.navbar-static-top {
+    min-height: 56px;
+}

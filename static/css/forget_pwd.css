@@ -1,0 +1,121 @@
+.forget-password-container {
+    width: 100%;
+}
+
+.forget-password-form-container {
+    width: 320px;
+    margin: 90px auto 0 auto;
+}
+
+.forget-pwd-form-header-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.forget-pwd-form-header-subtitle {
+    margin: 4px 0 40px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #8590a6;
+}
+
+.forget-pwd-block {
+    border-bottom: 1px solid #ebebeb;
+    position: relative;
+}
+
+.forget-pwd-form-group {
+    margin-top: 1.25rem;
+    color: #8590a6;
+}
+
+.forget-pwd-form-group input {
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 14px;
+    outline: none;
+    border: none;
+}
+
+.forget-pwd-form-group input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.forget-pwd-submit-button {
+    width: 100%;
+    margin-top: 30px;
+    height: 36px;
+}
+
+.forget-pwd-captcha-group {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: .375rem .75rem .375rem 0;
+    color: #8590a6;
+}
+
+.forget-pwd-captcha-group input {
+    font-size: 14px;
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 21px;
+}
+
+.forget-pwd-captcha-group > img {
+    margin-right: -.75rem;
+    z-index: 20;
+}
+
+.forget-pwd-common-error {
+    color: red;
+    position: absolute;
+    right: 0;
+    bottom: 0.375rem;
+}
+
+.forget-pwd-captcha-error {
+    color: red;
+    position: absolute;
+    right: 50%;
+    bottom: 0.375rem;
+}
+
+.forget-pwd-require-error {
+    color: red;
+    position: absolute;
+    bottom: 0.375rem;
+    z-index: 10;
+    width: 100%;
+    text-align: left;
+    background-color: white;
+}
+
+ul.messages {
+    list-style: none;
+    padding-left: 0;
+}
+
+.messages > .success {
+    background-color: #D7EBD9;
+    color: darkgreen;
+    padding: 1rem 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.messages > .error {
+    background-color: #F2D7DA;
+    color: darkred;
+    padding: 1rem 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
