@@ -4,4 +4,50 @@
 
 .navbar-static-top {
     min-height: 56px;
+    background-color: #25499f;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.mb-20 {
+    margin-bottom: 2rem;
+}
+
+#selectForm label {
+    font-size: 0.5rem;
+}
+
+#mainNav .nav-link {
+    color: rgba(255, 255, 255, 1)
+}
+
+#mainNav .navbar-brand {
+    font-size: 1.5rem;
+}
+
+#mainNav .nav-item.active .nav-link {
+    color: #4a7aec;
+}
+
+#mainNav .nav-link:hover {
+    color: #4a7aec;
+}
+
+#mainNav .nav-link {
+    transition-duration: 500ms;
+    padding: 2rem 1.5rem;
+}
+
+#mainNav .dropdown-menu {
+  margin-top: -2rem;
+}
+
+.btn-primary {
+    background-color: #4a7aec;
+    border-color: #4a7aec;
+}
+
+.dropdown-item {
+    font-size: 14px;
+    font-weight: 700;
+    color: #9597a6;
 }

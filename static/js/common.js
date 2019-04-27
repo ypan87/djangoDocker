@@ -1,10 +1,10 @@
 /**
  * Created by yifan_pan on 19/4/9.
  */
-var ctx = document.getElementById('firstChart').getContext('2d');
-var ctx2 = document.getElementById('secondChart').getContext('2d');
-var ctx3 = document.getElementById('threeChart').getContext('2d');
-
+var ctx = document.getElementById('firstChart');
+var ctx2 = document.getElementById('secondChart');
+var ctx3 = document.getElementById('threeChart');
+var myChart1, myChart2, myChart3;
 
 $('#selectButton').on('click', function() {
     var _self = $(this);
@@ -299,9 +299,9 @@ $('#selectButton').on('click', function() {
             ];
 
             // 产生图标
-            generateGraph(data.condOne, conditionColors, conditionLabels, ctx);
-            generateGraph(data.condTwo, conditionColors, conditionLabels, ctx2);
-            generateGraph(data.condThree, conditionColors, conditionLabels, ctx3);
+            myChart1 = generateGraph(data.condOne, conditionColors, conditionLabels, ctx, myChart1, "工况I");
+            myChart2 = generateGraph(data.condTwo, conditionColors, conditionLabels, ctx2, myChart2, "工况II");
+            myChart3 = generateGraph(data.condThree, conditionColors, conditionLabels, ctx3, myChart3, "工况III");
         },
         complete: function(XMLHttpRequest){
             _self.val("提交");
@@ -319,7 +319,11 @@ $('#selectButton').on('click', function() {
     });
 });
 
-function generateGraph(data, conditionColors, conditionLabels, elem) {
+function generateGraph(data, conditionColors, conditionLabels, elem, chart, title) {
+    if (chart) {
+        chart.destroy();
+    }
+
     let datasets = [];
     let condData = data[0];
     let powerData = data[1];
@@ -336,7 +340,7 @@ function generateGraph(data, conditionColors, conditionLabels, elem) {
     datasets.push(designGraphData);
 
     // 创建图表
-    let newChart = new Chart(elem, {
+    return new Chart(elem.getContext("2d"), {
         type: 'scatter',
         data: {
             datasets: datasets
@@ -377,7 +381,7 @@ function generateGraph(data, conditionColors, conditionLabels, elem) {
             },
             title: {
                 display: true,
-                text: '流量压力曲线及轴功率，工况I：'
+                text: '流量压力曲线及轴功率' + title + '：'
             },
             legend: {
                 position: 'bottom',

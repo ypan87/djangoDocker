@@ -9,9 +9,11 @@ from .services.project import Project
 from .services.design_points import RatedPoint, DutyPoint
 from .services.base_points import BasePoint
 from .services.turbo_data import TurboData
-from .services.const import ORDEN, DO_OIL, CONTROL_PANEL, PLATE_SURFACE_TEMP, TEMP_RISE_AE, UAIR_MAX
+from .services.const import ORDEN, DO_OIL, CONTROL_PANEL, PLATE_SURFACE_TEMP, TEMP_RISE_AE, UAIR_MAX, \
+MAX_FLOW_COEFF, PRESSURE_COEFF
 from .models import Turbo, TestPoints
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import SelectionForm
 
 
 def print_attributes(obj):
@@ -155,22 +157,22 @@ def get_design_points_of_cond_one(request, point):
     cond_one_temp = float(request.POST.get("dp1InletTemp", 0))
     cond_one_humi = float(request.POST.get("dp1InletHumidity", 0))
 
-    cond_one_point_one_flow = float(request.POST.get("dp1p1flow", 0))
+    cond_one_point_one_flow = float(request.POST.get("dp1p1flow", 0)) / 100
     cond_one_point_one_press = float(request.POST.get("dp1p1Pressure", 0))
 
-    cond_one_point_two_flow = float(request.POST.get("dp1p2flow", 0))
+    cond_one_point_two_flow = float(request.POST.get("dp1p2flow", 0)) / 100
     cond_one_point_two_press = float(request.POST.get("dp1p2Pressure", 0))
 
-    cond_one_point_three_flow = float(request.POST.get("dp1p3flow", 0))
+    cond_one_point_three_flow = float(request.POST.get("dp1p3flow", 0)) / 100
     cond_one_point_three_press = float(request.POST.get("dp1p3Pressure", 0))
 
-    cond_one_point_four_flow = float(request.POST.get("dp1p4flow", 0))
+    cond_one_point_four_flow = float(request.POST.get("dp1p4flow", 0)) / 100
     cond_one_point_four_press = float(request.POST.get("dp1p4Pressure", 0))
 
-    cond_one_point_five_flow = float(request.POST.get("dp1p5flow", 0))
+    cond_one_point_five_flow = float(request.POST.get("dp1p5flow", 0)) / 100
     cond_one_point_five_press = float(request.POST.get("dp1p5Pressure", 0))
 
-    cond_one_point_six_flow = float(request.POST.get("dp1p6flow", 0))
+    cond_one_point_six_flow = float(request.POST.get("dp1p6flow", 0)) / 100
     cond_one_point_six_press = float(request.POST.get("dp1p6Pressure", 0))
 
     cond_one_relative_flow = [
@@ -194,22 +196,22 @@ def get_design_points_of_cond_two(request, point):
     cond_two_temp = float(request.POST.get("dp2InletTemp", 0))
     cond_two_humi = float(request.POST.get("dp2InletHumidity", 0))
 
-    cond_two_point_one_flow = float(request.POST.get("dp2p1flow", 0))
+    cond_two_point_one_flow = float(request.POST.get("dp2p1flow", 0)) / 100
     cond_two_point_one_press = float(request.POST.get("dp2p1Pressure", 0))
 
-    cond_two_point_two_flow = float(request.POST.get("dp2p2flow", 0))
+    cond_two_point_two_flow = float(request.POST.get("dp2p2flow", 0)) / 100
     cond_two_point_two_press = float(request.POST.get("dp2p2Pressure", 0))
 
-    cond_two_point_three_flow = float(request.POST.get("dp2p3flow", 0))
+    cond_two_point_three_flow = float(request.POST.get("dp2p3flow", 0)) / 100
     cond_two_point_three_press = float(request.POST.get("dp2p3Pressure", 0))
 
-    cond_two_point_four_flow = float(request.POST.get("dp2p4flow", 0))
+    cond_two_point_four_flow = float(request.POST.get("dp2p4flow", 0)) / 100
     cond_two_point_four_press = float(request.POST.get("dp2p4Pressure", 0))
 
-    cond_two_point_five_flow = float(request.POST.get("dp2p5flow", 0))
+    cond_two_point_five_flow = float(request.POST.get("dp2p5flow", 0)) / 100
     cond_two_point_five_press = float(request.POST.get("dp2p5Pressure", 0))
 
-    cond_two_point_six_flow = float(request.POST.get("dp2p6flow", 0))
+    cond_two_point_six_flow = float(request.POST.get("dp2p6flow", 0)) / 100
     cond_two_point_six_press = float(request.POST.get("dp2p6Pressure", 0))
 
     cond_two_relative_flow = [
@@ -233,22 +235,22 @@ def get_design_points_of_cond_three(request, point):
     cond_three_temp = float(request.POST.get("dp3InletTemp", 0))
     cond_three_humi = float(request.POST.get("dp3InletHumidity", 0))
 
-    cond_three_point_one_flow = float(request.POST.get("dp3p1flow", 0))
+    cond_three_point_one_flow = float(request.POST.get("dp3p1flow", 0)) / 100
     cond_three_point_one_press = float(request.POST.get("dp3p1Pressure", 0))
 
-    cond_three_point_two_flow = float(request.POST.get("dp3p2flow", 0))
+    cond_three_point_two_flow = float(request.POST.get("dp3p2flow", 0)) / 100
     cond_three_point_two_press = float(request.POST.get("dp3p2Pressure", 0))
 
-    cond_three_point_three_flow = float(request.POST.get("dp3p3flow", 0))
+    cond_three_point_three_flow = float(request.POST.get("dp3p3flow", 0)) / 100
     cond_three_point_three_press = float(request.POST.get("dp3p3Pressure", 0))
 
-    cond_three_point_four_flow = float(request.POST.get("dp3p4flow", 0))
+    cond_three_point_four_flow = float(request.POST.get("dp3p4flow", 0)) / 100
     cond_three_point_four_press = float(request.POST.get("dp3p4Pressure", 0))
 
-    cond_three_point_five_flow = float(request.POST.get("dp3p5flow", 0))
+    cond_three_point_five_flow = float(request.POST.get("dp3p5flow", 0)) / 100
     cond_three_point_five_press = float(request.POST.get("dp3p5Pressure", 0))
 
-    cond_three_point_six_flow = float(request.POST.get("dp3p6flow", 0))
+    cond_three_point_six_flow = float(request.POST.get("dp3p6flow", 0)) / 100
     cond_three_point_six_press = float(request.POST.get("dp3p6Pressure", 0))
 
     cond_three_relative_flow = [
@@ -532,83 +534,98 @@ def get_table_data(rated_point, duty_points_collection):
 
     return table_info
 
+def initiate_project(request):
+    pj_name = request.POST.get("projectName", "")
+    pj_serial_num = request.POST.get("projectNumber", "")
+    pj_location = request.POST.get("projectLocation", "")
+    pj_altitude = float(request.POST.get("projectAltitude", ""))
+    pj_inlet_press = float(request.POST.get("projectInletPressure", ""))
+    pj_frequency = int(request.POST.get("projectFrequency", ""))
+    pj_machine_num = int(request.POST.get("projectMachNums", ""))
+    pj_volt = int(request.POST.get("machVolt", ""))
+    pj_security_coeff = float(request.POST.get("securityCoeff", ""))
+    pj_ei_rating = int(request.POST.get("eiRating", ""))
+    pj_amb_temp = float(request.POST.get("ambTemp", ""))
+    pj_standard_flow = float(request.POST.get("ratedFlow", 0))
+    pj_standard_press = float(request.POST.get("ratedPressure", 0))
+    pj_standard_temp = float(request.POST.get("ratedTemp", 0))
+    pj_standard_humi = float(request.POST.get("ratedHumidity", 0))
+    return Project(pj_name, pj_serial_num, pj_location, MAX_FLOW_COEFF, PRESSURE_COEFF,
+                   pj_altitude, pj_inlet_press, pj_frequency, pj_machine_num, pj_volt,
+                   "ALU", pj_security_coeff, pj_ei_rating, pj_amb_temp, pj_standard_flow,
+                   pj_standard_press, pj_standard_temp, pj_standard_humi)
+
 
 class SelectView(LoginRequiredMixin, View):
     login_url = "/login"
 
     def get(self, request):
-        return render(request, 'turbo_selection.html')
+        return render(request, 'turbo_selection.html', {
+            "turboActive": True
+        })
 
     def post(self, request):
 
-        # TODO 获取表单，进行验证
-        # selection_form = SelectionForm(request.POST)
-        # if selection_form.is_valid():
-            # 初始化项目信息
-            # TODO 确定是否需要根据输入信息初始化
-            # max_flow_coef = 0.1089
-            # pressure_coef = 1.1250
-            # pj = Project(max_flow_coef, pressure_coef)
-        # else:
-        #     return HttpResponse(
-        #         '{"status":"fail", "msg":"收藏出错"}',
-        #         content_type='application/json')
+        selection_form = SelectionForm(request.POST)
+        if selection_form.is_valid():
+            pj = initiate_project(request)
+            motor_table = initiate_motor_table()
+            motor_power = initiate_motor_power()
 
-        max_flow_coef = 0.1089
-        pressure_coef = 1.1250
-        pj = Project("项目一", "0-001-002", max_flow_coef, pressure_coef)
-        motor_table = initiate_motor_table()
-        motor_power = initiate_motor_power()
-        
-        # 初始化额定工况点
-        point = initiate_rated_point(request, pj)
+            # 初始化额定工况点
+            point = initiate_rated_point(request, pj)
 
-        # 初始化三个工况下的各个设计工况点
-        duty_points_one = get_design_points_of_cond_one(request, point)
-        duty_points_two = get_design_points_of_cond_two(request, point)
-        duty_points_three = get_design_points_of_cond_three(request, point)
-        duty_points_collection = [duty_points_one, duty_points_two, duty_points_three]
+            # 初始化三个工况下的各个设计工况点
+            duty_points_one = get_design_points_of_cond_one(request, point)
+            duty_points_two = get_design_points_of_cond_two(request, point)
+            duty_points_three = get_design_points_of_cond_three(request, point)
+            duty_points_collection = [duty_points_one, duty_points_two, duty_points_three]
 
-        # 获取测试数据点
-        base_points_collection = get_all_base_points()
+            # 获取测试数据点
+            base_points_collection = get_all_base_points()
 
-        # 进行插值计算
-        interpolation_calculation(10, point, duty_points_collection, base_points_collection)
+            # 进行插值计算
+            interpolation_calculation(10, point, duty_points_collection, base_points_collection)
 
-        # 开始计算流量压力以及轴功率曲线
-        cond_one_graph_data = get_condition_graph_data(duty_points_one, base_points_collection, point)
-        cond_two_graph_data = get_condition_graph_data(duty_points_two, base_points_collection, point)
-        cond_three_graph_data = get_condition_graph_data(duty_points_three, base_points_collection, point)
+            # 开始计算流量压力以及轴功率曲线
+            cond_one_graph_data = get_condition_graph_data(duty_points_one, base_points_collection, point)
+            cond_two_graph_data = get_condition_graph_data(duty_points_two, base_points_collection, point)
+            cond_three_graph_data = get_condition_graph_data(duty_points_three, base_points_collection, point)
 
-        # 计算进线功率
-        # 首先获取motor_rating
-        motor_rating = get_motor_rating(point, duty_points_collection, motor_table)
-        motor_loss_trend = get_motor_loss_trend(motor_rating)
-        calc_motor_data(duty_points_collection, motor_loss_trend, motor_rating)
-        glt_data = initiate_glt_data()
-        max_mechanical_loss = calc_max_mechanical_loss(duty_points_collection)
-        max_t2 = calc_max_t2(duty_points_collection)
-        max_motor_loss = cal_max_motor_loss(duty_points_collection)
-        heat_loss = calc_heat_loss(point, glt_data, max_mechanical_loss, pj.amb_temp, motor_power, max_t2, max_motor_loss)
-        update_total_wire_power(duty_points_collection, heat_loss)
-        project_info = {"projectName": pj.name, "projectNumber": pj.serial_num}
-        table_data = get_table_data(point, duty_points_collection)
+            # 计算进线功率
+            # 首先获取motor_rating
+            motor_rating = get_motor_rating(point, duty_points_collection, motor_table)
+            motor_loss_trend = get_motor_loss_trend(motor_rating)
+            calc_motor_data(duty_points_collection, motor_loss_trend, motor_rating)
+            glt_data = initiate_glt_data()
+            max_mechanical_loss = calc_max_mechanical_loss(duty_points_collection)
+            max_t2 = calc_max_t2(duty_points_collection)
+            max_motor_loss = cal_max_motor_loss(duty_points_collection)
+            heat_loss = calc_heat_loss(point, glt_data, max_mechanical_loss, pj.amb_temp, motor_power, max_t2,
+                                       max_motor_loss)
+            update_total_wire_power(duty_points_collection, heat_loss)
+            project_info = {"projectName": pj.name, "projectNumber": pj.serial_num}
+            table_data = get_table_data(point, duty_points_collection)
 
-        # 绘图所需数据
-        graph_data = {
-            "tableData": table_data,
-            "projectInfo": project_info,
-            "condOne": cond_one_graph_data,
-            "condTwo": cond_two_graph_data,
-            "condThree": cond_three_graph_data,
-        }
+            # 绘图所需数据
+            graph_data = {
+                "tableData": table_data,
+                "projectInfo": project_info,
+                "condOne": cond_one_graph_data,
+                "condTwo": cond_two_graph_data,
+                "condThree": cond_three_graph_data,
+            }
 
-        # 转换为json数据
-        json_data = json.dumps(graph_data)
+            # 转换为json数据
+            json_data = json.dumps(graph_data)
 
-        # 初始化测试点
-        return HttpResponse(
-            json_data,
-            content_type="application/json"
-        )
+            # 初始化测试点
+            return HttpResponse(
+                json_data,
+                content_type="application/json"
+            )
+        else:
+            return HttpResponse(
+                '{"status":"fail", "msg":"收藏出错"}',
+                content_type='application/json')
 
