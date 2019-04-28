@@ -1,13 +1,11 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
-
+"""
+This module contains the TurboData class, which represents the detail stats of every turbo
+"""
 from selectedturbo.models import Turbo
 
 class TurboData(object):
-    """
-    initialize data of different turbos
-    later achieve from database
-    """
     def __init__(self, turbo=None):
         self.coeff = 0.0
         self.val = 0
@@ -19,4 +17,3 @@ class TurboData(object):
         self.fix_loss_2 = turbo.fix_loss_two if x else 0
         self.var_loss = turbo.var_loss if x else 0
         self.size_correction = turbo.size_correction if x else 0
-

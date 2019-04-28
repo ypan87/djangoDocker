@@ -7,7 +7,7 @@ var ctx3 = document.getElementById('threeChart');
 var myChart1, myChart2, myChart3;
 
 $('#selectButton').on('click', function() {
-    var _self = $(this);
+    let _self = $(this);
     $.ajax({
         cache: false,
         type: 'post',
@@ -16,8 +16,8 @@ $('#selectButton').on('click', function() {
         data: $('#selectForm').serialize(),
         async: true,
         beforeSend:function(XMLHttpRequest){
-            _self.val("提交中...");
-            _self.attr("disabled","disabled");
+            _self.addClass("disabled");
+            _self.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>提交中');
             let graphCard = document.getElementById('graphCard');
             if (!graphCard.classList.contains('no-display')) {
                 graphCard.classList.add('no-display');
@@ -304,8 +304,8 @@ $('#selectButton').on('click', function() {
             myChart3 = generateGraph(data.condThree, conditionColors, conditionLabels, ctx3, myChart3, "工况III");
         },
         complete: function(XMLHttpRequest){
-            _self.val("提交");
-            _self.removeAttr("disabled");
+            _self.removeClass("disabled");
+            _self.html('提交');
             let graphCard = document.getElementById('graphCard');
             if (graphCard.classList.contains('no-display')) {
                 graphCard.classList.remove('no-display');
