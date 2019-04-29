@@ -3,8 +3,21 @@
 from django.db import models
 
 # 鼓风机型号
+TURBO_CHOICES = [
+    ("GL1", u"GL1"),
+    ("GL2", u"GL2"),
+    ("GL3", u"GL3"),
+    ("GL5", u"GL5"),
+    ("GL8", u"GL8"),
+    ("GL10", u"GL10"),
+    ("GL15", u"GL15"),
+    ("GL20", u"GL20"),
+    ("GL30", u"GL30"),
+    ("GL50", u"GL50"),
+]
+
 class Turbo(models.Model):
-    category = models.CharField(max_length=10, verbose_name=u"鼓风机型号")
+    category = models.CharField(max_length=10, verbose_name=u"鼓风机型号", choices=TURBO_CHOICES, default="GL1")
     cut_back = models.FloatField(verbose_name=u"cut back")
     diameter = models.FloatField(verbose_name=u"直径")
     fix_loss_one = models.FloatField(verbose_name=u"fix loss one")
@@ -21,7 +34,7 @@ class Turbo(models.Model):
 
 # 测试工况点
 class TestPoints(models.Model):
-    category = models.CharField(max_length=10, verbose_name=u"鼓风机型号")
+    category = models.CharField(max_length=10, verbose_name=u"鼓风机型号", choices=TURBO_CHOICES, default="GL3")
     working_condition = models.IntegerField(default=0, verbose_name=u"工况")
     working_position = models.IntegerField(default=0, verbose_name=u"工况点")
     flow_coef = models.FloatField(verbose_name=u"流量系数")
