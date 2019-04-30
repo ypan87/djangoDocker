@@ -14,6 +14,7 @@ MAX_FLOW_COEFF, PRESSURE_COEFF
 from .models import Turbo, TestPoints
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SelectionForm
+from utils.form_validation import form_validation_errors
 
 
 def print_attributes(obj):
@@ -626,6 +627,6 @@ class SelectView(LoginRequiredMixin, View):
             )
         else:
             return HttpResponse(
-                '{"status":"fail", "msg":"收藏出错"}',
+                form_validation_errors(selection_form),
                 content_type='application/json')
 

@@ -13,7 +13,7 @@
 }
 
 #selectForm label {
-    font-size: 0.5rem;
+    font-size: 0.85rem;
 }
 
 #mainNav .nav-link {
@@ -50,4 +50,31 @@
     font-size: 14px;
     font-weight: 700;
     color: #9597a6;
+}
+
+.asteriskField {
+    color: red;
+}
+
+.inputTip {
+    font-size: 50%;
+    color: #9597a6;
+}
+
+.error {
+    font-size: 50%;
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.toast-error {
+    background-color: #F2D7DA;
+    color: #692226;
+}
+
+.toast-success {
+
 }

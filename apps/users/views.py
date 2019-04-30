@@ -13,7 +13,11 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from functools import wraps
+from utils.form_validation import form_validation_errors
 
+class EmailRegisterView(View):
+    def get(self, request):
+        return render(request, 'email_register.html')
 
 def guest_required(func):
     @wraps(func)
@@ -205,14 +209,6 @@ class ModifyPwdView(View):
                 form_validation_errors(modify_form),
                 content_type="application/json"
             )
-
-
-def form_validation_errors(form):
-    json_errors = {"status": "error"}
-    for key, value in form.errors.items():
-        json_errors[key] = value[0]
-    return json.dumps(json_errors)
-
 
 class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):

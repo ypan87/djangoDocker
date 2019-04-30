@@ -15,7 +15,7 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import path, include
-from users.views import IndexView, RegisterView, LoginView, LogoutView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
+from users.views import IndexView, RegisterView, LoginView, LogoutView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, EmailRegisterView
 
 import xadmin
 
@@ -32,4 +32,5 @@ urlpatterns = [
     path("forget/", ForgetPwdView.as_view(), name="forget_pwd"),
     path("reset/<str:active_code>", ResetView.as_view(), name="reset_pwd"),
     path("modify_pwd/", ModifyPwdView.as_view(), name="modify_pwd"),
+    path("email_register/", EmailRegisterView.as_view())
 ]
