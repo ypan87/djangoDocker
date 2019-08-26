@@ -557,13 +557,17 @@ def initiate_project(request):
                    pj_standard_press, pj_standard_temp, pj_standard_humi)
 
 
-class SelectView(LoginRequiredMixin, View):
+class SelectView(View):
     login_url = "/login"
 
+    # def get(self, request):
+    #     return render(request, 'turbo_selection.html', {
+    #         "turboActive": True
+    #     })
+
     def get(self, request):
-        return render(request, 'turbo_selection.html', {
-            "turboActive": True
-        })
+        return render(request, 'turbo.html')
+
 
     def post(self, request):
 

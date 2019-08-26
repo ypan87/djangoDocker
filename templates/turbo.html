@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    GL-TURBO 鼓风机选型
+{% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+{% endblock %}
+
+{% block content %}
+	<main class="container-fluid">
+		<!-- 导航栏 -->
+        <!-- 导航组件 -->
+		<nav class="navbar navbar-expand-sm navbar-light bg-light">
+			<a href="#" class="navbar-brand">
+				GLTURBO
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a href="#" class="nav-link" data-translation="lang" name="home">主页 <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link">选型</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link">panyifan1992@outlook.com</a>
+					</li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto">
+					无锡杰尔科技鼓风机选型软件1.1.1
+				</ul>
+			</div>
+		</nav>
+
+		<form action="" id="turboForm">
+            <!-- 选择单位组件 -->
+            <div class="selection">
+                <label for="lang-select">选择语言</label>
+                <select name="lang-select" id="lang-select">
+                    <option value="cn">中文</option>
+                    <option value="en">English</option>
+                </select>
+
+                <label for="unit-select">选择单位</label>
+                <select name="lang-select" id="lang-select">
+                    <option value="metric">公制</option>
+                    <option value="imperial">英制</option>
+                </select>
+            </div>
+
+            <!-- 项目信息 -->
+			<div class="card">
+				<div class="card-header card-header-active">
+					<span class="card-header-icon"></span>
+					项目信息
+				</div>
+
+				<div class="card-body scroll-hidden">
+					<div class="form-row">
+                        <div class="col-sm-2 form-group">
+                            <label for="projectName">项目名称</label>
+                            <div class="value-input">
+                            	<input type="text" class="form-control" id="projectName" name="projectName">
+                                <div class="input-error hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectNumber">项目编号</label>
+                            <input type="text" class="form-control" id="projectNumber" name="projectNumber">
+                            <div class="input-error hidden"></div>
+
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectLocation">现场位置</label>
+                            <input type="text" class="form-control" id="projectLocation" name="projectLocation">
+                            <div class="input-error hidden"></div>
+
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                        	<label for="projectEngineer">工程师</label>
+                        	<input type="text" class="form-control" id="projectEngineer" name="projectEngineer" value="tom">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectAltitude">现场海拔(m)</label>
+                            <input type="text" class="form-control" id="projectAltitude" name="projectAltitude" value="0" required>
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectEnvPres">环境压力</label>
+                            <input type="text" class="form-control" id="projectEnvPres" name="projectEnvPres" value="1.01325" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                    	<div class="col-sm-2 form-group">
+                            <label for="projectInletPres">系统进口压力</label>
+                            <input type="text" class="form-control" id="projectInletPres" name="projectInletPres" value=0.988>
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectFrequency">电网频率</label>
+                            <select name="frequency-select" id="requency-select" class="form-control">
+                                <option value="50">50HZ</option>
+                                <option value="60">60HZ</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectUnitsNum">机组数量</label>
+                            <input type="text" class="form-control" id="projectUnitsNum" name="projectUnitsNum" value="1">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                        	<label for="projectVolt">电机电压</label>
+                        	<input type="text" class="form-control" id="projectVolt" name="projectVolt" value="400">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectAltitude">叶轮材料</label>
+                            <input type="text" class="form-control" id="projectMaterial" name="projectMaterial" value="ALU">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectSafetyFactor">安全系数</label>
+                            <input type="text" class="form-control" id="projectSafetyFactor" name="projectSafetyFactor" value="1">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                    	<div class="col-sm-2 form-group">
+                            <label for="projectEIRating">EI Rating</label>
+                            <input type="text" class="form-control" id="projectEIRating" name="projectEIRating" value="3">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="projectEnvTemp">环境温度</label>
+                            <input type="text" class="form-control" id="projectEnvTemp" name="projectEnvTemp" value=45>
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+
+            <!-- 额定流量定义 -->
+            <div class="card">
+                <div class="card-header card-header-active">
+                    <span class="card-header-icon"></span>
+                    额定流量定义
+                </div>
+
+                <div class="card-body scroll-hidden">
+                    <div class="form-row">
+                        <div class="col-sm-2 form-group">
+                            <label for="ratingFlow">额定流量</label>
+                            <div class="value-input">
+                                <input type="text" class="form-control" id="ratingFlow" name="ratingFlow" value="3486">
+                                <div class="input-error hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="ratingPressure">额定气压</label>
+                            <input type="text" class="form-control" id="ratingPressure" name="ratingPressure" value="1.01325">
+                            <div class="input-error hidden"></div>
+
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="ratingTemp">额定温度</label>
+                            <input type="text" class="form-control" id="ratingTemp" name="ratingTemp" value="20">
+                            <div class="input-error hidden"></div>
+
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="ratingHumi">额定相对湿度</label>
+                            <input type="text" class="form-control" id="ratingHumi" name="ratingHumi" value="70">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 额定工况点 -->
+            <div class="card">
+                <div class="card-header card-header-active">
+                    <span class="card-header-icon"></span>
+                    额定工况点
+                </div>
+
+                <div class="card-body scroll-auto">
+                    <div class="form-row">
+                        <div class="col-sm-4">
+                            <table class="table table-bordered table-striped text-center mt-24">
+                                <tr>
+                                    <th scope="col" colspan="3">
+                                        额定工况点
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">系统进口压力</th>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" value="0.988" id="ratingPointInletPressure" name="ratingPointInletPressure">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">进气温度</th>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" value="40" id="ratingPointInletTmep" name="ratingPointInletTmep">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope=row>进气相对湿度</th>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" value="90" id="ratingPointHumi" name="ratingPointHumi">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope=row>进气损失（过滤袋）</th>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" value="0.006" id="ratingPointInletLoss" name="ratingPointInletLoss">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope=row>出气损失</th>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" value="0" id="ratingPointOutletLoss" name="ratingPointOutletLoss">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope=row>出口压力</th>
+                                    <td colspan="2">
+                                        <input type="text" class="form-control" value="0.6" id="ratingPointOutPressure" name="ratingPointOutPressure">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--
+                工况组件
+                交互有：
+                初次加载时加载默认数据，包括默认的额定工况点以及三个工况
+                添加工况按钮-> 点击之后会出现新的单个工况组件，总组件个数不能超过6个
+                新添加的组件数据为默认数据
+
+                每个工况组件有拷贝按钮可以用来进行数据拷贝
+
+                已经出现的工况点可以进行删除，最后一行可以创建新的工况点
+
+                每个工况组件都有删除按钮，可以删除该组件元素
+
+             -->
+            <div class="card">
+                <div class="card-header card-header-active">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="card-header-icon"></span>
+                            工况曲线
+                        </div>
+
+                        <button type="button" class="btn btn-light condition-table-add">添加工况曲线</button>
+                    </div>
+                </div>
+
+                <div class="card-body scroll-auto">
+                    <div class="form-row condition-table-wrapper">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 性能调节 -->
+            <div class="card">
+                <div class="card-header card-header-active">
+                    <span class="card-header-icon"></span>
+                    性能调节
+                </div>
+
+                <div class="card-body scroll-hidden">
+                    <div class="form-row">
+                        <div class="col-sm-2 form-group">
+                            <label for="maxFlowCoeff">最大流量系数</label>
+                            <div class="value-input">
+                                <input type="text" class="form-control" id="maxFlowCoeff" name="maxFlowCoeff" value="0.1089">
+                                <div class="input-error hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 form-group">
+                            <label for="maxPressureCoeff">压力系数</label>
+                            <input type="text" class="form-control" id="maxPressureCoeff" name="maxPressureCoeff" value="1.1250">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-primary">提交</button>
+
+        </form>
+	</main>
+
+    <div class="wrapper hidden">
+    	<div class="load-background">
+    		<div class="load">
+    			<p>loading</p>
+    			<div class="k-line k-line1-1"></div>
+    			<div class="k-line k-line1-2"></div>
+    			<div class="k-line k-line1-3"></div>
+    		</div>
+    	</div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/language.js' %}"></script>
+    <script src="{% static 'js/validation.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

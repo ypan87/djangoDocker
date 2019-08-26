@@ -1,0 +1,205 @@
+/* 表格样式 */
+.card table th {
+	font-size: .5rem;
+}
+
+/* 按钮样式 */
+button {
+	margin-top: 1.5rem;
+}
+
+.card button {
+	margin-top: 0;
+	font-size: .5rem;
+}
+
+tr button {
+	margin-top: 0;
+	font-size: .5rem;
+}
+
+/* 选择文字大小 */
+.selection {
+	font-size: 0.5rem;
+}
+
+/* card style */
+.card {
+	margin-top: 1.5rem;
+}
+
+.card .value-input {
+	position: relative;
+}
+
+.card .form-control {
+	font-size: .5rem;
+	height: 1rem;
+}
+
+.input-unit {
+	position: absolute;
+	right: 0.75rem;
+	bottom: .375rem;
+}
+
+.input-error {
+	color: red;
+	font-size: .5rem;
+}
+
+.card-header-icon {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+  	border-right: 10px solid transparent;
+  	border-top: 10px solid #fff;
+  	transition: transform 0.2s ease-out;
+}
+
+.icon-rotate {
+	transform: rotate(-90deg);
+}
+
+.card-header {
+	font-size: .75rem;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: #777;
+	color: white;
+}
+
+.card-header-active, .card-header:hover {
+	background-color: #555;
+}
+
+.card-body label {
+	font-size: .5rem;
+}
+
+.card-body {
+	padding: 0 1.25rem;
+	max-height: 350px;
+	transition: max-height 0.2s ease-out;
+}
+
+.scroll-hidden {
+	overflow: hidden;
+}
+
+.scroll-auto {
+	overflow: auto
+}
+
+.card-body-collapsed {
+	max-height: 0px;
+	border: 0px;
+}
+
+/* 表单选项 */
+.selection {
+	padding: .75rem 1.25rem;
+	background-color: #555;
+	margin-top: 1.5rem;
+	color: white;
+}
+
+/* 工况组件 */
+.condition-table {
+	font-size: 0.5rem;
+}
+
+.condition-table .btn {
+	font-size: 0.5rem;
+}
+
+.condition-table-header {
+	position: relative;
+}
+
+.condition-table-close {
+	position: absolute;
+	right: 2%;
+	top: 25%;
+}
+
+table .form-control {
+	font-size: 0.5rem;
+	height: 1rem;
+}
+
+.table td, .table th {
+	padding: .25rem 0.75rem;
+	vertical-align: middle;
+}
+
+.table button {
+	padding: 0 .25rem;
+}
+
+/* 模态框 */
+.full-width {
+	width: 100%;
+}
+
+/* 工具类 */
+.mt-24 {
+	margin-top: 1.5rem;
+}
+
+/* loading */
+.hidden {
+	display: none;
+}
+
+.load-background {
+	display: flex;
+	min-height: 100vh;
+	min-width: 100vh;
+	margin: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: white;
+}
+
+.load {
+	margin: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 0.25rem 1rem;
+}
+
+.k-line {
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border-radius:15px;
+	background-color:#4b9cdb
+}
+
+.k-line1-1 {
+	animation:k-loadingA 1.5s 0s infinite;
+}
+
+.k-line1-2 {
+	animation:k-loadingA 1.5s .5s infinite;
+}
+
+.k-line1-3 {
+	animation:k-loadingA 1.5s 1s infinite;
+}
+
+@keyframes k-loadingA {
+	0% {
+		height: 15px;
+	}
+	50% {
+		height: 35px;
+	}
+	100% {
+		height: 15px;
+	}
+}

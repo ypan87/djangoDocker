@@ -86,6 +86,7 @@ $('#selectButton').on('click', function() {
             if (!graphCard.classList.contains('no-display')) {
                 graphCard.classList.add('no-display');
             }
+
         },
         success: function(data) {
             if (data.status == "error") {
