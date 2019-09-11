@@ -1,446 +1,1092 @@
-// 表单的收放
-let form = document.querySelector('#turboForm');
-form.addEventListener('click', function(event) {
-	let target = event.target;
+/**
+ * Created by yifan_pan on 2019/9/11.
+ */
+var baseView = (function() {
+    var DOMs = {
+        form: document.querySelector('#turboForm'),
+        addCondBtn: document.querySelector('.condition-table-add'),
+        condTableWrapper: document.querySelector('.condition-table-wrapper'),
+        subBtn: document.querySelector('.sub-btn'),
+        loadIcon: document.querySelector('.wrapper'),
+        projectSec: document.querySelector('.project-sec'),
+        defSec: document.querySelector('.def-sec'),
+        rateSec: document.querySelector('.rate-sec'),
+        conditionSec: document.querySelector('.condition-sec'),
+        performenceSec: document.querySelector('.performence-sec'),
+        imperialSelect: document.querySelector('#isImperial'),
+        languageSelect: document.querySelector('#lang-select'),
+    };
 
-	// 点击cardHeader并且不在button区域时，我们可以进行css动画
-	let cardHeader = null;
-	if (target.classList.contains('card-header') ) {
-		cardHeader = target;
-	} else if (target.closest('.card-header') && target.tagName != "BUTTON") {
-		cardHeader = target.closest('.card-header');
-	} else {
-		return false;
-	}
+    var DOMStrings = {
+        graphSec: "graph-sec",
+        effChart: "efficiencyChart",
+        graphCardBody: "graphCardBody",
+        turboInfo: "turboInfo",
+        turboGraph: "turboGraph",
+    };
 
-	// css动画
-	let cardBody = cardHeader.nextElementSibling;
-	let icon = cardHeader.querySelector('span');
-	cardBody.classList.toggle('card-body-collapsed');
-	cardHeader.classList.toggle('card-header-active');
-	icon.classList.toggle('icon-rotate');
-});
+    var colors = {
+        black: "rgb(0, 0, 0)",
+        red: "rgb(244,96,108)",
+        green: "rgb(25,202,173)"
+    };
 
-// 添加验证规则
-let validataFunc = function() {
-	let validator = new Validator();
+    var getSectionData = function(section) {
+        var inputs = section.querySelectorAll('input');
+        var data = {};
+        for (var i = 0; i < inputs.length; i++) {
+            var input = inputs[i];
+            if (input.value == "") continue;
+            data[input.name] = input.value;
+        }
+        return data;
+    };
 
-	validator.add(form.projectName, [{
-		strategy: 'isNonEmpty',
-		errorMsg: '项目名不能为空'
-	}]);
+    var getSelectData = function(select) {
+        var index = select.selectedIndex;
+        return {
+            [select.name]: select[index].value
+        }
+    };
 
-	return validator.start();
-};
+    var insertGraphSection = function() {
+        var markup = `
+            <div class="row" id="graph-sec">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header card-header-active">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    鼓风机选择                            
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-light export-excel mr-24">输出excel</button>
+                                    <button type="button" class="btn btn-light save-project ml-24">保存项目</button>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="card-body" id="graphCardBody">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <canvas id="efficiencyChart" height="275px"></canvas>
+                                </div>
+                                <div class="col-lg-6" id="turboInfo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        `;
+        DOMs.form.insertAdjacentHTML("afterend", markup);
+    };
 
-// 显示错误信息
-let displayError = function(errorMsg) {
-	let inputError = this.parentElement.getElementsByClassName('input-error')[0];
-	inputError.innerHTML = errorMsg;
-	if (inputError.classList.contains('hidden')) {
-		inputError.classList.remove('hidden');
-	}
-};
+    var insertEffGraph = function(data) {
+        var ctx = document.getElementById(DOMStrings.effChart).getContext('2d');
+        var datasets = [], singleData, i;
 
-// // 清除错误信息
-// let clearError = function() {
-// 	let inputError = this.parentElement.getElementsByClassName('input-error')[0];
-// 	if (inputError) {
-// 		inputError.innerHTML = '';
-// 		if (!inputError.classList.contains('hidden')) {
-// 			inputError.classList.add('hidden');
-// 		}
-// 	}
-// }
+        // 添加测试点数据
+        for (i = 0; i < data.baseTableData.length; i++) {
+            singleData = getGraphData({
+                data: data.baseTableData[i],
+                category: "test",
+                label: "测试曲线" + i,
+                color: colors.black
+            });
+            datasets.push(singleData);
+        }
 
-// // 输入数据后错误信息消失
-// let inputs = document.querySelectorAll('input');
-// for (let i = 0, input; input = inputs[i++];) {
-// 	input.addEventListener('keyup', function() {
-// 		clearError.call(this);
-// 	});
-// }
+        // 添加工况曲线数据
+        for (i = 0; i < data.normalTableData.length; i++) {
+            singleData = getGraphData({
+                data: data.normalTableData[i],
+                category: "condition",
+                label: "工况曲线" + i,
+                color: colors.red,
+            });
+            datasets.push(singleData);
+        }
 
-// 表单提交
-form.onsubmit = function() {
-	let results = validataFunc();
-	let hasNoError = true;
-	for (let i = 0, result; result = results[i++];) {
-		if (result.msg) {
-			displayError.call(result.dom, result.msg);
-		}
-	}
-};
+        // 添加效率曲线数据
+        for (i = 0; i < data.efficiencyTableData.length; i++) {
+            singleData = getGraphData({
+                data: data.efficiencyTableData[i],
+                category: "efficiency",
+                label: "效率曲线" + i,
+                color: colors.green
+            });
+            datasets.push(singleData);
+        }
 
-// 修改语言
-let elemLangChange = function(language) {
-	let name = this.name;
-	if (translation[language][name]) {
-		this.innerHTML = translation[language][name];
-	}
-};
+        // 添加额定工况点数据
+        singleData = getGraphData({
+            data: [data.ratedTableData],
+            category: "rating",
+            label: "额定工况点",
+            color: colors.red
+        });
+        datasets.push(singleData);
 
-let elemsLangChange = function(language) {
-	let changes = document.querySelectorAll('[data-translation]');
-	for (let i = 0, div; div = changes[i++];) {
-		elemLangChange.call(div, language);
-	}
-};
+        return new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '最大流量系数'
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        },
+                        position: 'left',
+                        id: 'y-axis-1',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '压力系数'
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: '效率曲线'
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        fontSize: 8
+                    }
+                },
+            }
+        });
+    };
 
-let loadingDisplay = function() {
-	let loading = document.querySelector('.wrapper');
-	if (loading.classList.contains("hidden")) {
-		loading.classList.remove("hidden");
-	}
-};
+    var getGraphData = function(option) {
+        var dataPoints = [];
+        if (!option.data) return dataPoints;
+        for (let point of option.data) {
+            dataPoints.push({
+                x: point[0],
+                y: point[1]
+            });
+        }
+        return {
+            label: option.label,
+            data: dataPoints,
+            pointStyle: option.category == "rating" ? "triangle" : "circle",
+            borderColor: option.color,
+            backgroundColor: option.color,
+            borderWidth: option.category == "rating" ? 5 : 2,
+            showLine: option.category != "design",
+            fill: false,
+            yAxisID: option.category == "power" ? 'y-axis-2' : "y-axis-1",
+            pointRadius: 2
+        };
+    };
 
-let loadingClear = function() {
-	let loading = document.querySelector('.wrapper');
-	if (!loading.classList.contains("hidden")) {
-		loading.classList.add("hidden");
-	}
-};
+    var insertTurboSelectionTable = function(data) {
+        var turboData = data.tableData;
+        var markup = `
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-center">
+                    <tr>
+                        <th>鼓风机型号</th>
+                        <th>叶轮机切顶</th>
+                    </tr>
 
-let langSelect = document.querySelector('#lang-select');
-langSelect.addEventListener('change', function() {
-	// 展示loading页面
-	loadingDisplay();
-	// 文字变化
-	let index = this.selectedIndex;
-	let value = this.options[index].value;
-	elemsLangChange(value);
-	// 隐藏loading页面
-	loadingClear();
-});
+                    <tr>
+                        <td>
+                            ${turboData.turbo}
+                        </td>
+                        <td>
+                            ${turboData.cutBack}
+                        </td>
+                    </tr>
+                </table>
+            </div> 
+        `;
+        document.getElementById(DOMStrings.turboInfo).insertAdjacentHTML("beforeend", markup);
+    };
 
-// 修改单位
+    var insertTurboSpecificsTable = function(data) {
+        var markup = "";
+        for (var i = 0; i < data.tableData.conditions.length; i++) {
+            markup += getTurboSpecificsHTML(data.tableData.conditions[i], data.tableData.turbo);
+        }
+        markup = `
+            <div class="row">
+        ` + markup + `</div>`;
+        document.getElementById(DOMStrings.graphCardBody).insertAdjacentHTML('beforeend', markup);
+    };
 
-// 工况组件
-// 工况组件对象池
-let conditionTableFactory = (function(){
-	let tables = [];
+    var getTurboSpecificsHTML = function(conditions, turbo) {
+        var template = "";
+        for (var i = 0; i < conditions.dataSet.length; i++) {
+            var point = conditions.dataSet[i];
+            template += `
+                <tr>
+                    <td colspan="4">${point.relativeFlow} %</td>
+                    <td colspan="1">${point.outletPress}</td>
+                    <td colspan="1">${point.flowAmb}</td>
+                    <td colspan="1">${point.shaftPower}</td>
+                    <td colspan="1">${point.wirePower}</td>
+                </tr>
+            `
+        }
 
-	return {
-		create: function(pressure, temp, humi,) {
-			if (tables.length == 0) {
-				let div = document.createElement("div");
-				div.innerHTML = `
-							<table class="table table-bordered table-striped text-center mt-24 condition-table">
-                                <tr>
-                                    <th scope="col" colspan="3" class="condition-table-header">
-                                        工况
-                                        <button type="button" class="close condition-table-close">
-                                            <span>&times;</span>
-                                        </button>
-                                    </th>
-                                </tr>
-                                <tr class="general">
-                                    <th scope="row">系统进口压力</th>
-                                    <td colspan="2">
-                                        <input type="text" class="form-control" value=${pressure || ''}>
-                                    </td>
-                                </tr>
-                                <tr class="general">
-                                    <th scope="row">进气温度</th>
-                                    <td colspan="2">
-                                        <input type="text" class="form-control" value=${temp || ''}>
-                                    </td>
-                                </tr>
-                                <tr class="general">
-                                    <th scope=row>进气相对湿度</th>
-                                    <td colspan="2">
-                                        <input type="text" class="form-control" value=${humi || ''}>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">相对流量</th>
-                                    <th scope="col">压力</th>
-                                    <th scope="col">操作</th>
-                                </tr>
-                                <tr class="point">
-                                    <td>
-                                        <input type="text" class="form-control" value="100">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="0.6">
-                                    </td>
-                                    <td>
-                                        <!-- 可以修改td的对齐方式 -->
-                                        <span class="row-del">
-                                            <button type="button" class="btn btn-outline-danger">删除</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="point">
-                                    <td>
-                                        <input type="text" class="form-control" value="90">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="0.6">
-                                    </td>
-                                    <td>
-                                        <span class="row-del">
-                                            <button type="button" class="btn btn-outline-danger">删除</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="point">
-                                    <td>
-                                        <input type="text" class="form-control" value="80">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="0.6">
-                                    </td>
-                                    <td>
-                                        <span class="row-del">
-                                            <button type="button" class="btn btn-outline-danger">删除</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="point">
-                                    <td>
-                                        <input type="text" class="form-control" value="70">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="0.6">
-                                    </td>
-                                    <td>
-                                        <span class="row-del">
-                                            <button type="button" class="btn btn-outline-danger">删除</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="point">
-                                    <td>
-                                        <input type="text" class="form-control" value="60">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="0.6">
-                                    </td>
-                                    <td>
-                                        <span class="row-del">
-                                            <button type="button" class="btn btn-outline-danger">删除</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr class="point">
-                                    <td>
-                                        <input type="text" class="form-control" value="45">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" value="0.6">
-                                    </td>
-                                    <td>
-                                        <span class="row-del">
-                                            <button type="button" class="btn btn-outline-danger">删除</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control">
-                                    </td>
-                                    <td>
-                                        <span class="row-add">
-                                            <button type="button" class="btn btn-outline-success">添加</button>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-				`;
-				div.classList = "col-sm-4";
-				return div;
-			} else {
-				return tables.shift();
-			}
-		},
-		recover: function(table) {
-			return tables.push(table);
-		}
-	}
+        template = `
+            <div class="table-responsive col-6">
+                <table class="table table-bordered table-striped text-center final-table">
+                    <tr>
+                        <td colspan="4">风机型号：${turbo}</td>
+                        <td colspan="4">${conditions.temp}&#8451;/${conditions.humidity}%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">进气压力</td>
+                        <td colspan="4">${conditions.baraPressure} bara</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">相对流量</td>
+                        <td colspan="1">ΔP</td>
+                        <td colspan="1">流量</td>
+                        <td colspan="1">轴功率</td>
+                        <td colspan="1">进线功率</td>
+                    </tr>              
+        `
+        + template + `
+                </table>
+            </div>
+        `;
+        return template;
+    };
+
+    var insertTurboGraph = function(data) {
+        var templates = "";
+        for (var i = 0; i < data.conditions.length; i++) {
+            templates += `                        
+            <div class="col-lg-6">
+                <canvas height="275px"></canvas>
+            </div>`;
+        }
+        templates = `
+            <div class="row" id="turboGraph">
+        ` + templates + `</div>`;
+
+        document.getElementById(DOMStrings.graphCardBody).insertAdjacentHTML('beforeend', templates);
+        var canvasCollection = document.getElementById(DOMStrings.turboGraph).querySelectorAll('canvas');
+        for (i = 0; i < data.conditions.length; i++) {
+            var index = i + 1;
+            insertSingleTurboGraph({
+                data: data.conditions[i],
+                ctx: canvasCollection[i].getContext("2d"),
+                title: "工况曲线" + index,
+            });
+        }
+    };
+
+    var insertSingleTurboGraph = function(option) {
+        var datasets = [];
+        var condData = option.data[0];
+        let powerData = option.data[1];
+        let designData = option.data[2];
+
+        for (let i = 0; i < condData.length; i++) {
+            var index = i + 1;
+            let singleData = getGraphData({
+                data: condData[i],
+                category: "condition",
+                label: "流量压升曲线" + index,
+                color: colors.black
+            });
+            datasets.push(singleData);
+        }
+
+        var powerGraphData = getGraphData({
+            data: powerData,
+            category: "power",
+            label: "流量轴功率曲线",
+            color: colors.green
+        });
+        datasets.push(powerGraphData);
+
+        let designGraphData = getGraphData({
+            data: designData,
+            category: "design",
+            label: "设计点流量压升",
+            color: colors.red
+        });
+        datasets.push(designGraphData);
+
+        // 创建图表
+        return new Chart(option.ctx, {
+            type: 'scatter',
+            data: {
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '流量 - m3/h'
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        position: 'left',
+                        id: 'y-axis-1',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '压升 - mbarg'
+                        }
+                    }, {
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        position: 'right',
+                        id: 'y-axis-2',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: '轴功率 - kw'
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: '流量压力曲线及轴功率' + option.title + '：'
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        fontSize: 8
+                    }
+                },
+            }
+        });
+    };
+
+    return {
+        getDOMS: function() {
+            return DOMs;
+        },
+        renderErrorTip: function() {
+            var markup = `
+                <div class="alert alert-danger error-tip">
+                    输入有错误，请修改错误后再提交
+                </div>
+            `;
+            DOMs.form.insertAdjacentHTML("beforebegin", markup);
+            var height = $(".error-tip").offset().top;
+            this.scrollAnimation(height);
+        },
+        deleteErrorTip: function() {
+            var error = document.querySelector('.error-tip');
+            if (error) {
+                error.parentElement.removeChild(error);
+            }
+        },
+        scrollAnimation: function(height) {
+            var speed = 1600;
+            $("body,html").animate({ scrollTop: height }, speed);
+        },
+        clearFormInputError: function(input) {
+            var inputError = input.parentElement.querySelector(".input-error");
+            if (inputError) {
+                inputError.innerHTML = '';
+                if (!inputError.classList.contains('hidden')) {
+                    inputError.classList.add('hidden');
+                }
+            }
+        },
+        diableSubBtn: function() {
+            DOMs.subBtn.disabled = true;
+        },
+        ableSubBtn: function() {
+            DOMs.subBtn.disabled = false;
+        },
+        renderLoading: function() {
+            if (DOMs.loadIcon.classList.contains('hidden')) {
+                DOMs.loadIcon.classList.remove('hidden');
+            }
+        },
+        removeLoading: function() {
+            if (!DOMs.loadIcon.classList.contains('hidden')) {
+                DOMs.loadIcon.classList.add('hidden');
+            }
+        },
+        getFormInputExceptWorkingCondition: function() {
+            var projectData = getSectionData(DOMs.projectSec);
+            var defData = getSectionData(DOMs.defSec);
+            var rateData = getSectionData(DOMs.rateSec);
+            var performanceData = getSectionData(DOMs.performenceSec);
+            var imperialSelectData = getSelectData(DOMs.imperialSelect);
+            return Object.assign(projectData, defData, rateData, performanceData, imperialSelectData);
+        },
+        generateGraph: function(data) {
+            insertGraphSection();
+            insertEffGraph(data);
+            insertTurboSelectionTable(data);
+            insertTurboSpecificsTable(data);
+            insertTurboGraph(data);
+            var height = $('#' + DOMStrings.graphSec).offset().top;
+            this.scrollAnimation(height);
+        },
+        deleteGraphSec: function() {
+            var graphSec = document.querySelector("#" + DOMStrings.graphSec);
+            if (graphSec) {
+                graphSec.parentElement.removeChild(graphSec);
+            }
+        }
+    }
 })();
 
-// 初始化三个工况组件
-let wrapper = document.querySelector('.condition-table-wrapper');
-let conditionTableInitData = [["0.988","40", "90"], ["0.988", "20", "70"], ["0.988", "0", "60"]];
-for (let i = 0; i < 3; i++) {
-	let conditionTable = conditionTableFactory.create(conditionTableInitData[i][0],
-		conditionTableInitData[i][1], conditionTableInitData[i][2],);
-	wrapper.appendChild(conditionTable);
-}
+var baseController = (function(){
 
-// 删除工况表
-form.addEventListener('click', function(event) {
-	let target = event.target;
-	// 如果点击删除按钮的话，就直接删除所在的工况表
-	if (target.parentElement.classList.contains('condition-table-close')) {
-		// 找到最近的table并删除
-		let table = target.closest('table');
-		let wrapper = table.parentElement;
-		conditionTableFactory.recover(wrapper);
-		wrapper.remove();
-	}
-});
-
-// 添加工况表
-form.addEventListener('click', function(event) {
-	let target = event.target;
-	if (target.classList.contains('condition-table-add')) {
-		let conditionTable = conditionTableFactory.create();
-		wrapper.appendChild(conditionTable);
-	}
-});
-
-// 删除行操作
-form.addEventListener('click', function(event) {
-	let target = event.target;
-	// 如果是点击的删除按钮的话，就删除按钮所在的那一行
-	if (target.parentElement.classList.contains('row-del')) {
-		let row = target.closest('tr');
-		row.remove();
-	}
-});
-
-// 添加行操作
-form.addEventListener('click', function(event) {
-	let target = event.target;
-	if (target.parentElement.classList.contains('row-add')) {
-		// 数据验证（required, number)
-		let row = target.closest('tr');
-		// 克隆
-		let cloneRow = row.cloneNode(true);
-        cloneRow.classList = "point";
-		// 修改内容
-		let rowAdd = cloneRow.querySelector('.row-add');
-		rowAdd.classList = "row-del";
-		rowAdd.innerHTML = `<button type="button" class="btn btn-outline-danger">删除</button>`
-		let tbody = target.closest('tbody');
-		// 添加
-		tbody.insertBefore(cloneRow, row);
-		// 清除内容
-		clearAllInputChildren(row);
-	}
-});
-
-// 清除父元素下所有input子元素的内容
-let clearAllInputChildren = function(parentElem) {
-	let inputs = parentElem.querySelectorAll('input');
-	for (i = 0; i < inputs.length; i++) {
-		inputs[i].value = "";
-	}
-};
-
-// 提交表格
-form.addEventListener('submit', function(event) {
-	event.preventDefault();
-    // 获取普通的元素
-    let elements = getElements(form);
-    let elementsDict = getDictFromElements(elements);
-    // 获取condition table 中的所有input元素
-    let tables = document.querySelectorAll('.condition-table');
-    // 将所有input组合成另一个键值对conditionTableArray
-    elementsDict["conditionArray"] = getConditionTableArray(tables);
-
-    let finalData = JSON.stringify(elementsDict);
-
-    $.ajax({
-        cache: false,
-        type: 'POST',
-        dataType:'json',
-		contentType: "application/json; charset=UTF-8",
-        url:"/turbo/selection/",
-		headers:{ "X-CSRFtoken": getCookie('csrftoken')},
-        data: finalData,
-        async: true,
-		beforeSend:function (xhr,settings) {
-		},
-        success: function(data) {
-			console.log(data);
-		}
-    });
-});
-
-// 获取表格中的所有元素
-let getElements = function(form) {
-    let elements = [];
-    let tagElements = form.getElementsByTagName('input');
-    for (let i = 0; i < tagElements.length; i++) {
-		if (tagElements[i].value) {
-			elements.push(tagElements[i]);
-		}
-    }
-    return elements;
-};
-
-// 将所有元素转换格式
-let getDictFromElements = function(elements) {
-    let a = {};
-    for (let i = 0; i < elements.length; i++) {
-        name = elements[i].name;
-        value = elements[i].value;
-        a[name] = value;
-    }
-    return a;
-};
-
-// 组合所有table中的input元素
-let getConditionTableArray = function(tables) {
-    let tablesArray = [];
-    for (let i = 0; i < tables.length; i++) {
-        let tableArray = [];
-        let general = tables[i].querySelectorAll('tr.general');
-        for (let j = 0; j < general.length; j++) {
-            dict1 = {};
-            let input = general[j].querySelector('input');
-            switch(j) {
-                case 0:
-                    dict1 = {pressure: input.value};
+    var getCookie = function(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
-                case 1:
-                    dict1 = {temp: input.value};
-                    break;
-                case 2:
-                    dict1 = {humi: input.value};
-                    break;
-                default:
-                    break;
+                }
             }
-            tableArray.push(dict1);
         }
+        return cookieValue;
+    };
 
-        let points = tables[i].querySelectorAll('tr.point');
-        for (let j = 0; j < points.length; j++) {
-            let input1 = points[j].querySelectorAll('input')[0];
-            let input2 = points[j].querySelectorAll('input')[1];
-            let dict1 = {
-                flow: input1.value,
-                pressure: input2.value
+    var Sizer = function(data) {
+        this.data = data;
+        this.result = "";
+    };
+
+    Sizer.prototype.searchTurbo = function() {
+        var self = this;
+
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                dataType:'json',
+                contentType: "application/json; charset=UTF-8",
+                url:"/turbo/selection/",
+                headers:{ "X-CSRFtoken": getCookie('csrftoken')},
+                data: self.data,
+                async: true,
+                beforeSend:function (xhr,settings) {
+                },
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                }
+            });
+        });
+
+    };
+
+    return {
+        createSizer: function(data) {
+            return new Sizer(data);
+        }
+    }
+})();
+
+var cardController = (function() {
+    return {
+        fold: function(cardHeader) {
+            if (!cardHeader) return;
+            var cardBody = cardHeader.nextElementSibling;
+            var triIcon = cardHeader.querySelector('.card-header-icon');
+            if (triIcon) {
+                triIcon.classList.toggle('icon-rotate');
+            }
+            cardBody.classList.toggle('card-body-collapsed');
+            cardHeader.classList.toggle('card-header-active');
+        }
+    }
+})();
+
+var validateCtrl = (function(baseView) {
+    var form = baseView.getDOMS().form;
+
+    var validator = new Validator();
+
+    validator.add(form.projectAltitude, [{
+        strategy: 'isNumber',
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.projectEnvPres, [{
+        strategy: "isNumber",
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.projectInletPres, [{
+        strategy: "isNumber",
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.projectUnitsNum, [{
+        strategy: "isNumber",
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.projectSafetyFactor, [{
+        strategy: "isNumber",
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.projectEnvTemp, [{
+        strategy: "isNumber",
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.ratingFlow, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        },
+        {
+            strategy: "minValue:0",
+            errorMsg: '请填写大于0的数字',
+        }
+    ]);
+
+    validator.add(form.ratingPressure, [{
+        strategy: "isNumber",
+        errorMsg: '请填写数字',
+    }]);
+
+    validator.add(form.ratingTemp, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.ratingHumi, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        },
+        {
+            strategy: "minValue:0",
+            errorMsg: '请填写大于0的数字',
+        },
+        {
+            strategy: "maxValue:100",
+            errorMsg: '请填写小于100的数字',
+        }
+    ]);
+
+    validator.add(form.ratingPointInletPressure, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.ratingPointInletTmep, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.ratingPointHumi, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        },
+        {
+            strategy: "minValue:0",
+            errorMsg: '请填写大于0的数字',
+        },
+        {
+            strategy: "maxValue:100",
+            errorMsg: '请填写小于100的数字',
+        }
+    ]);
+
+    validator.add(form.ratingPointInletLoss, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.ratingPointOutletLoss, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.ratingPointOutPressure, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.maxFlowCoeff, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    validator.add(form.maxPressureCoeff, [
+        {
+            strategy: "isNumber",
+            errorMsg: '请填写数字',
+        }
+    ]);
+
+    var displayError = function(errorMsg) {
+        let inputError = this.parentElement.getElementsByClassName('input-error')[0];
+        if (!inputError) return;
+        inputError.innerHTML = errorMsg;
+        if (inputError.classList.contains('hidden')) {
+            inputError.classList.remove('hidden');
+        }
+    };
+
+    return {
+        addValidatorRule: function(dom, rules) {
+            validator.add(dom, rules);
+        },
+        validateFields: function() {
+            var results = validator.start();
+            if(results.length == 0) {
+                return true;
+            }
+            for (let i = 0, result; result = results[i++];) {
+                if (result.msg) {
+                    displayError.call(result.dom, result.msg);
+                }
+            }
+            return false;
+        },
+        removeValidatorRule: function(dom) {
+            validator.remove(dom);
+        }
+    }
+})(baseView);
+
+var workingConditionController = (function() {
+    // 保存新建的Condition
+    var wkCondsAll = [];
+    // 保存正在使用的Condition
+    var wkCondsInUse = [];
+    // 保存可以使用的id
+    var ids = [];
+
+    var findIdIndexInAry = function(ary, id) {
+        return ary.findIndex(function(el) {
+            return el == id;
+        });
+    };
+
+    return {
+        addWkCond: function(option) {
+            var id;
+            // 如果还有id可以使用，则找到对应的Condition然后返回
+            if (ids.length > 0) {
+                id = ids.shift();
+            } else {
+                // 如果没有id可以使用，则新建新的Condition返回
+                var condsLength = wkCondsAll.length;
+                if (condsLength == 0) {
+                    id = 0;
+                } else {
+                    id = wkCondsAll[condsLength - 1] + 1;
+                }
+                wkCondsAll.push(id);
+            }
+            wkCondsInUse.push(id);
+
+            return {
+                id: id,
+                inletPressure: option ? option.inletPressure : null,
+                inletTemp: option ? option.inletTemp : null,
+                inletReltHumi: option ? option.inletReltHumi : null,
+                points: option && option.points ? option.points : [
+                    {flow: 100, pressure: 0.6},
+                    {flow: 90, pressure: 0.6},
+                    {flow: 80, pressure: 0.6},
+                    {flow: 70, pressure: 0.6},
+                    {flow: 60, pressure: 0.6},
+                    {flow: 45, pressure: 0.6},
+                ]
             };
-            tableArray.push(dict1);
+        },
+        deleteWkCond: function(id) {
+            ids.push(id);
+            var index = findIdIndexInAry(wkCondsInUse, id);
+            wkCondsInUse.splice(index, 1);
         }
-        tablesArray.push(tableArray);
     }
-    return tablesArray
-};
+})();
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+var workingConditionViewController = (function(baseView, vldCtrl) {
+    var condTables = [];
+    var DOMs = baseView.getDOMS();
+
+    var getTableData = function(table) {
+        var tableData = [];
+
+        var generalRows = table.querySelectorAll('tr.general');
+        pressureData = {pressure: generalRows[0].querySelector('input').value};
+        tempData = {temp: generalRows[1].querySelector('input').value};
+        humiData = {humi: generalRows[2].querySelector('input').value};
+        tableData.push(pressureData, tempData, humiData);
+
+        var pointRows = table.querySelectorAll("tr.point");
+        for (var i = 0; i < pointRows.length; i++) {
+            var inputs = pointRows[i].querySelectorAll('input');
+            tableData.push({flow: inputs[0].value, pressure: inputs[1].value});
+        }
+
+        return tableData;
+    };
+
+    return {
+        addWkTable: function(wkCond) {
+            if (condTables.length > 0) {
+                var index = condTables.findIndex(function(el) {
+                    return el.dataset.tableid == wkCond.id;
+                });
+                var selectedTable = condTables.splice(index, 1)[0];
+                DOMs.condTableWrapper.insertAdjacentElement('beforeend', selectedTable);
+                return;
             }
+
+            var markup = `
+                <div class="col-sm-4" data-tableid=${wkCond.id}>
+                    <table class="table table-bordered table-striped text-center mt-24 condition-table">
+                        <tr>
+                            <th scope="col" colspan="3" class="condition-table-header">
+                                工况
+                                <button type="button" class="close condition-table-close">
+                                    <span>&times;</span>
+                                </button>
+                            </th>
+                        </tr>
+                        <tr class="general">
+                            <th scope="row">系统进口压力</th>
+                            <td colspan="2">
+                                <div class="value-input">
+                                    <input type="text" class="form-control" value=${wkCond.inletPressure || ""}>
+                                    <div class="input-error hidden"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="general">
+                            <th scope="row">进气温度</th>
+                            <td colspan="2">
+                                <div class="value-input">
+                                    <input type="text" class="form-control" value=${wkCond.inletTemp || ""}>
+                                    <div class="input-error hidden"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="general">
+                            <th scope=row>进气相对湿度</th>
+                            <td colspan="2">
+                                <div class="value-input">
+                                    <input type="text" class="form-control" value=${wkCond.inletReltHumi || ""}>
+                                    <div class="input-error hidden"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr class="pointHead">
+                            <th scope="col">相对流量</th>
+                            <th scope="col">压力</th>
+                            <th scope="col">操作</th>
+                        </tr> 
+                        <tr class="pointAdd">
+                            <td>
+                                <input type="text" class="form-control">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control">
+                            </td>
+                            <td>
+                                <span class="row-add">
+                                    <button type="button" class="btn btn-outline-success">添加</button>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+            DOMs.condTableWrapper.insertAdjacentHTML('beforeend', markup);
+            var newTable = document.querySelector(`[data-tableid="${wkCond.id}"]`);
+            var inputs = newTable.querySelectorAll('input');
+            vldCtrl.addValidatorRule(inputs[0], [{
+                strategy: "isNumber",
+                errorMsg: "请填写数字"
+            }]);
+            vldCtrl.addValidatorRule(inputs[1], [{
+                strategy: "isNumber",
+                errorMsg: "请填写数字"
+            }]);
+            vldCtrl.addValidatorRule(inputs[2], [
+                {
+                    strategy: "isNumber",
+                    errorMsg: "请填写数字"
+                },
+                {
+                    strategy: "maxValue:100",
+                    errorMsg: "请填写小于100的数字"
+                },
+                {
+                    strategy: "minValue:0",
+                    errorMsg: "请填写大于0的数字"
+                }
+            ]);
+            var addRow = newTable.querySelector(`.pointAdd`);
+            if (wkCond.points) {
+                for (var i = 0; i < wkCond.points.length; i++) {
+                    this.addWkPoint(wkCond.points[i], addRow);
+                }
+            }
+        },
+        deleteWkTable: function(table) {
+            var inputs = table.querySelectorAll('input');
+            for (var i = 0; i < inputs.length; i++) {
+                vldCtrl.removeValidatorRule(inputs[i]);
+            }
+            condTables.push(table);
+            table.parentElement.removeChild(table);
+        },
+        addWkPoint(elem, addRow) {
+            var markup = `
+            <tr class="point">
+                <td>
+                    <div class="value-input">
+                        <input type="text" class="form-control" value="${elem.flow}">
+                        <div class="input-error hidden"></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="value-input">
+                        <input type="text" class="form-control" value="${elem.pressure}">
+                        <div class="input-error hidden"></div>
+                    </div>
+                </td>
+                <td>
+                    <span class="row-del">
+                        <button type="button" class="btn btn-outline-danger">删除</button>
+                    </span>
+                </td>
+            </tr>`;
+
+            addRow.insertAdjacentHTML("beforebegin", markup);
+
+            var newRow = addRow.previousSibling;
+            var inputs = newRow.querySelectorAll('input');
+            vldCtrl.addValidatorRule(inputs[0], [
+                {
+                    strategy: "isNumber",
+                    errorMsg: "请填写数字"
+                },
+                {
+                    strategy: "maxValue:100",
+                    errorMsg: "请填写小于100的数字"
+                },
+                {
+                    strategy: "minValue:0",
+                    errorMsg: "请填写大于0的数字"
+                }
+            ]);
+            vldCtrl.addValidatorRule(inputs[1], [
+                {
+                    strategy: "isNumber",
+                    errorMsg: "请填写数字"
+                },
+            ]);
+        },
+        deleteWkPoint(row) {
+            var inputs = row.querySelectorAll('input');
+            vldCtrl.removeValidatorRule(inputs[0]);
+            vldCtrl.removeValidatorRule(inputs[1]);
+            row.parentElement.removeChild(row);
+        },
+        getRowInput: function(addRow) {
+            var inputs = addRow.querySelectorAll('input');
+            return {
+                flow: inputs[0].value,
+                pressure: inputs[1].value
+            };
+        },
+        clearRowInput: function(addRow) {
+            var inputs = addRow.querySelectorAll('input');
+            inputs[0].value = "";
+            inputs[1].value = "";
+        },
+        getConditionTablesData: function() {
+            var tables = DOMs.conditionSec.querySelectorAll('[data-tableid]');
+            var tablesData = [];
+            for (var i = 0; i < tables.length; i++) {
+                var table = tables[i];
+                var tableData = getTableData(table);
+                tablesData.push(tableData);
+            }
+            return {
+                conditionArray: tablesData,
+            };
         }
     }
-    return cookieValue;
-}
+})(baseView, validateCtrl);
+
+var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl, vldCtrl) {
+
+    var setupEventListeners = function() {
+        var DOM = baseView.getDOMS();
+        // 表格中card折叠
+        DOM.form.addEventListener('click', function(event) {
+            if(event.target.matches('.card-header, .card-header *')) {
+                var cardHeader = event.target.closest('.card-header');
+                cardCtrl.fold(cardHeader);
+            }
+        });
+
+        // 工况卡片事件
+        DOM.conditionSec.addEventListener('click', function(event) {
+            if (event.target.matches('.condition-table-close, .condition-table-close *')) {
+                ctrlDeleteWorkingCondition(event);
+            } else if (event.target.matches('.row-add, .row-add * ')) {
+                ctrlAddWorkingPoint(event);
+            } else if (event.target.matches('.row-del, .row-del *')) {
+                ctrlDeleteWorkingPoint(event);
+            } else if (event.target.matches('.condition-table-add')) {
+                // 停止冒泡
+                event.stopPropagation();
+                ctrlAddWorkingCondition();
+            }
+        });
+
+        // 键盘输入
+        DOM.form.addEventListener('keyup', function(event) {
+            if (event.target.matches('.value-input input')) {
+                clearFormInputError(event);
+            }
+        });
+
+        // 提交按钮
+        DOM.form.addEventListener('submit', function(event) {
+            // 停止默认提交事件，使用ajax
+            event.preventDefault();
+            // 删除图表区域
+            baseView.deleteGraphSec();
+            // disable提交按钮
+            baseView.diableSubBtn();
+            // loading图标
+            baseView.renderLoading();
+            if (!formValidation()) {
+                baseView.removeLoading();
+                baseView.ableSubBtn();
+                return false;
+            }
+            // 获取最终传输数据
+            var formData = getFormSubmitData();
+            var sizer = baseCtrl.createSizer(formData);
+            var promise = sizer.searchTurbo();
+
+            promise.then(function(result) {
+                console.log(result);
+                baseView.generateGraph(result);
+                baseView.removeLoading();
+                baseView.ableSubBtn();
+            });
+        });
+    };
+
+    var getFormSubmitData = function() {
+        var formData = baseView.getFormInputExceptWorkingCondition();
+        var conditionData = wkViewCtrl.getConditionTablesData();
+        return JSON.stringify(Object.assign(formData, conditionData));
+    };
+
+    var clearFormInputError = function(event) {
+        baseView.clearFormInputError(event.target);
+    };
+
+    var formValidation = function() {
+        baseView.deleteErrorTip();
+        if (!vldCtrl.validateFields()) {
+            baseView.renderErrorTip();
+            return false;
+        }
+        return true;
+    };
+
+    var ctrlAddWorkingCondition = function(option) {
+        newWorkingOption = wkCondCtrl.addWkCond(option);
+         wkViewCtrl.addWkTable(newWorkingOption);
+    };
+
+    var ctrlDeleteWorkingCondition = function(event) {
+        var table = event.target.closest('.col-sm-4');
+        wkViewCtrl.deleteWkTable(table);
+        var id = parseInt(table.dataset.tableid);
+        wkCondCtrl.deleteWkCond(id);
+    };
+
+    var ctrlAddWorkingPoint = function(event) {
+        var addRow = event.target.closest('tr');
+        var input = wkViewCtrl.getRowInput(addRow);
+        wkViewCtrl.addWkPoint(input, addRow);
+        wkViewCtrl.clearRowInput(addRow);
+    };
+
+    var ctrlDeleteWorkingPoint = function(event) {
+        var row = event.target.closest('tr');
+        wkViewCtrl.deleteWkPoint(row);
+    };
+
+    var initTables = function() {
+        var data = [
+            {inletPressure: "0.988", inletTemp: "40", inletReltHumi: "90"},
+            {inletPressure: "0.988", inletTemp: "20", inletReltHumi: "70"},
+            {inletPressure: "0.988", inletTemp: "0", inletReltHumi: "60"},
+        ];
+        data.forEach(function(option) {
+            ctrlAddWorkingCondition(option);
+        })
+    };
+
+    return {
+        init: function() {
+            setupEventListeners();
+            initTables();
+        }
+    };
+})(baseView, baseController, cardController, workingConditionController, workingConditionViewController, validateCtrl);
+
+controller.init();

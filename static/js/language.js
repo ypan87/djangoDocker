@@ -8,4 +8,4 @@ const translation = {
 	'cn': {
 		'home': "主页",
 	}
-}
+};

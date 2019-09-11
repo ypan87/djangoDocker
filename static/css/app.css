@@ -78,7 +78,7 @@ tr button {
 	font-size: .5rem;
 }
 
-.card-body {
+.flex-card-body {
 	padding: 0 1.25rem;
 	max-height: 350px;
 	transition: max-height 0.2s ease-out;
@@ -93,8 +93,8 @@ tr button {
 }
 
 .card-body-collapsed {
-	max-height: 0px;
-	border: 0px;
+	max-height: 0;
+	border: 0;
 }
 
 /* 表单选项 */
@@ -146,6 +146,14 @@ table .form-control {
 /* 工具类 */
 .mt-24 {
 	margin-top: 1.5rem;
+}
+
+.mr-24 {
+	margin-right: 1.5rem;
+}
+
+.ml-24 {
+	margin-left: 1.5rem;
 }
 
 /* loading */

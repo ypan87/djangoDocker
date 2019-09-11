@@ -1,5 +1,7 @@
 import math
 import json
+import xlsxwriter
+import io
 
 from django.shortcuts import render
 from django.views.generic import View
@@ -9,13 +11,13 @@ from .services.project import Project
 from .services.design_points import RatedPoint, DutyPoint
 from .services.base_points import BasePoint
 from .services.turbo_data import TurboData
-from .services.const import ORDEN, DO_OIL, CONTROL_PANEL, PLATE_SURFACE_TEMP, TEMP_RISE_AE, UAIR_MAX, \
-MAX_FLOW_COEFF, PRESSURE_COEFF
+from .services.const import *
 from .models import Turbo, TestPoints
+from .services.efficiency_points import *
+from .services.turbo_calculation import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SelectionForm
 from utils.form_validation import form_validation_errors
-
 
 def print_attributes(obj):
     for x, y in obj.__dict__.items():
@@ -37,7 +39,7 @@ def initial_turbo_list():
     return turbo_list
 
 
-def get_all_base_points(category="GL3"):
+def get_all_base_points(turbo_calculation, category="GL3"):
     base_points_collection = []
     for x in range(1, 12):
         condition_collection = []
@@ -47,20 +49,22 @@ def get_all_base_points(category="GL3"):
                 base_point = BasePoint(point)
                 condition_collection.append(base_point)
         base_points_collection.append(condition_collection)
-    return base_points_collection
-
+    turbo_calculation.add_base_point_list(base_points_collection)
 
 def single_triangle_calculation(base_point_a, base_point_b, base_point_c, design_point_d):
-    ab = ((base_point_a.flow_coef - base_point_b.flow_coef)**2 + (base_point_a.pressure_coef - base_point_b.pressure_coef)**2)**0.5
-    bc = ((base_point_b.flow_coef - base_point_c.flow_coef)**2 + (base_point_b.pressure_coef - base_point_c.pressure_coef)**2)**0.5
-    ac = ((base_point_a.flow_coef - base_point_c.flow_coef)**2 + (base_point_a.pressure_coef - base_point_c.pressure_coef)**2)**0.5
+    ab = ((base_point_a.final_flow_coef - base_point_b.final_flow_coef)**2
+          + (base_point_a.final_pressure_coef - base_point_b.final_pressure_coef)**2)**0.5
+    bc = ((base_point_b.final_flow_coef - base_point_c.final_flow_coef)**2
+          + (base_point_b.final_pressure_coef - base_point_c.final_pressure_coef)**2)**0.5
+    ac = ((base_point_a.final_flow_coef - base_point_c.final_flow_coef)**2
+          + (base_point_a.final_pressure_coef - base_point_c.final_pressure_coef)**2)**0.5
 
     angle_bac = angle_b(ab, bc, ac)
     area_abc = area(ab, ac, angle_bac)
 
-    da = ((base_point_a.flow_coef - design_point_d.phi)**2 + (base_point_a.pressure_coef - design_point_d.psi)**2)**0.5
-    db = ((base_point_b.flow_coef - design_point_d.phi)**2 + (base_point_b.pressure_coef - design_point_d.psi)**2)**0.5
-    dc = ((base_point_c.flow_coef - design_point_d.phi)**2 + (base_point_c.pressure_coef - design_point_d.psi)**2)**0.5
+    da = ((base_point_a.final_flow_coef - design_point_d.phi)**2 + (base_point_a.final_pressure_coef - design_point_d.psi)**2)**0.5
+    db = ((base_point_b.final_flow_coef - design_point_d.phi)**2 + (base_point_b.final_pressure_coef - design_point_d.psi)**2)**0.5
+    dc = ((base_point_c.final_flow_coef - design_point_d.phi)**2 + (base_point_c.final_pressure_coef - design_point_d.psi)**2)**0.5
 
     angle_bad = angle_b(ab, db, da)
     angle_dac = angle_b(ac, dc, da)
@@ -77,8 +81,8 @@ def single_triangle_calculation(base_point_a, base_point_b, base_point_c, design
     eff_interpolation = 0.0
 
     if area_ratio > 0.999:
-        eff_interpolation = (base_point_a.efficiency * area_dbc + base_point_b.efficiency * area_dac
-                            + base_point_c.efficiency * area_abd) / area_abc
+        eff_interpolation = (base_point_a.final_efficiency * area_dbc + base_point_b.final_efficiency * area_dac
+                            + base_point_c.final_efficiency * area_abd) / area_abc
 
     return eff_interpolation, area_ratio
 
@@ -90,68 +94,18 @@ def angle_b(a, b, c):
 def area(a, c, angle):
     return 0.5 * math.sin(angle) * a * c
 
-
-def rated_point_interpolation(rated_point, duty_points_collect, base_points_collect):
-    eff_sum = 0.0
-    for x in range(0, 10):
-        for y in range(0, 7):
-            base_point_a = base_points_collect[x][y+1]
-            base_point_b = base_points_collect[x+1][y]
-            base_points_c = base_points_collect[x][y]
-            eff, _ = single_triangle_calculation(base_point_a, base_point_b, base_points_c, rated_point)
-            eff_sum += eff
-
-        for y in range(0, 7):
-            base_point_a = base_points_collect[x][y+1]
-            base_point_b = base_points_collect[x+1][y+1]
-            base_points_c = base_points_collect[x+1][y]
-            eff, _ = single_triangle_calculation(base_point_a, base_point_b, base_points_c, rated_point)
-            eff_sum += eff
-
-    if eff_sum == 0.0:
-        eff_sum = 0.74
-    elif eff_sum > 1:
-        eff_sum /= 2
-
-    rated_point.update_data_relt_to_efficiency(eff_sum)
-    for x in duty_points_collect:
-        for y in x:
-            y.update_data_relt_to_rated_point(rated_point)
-
-
-def duty_point_interpolation(duty_point, rated_point, base_points_collect):
-    eff_sum = 0.0
-
-    for x in range(0, 10):
-        for y in range(0, 7):
-            base_point_a = base_points_collect[x][y + 1]
-            base_point_b = base_points_collect[x + 1][y]
-            base_points_c = base_points_collect[x][y]
-            eff, _ = single_triangle_calculation(base_point_a, base_point_b, base_points_c, duty_point)
-            eff_sum += eff
-
-        for y in range(0, 7):
-            base_point_a = base_points_collect[x][y + 1]
-            base_point_b = base_points_collect[x + 1][y + 1]
-            base_points_c = base_points_collect[x + 1][y]
-            eff, _ = single_triangle_calculation(base_point_a, base_point_b, base_points_c, duty_point)
-            eff_sum += eff
-
-    if eff_sum == 0.0:
-        eff_sum = 0.74
-    elif eff_sum > 1:
-        eff_sum /= 2
-    duty_point.update_data_relt_to_efficiency(eff_sum, rated_point)
-
-
-def initiate_rated_point(request, project):
-    turbo_list = initial_turbo_list()
-    rp_inlet_temp = float(request.POST.get("rpInletTemp", 0))
-    rp_inlet_humi = float(request.POST.get("rpInletHumidity", 0))
-    rp_outlet_press = float(request.POST.get("rpOutletPressure", 0))
-    point = RatedPoint(rp_inlet_temp, rp_inlet_humi, rp_outlet_press, 1, project, turbo_list)
-    return point
-
+def initiate_rated_point(post_data, project, turbo_calculation):
+    rp_inlet_temp = float(post_data.get("ratingPointInletTmep", 0))
+    rp_inlet_humi = float(post_data.get("ratingPointHumi", 0))
+    rp_outlet_press = float(post_data.get("ratingPointOutPressure", 0))
+    rp_inlet_press = float(post_data.get("ratingPointInletPressure", 0))
+    rp_inlet_press_loss = float(post_data.get("ratingPointInletLoss", 0))
+    rp_outlet_press_loss = float(post_data.get("ratingPointOutletLoss", 0))
+    is_imperial = get_is_imperial(post_data)
+    point = RatedPoint(rp_inlet_temp, rp_inlet_humi, rp_outlet_press, 1,
+                       project, is_imperial, False, rp_inlet_press, rp_inlet_press_loss,
+                       rp_outlet_press_loss)
+    turbo_calculation.add_rated_point(point)
 
 def get_design_points_of_cond_one(request, point):
     duty_points_one = []
@@ -268,15 +222,6 @@ def get_design_points_of_cond_three(request, point):
 
     return duty_points_three
 
-
-def interpolation_calculation(times, point, duty_points_collection, base_points_collection):
-    for t in range(0, times):
-        rated_point_interpolation(point, duty_points_collection, base_points_collection)
-        for d in duty_points_collection:
-            for d_p in d:
-                duty_point_interpolation(d_p, point, base_points_collection)
-
-
 def get_condition_graph_data(duty_points, base_points_collection, point):
     duty_point_one = duty_points[0]
     for x in base_points_collection:
@@ -316,7 +261,7 @@ def get_max_shaft_power(rated_point, duty_points_collection):
 
 
 def get_motor_round_rating(max_shaft_power, rated_point):
-    return round(max_shaft_power*(1+rated_point.motor_factor)/rated_point.de_rating, 0)
+    return round(max_shaft_power*(1+rated_point.motor_factor)/rated_point.project.de_rating, 0)
 
 
 def initiate_motor_table():
@@ -403,7 +348,7 @@ def initiate_glt_data():
     }
 
 def get_oil_pump(rated_point, glt_data):
-    selected_turbo = rated_point.selected_turbo.type
+    selected_turbo = rated_point.project.selected_turbo.type
     oil_pump = glt_data[selected_turbo]["oil_pump_capacity"]
     return oil_pump
 
@@ -442,7 +387,7 @@ def calc_heat_loss(rated_point, glt_data, max_mechanical_loss, amb_temp, motor_p
     mechanical_loss_from_gearbox = 0.0
     main_lube_oil_pump = 0.0
 
-    d2 = rated_point.selected_turbo.d2
+    d2 = rated_point.project.selected_turbo.d2
     scroll_casing_surface = round(1.2 * (d2 / 350) ** 2, 2)
     heat_loss_scroll_casing = round(14*scroll_casing_surface*(max_t2 - amb_temp)/1000, 1)
     sum_loss_except_cooling_fan = motor_loss_inside + heat_loss_scroll_casing + skin_heat_loss \
@@ -495,30 +440,20 @@ def update_total_wire_power(duty_points_collection, heat_loss):
 
 def get_table_data(rated_point, duty_points_collection):
     table_info = {
-        "turbo": rated_point.selected_turbo.type,
-        "condition1": {
-            "temp": duty_points_collection[0][0].inlet_temp,
-            "humidity": duty_points_collection[0][0].rh,
-            "baraPressure": duty_points_collection[0][0].bara_pressure,
-            "dataSet": []
-        },
-        "condition2": {
-            "temp": duty_points_collection[1][0].inlet_temp,
-            "humidity": duty_points_collection[1][0].rh,
-            "baraPressure": duty_points_collection[1][0].bara_pressure,
-            "dataSet": []
-        },
-        "condition3": {
-            "temp": duty_points_collection[2][0].inlet_temp,
-            "humidity": duty_points_collection[2][0].rh,
-            "baraPressure": duty_points_collection[2][0].bara_pressure,
-            "dataSet": []
-        },
-
+        "turbo": rated_point.project.selected_turbo.type,
+        "cutBack": rated_point.project.selected_turbo.cut_back,
+        "conditions": [],
     }
 
-    for index in range(0,3):
-        for point in duty_points_collection[index]:
+    for duty_points in duty_points_collection:
+        info_array = {
+            "temp": duty_points[0].inlet_temp,
+            "humidity": duty_points[0].rh,
+            "baraPressure": duty_points[0].bara_pressure,
+            "dataSet": []
+        }
+        table_info["conditions"].append(info_array)
+        for point in duty_points:
             data = {
                 "relativeFlow": round(point.blower_capacity * 100, 1),
                 "flowAmb": round(point.actual_flow_amb, 1),
@@ -526,111 +461,320 @@ def get_table_data(rated_point, duty_points_collection):
                 "shaftPower": round(point.shaft_power, 1),
                 "wirePower": round(point.total_wire_power, 1)
             }
-            if index == 0:
-                table_info["condition1"]["dataSet"].append(data)
-            elif index == 1:
-                table_info["condition2"]["dataSet"].append(data)
-            elif index == 2:
-                table_info["condition3"]["dataSet"].append(data)
+            info_array["dataSet"].append(data)
 
     return table_info
 
-def initiate_project(request):
-    pj_name = request.POST.get("projectName", "")
-    pj_serial_num = request.POST.get("projectNumber", "")
-    pj_location = request.POST.get("projectLocation", "")
-    pj_altitude = float(request.POST.get("projectAltitude", ""))
-    pj_inlet_press = float(request.POST.get("projectInletPressure", ""))
-    pj_frequency = int(request.POST.get("projectFrequency", ""))
-    pj_machine_num = int(request.POST.get("projectMachNums", ""))
-    pj_volt = int(request.POST.get("machVolt", ""))
-    pj_security_coeff = float(request.POST.get("securityCoeff", ""))
-    pj_ei_rating = int(request.POST.get("eiRating", ""))
-    pj_amb_temp = float(request.POST.get("ambTemp", ""))
-    pj_standard_flow = float(request.POST.get("ratedFlow", 0))
-    pj_standard_press = float(request.POST.get("ratedPressure", 0))
-    pj_standard_temp = float(request.POST.get("ratedTemp", 0))
-    pj_standard_humi = float(request.POST.get("ratedHumidity", 0))
-    return Project(pj_name, pj_serial_num, pj_location, MAX_FLOW_COEFF, PRESSURE_COEFF,
-                   pj_altitude, pj_inlet_press, pj_frequency, pj_machine_num, pj_volt,
-                   "ALU", pj_security_coeff, pj_ei_rating, pj_amb_temp, pj_standard_flow,
-                   pj_standard_press, pj_standard_temp, pj_standard_humi)
+def get_is_imperial(post_data):
+    if post_data.get("isImperial") == "metric":
+        return False
+    else:
+        return True
 
+# 初始化project TODO 项目初始化有需要更新
+def initiate_project(post_data):
+    turbo_list = initial_turbo_list()
+    pj_name = post_data.get("projectName", "")
+    pj_serial_num = post_data.get("projectNumber", "")
+    pj_location = post_data.get("projectLocation", "")
+    pj_altitude = float(post_data.get("projectAltitude", ""))
+    pj_inlet_press = float(post_data.get("projectInletPres", ""))
+    # pj_frequency = int(post_data.get("projectFrequency", ""))
+    pj_machine_num = int(post_data.get("projectUnitsNum", ""))
+    pj_volt = int(post_data.get("projectVolt", ""))
+    pj_security_coeff = float(post_data.get("projectSafetyFactor", ""))
+    pj_ei_rating = int(post_data.get("projectEIRating", ""))
+    pj_amb_temp = float(post_data.get("projectEnvTemp", ""))
+    pj_standard_flow = float(post_data.get("ratingFlow", 0))
+    pj_standard_press = float(post_data.get("ratingPressure", 0))
+    pj_standard_temp = float(post_data.get("ratingTemp", 0))
+    pj_standard_humi = float(post_data.get("ratingHumi", 0))
+    # pj_is_wet = float(post_data.get("is_wet", False))
+    pj_is_imperial = get_is_imperial(post_data)
+    pj_max_flow_coeff = float(post_data.get("maxFlowCoeff", 0))
+    pj_pressure_coeff = float(post_data.get("maxPressureCoeff", 0))
+
+    return Project(pj_name, pj_serial_num, pj_location, pj_max_flow_coeff,
+                   pj_pressure_coeff, turbo_list, pj_altitude, pj_is_imperial, False,
+                   pj_inlet_press, 50, pj_machine_num, pj_volt, "ALU", pj_security_coeff,
+                   pj_ei_rating, pj_amb_temp, pj_standard_flow, pj_standard_press,
+                   pj_standard_temp, pj_standard_humi)
+
+# 初始化效率曲线
+def initial_efficiency_points_list():
+     efficiency_points_list = [
+         [
+             [0.85, 0.09, 1.23],
+             [0.85, 0.0975, 1.18],
+             [0.85, 0.1050, 1.05],
+             [0.85, 0.1, 1.05],
+             [0.85, 0.095, 1.04],
+             [0.85, 0.09, 1.035],
+             [0.85, 0.08, 1.04],
+             [0.85, 0.07, 1.05],
+             [0.85, 0.065, 1.075],
+             [0.85, 0.057, 1.12],
+             [0.85, 0.055, 1.2],
+             [0.85, 0.06, 1.23],
+             [0.85, 0.07, 1.26],
+             [0.85, 0.075, 1.27],
+             [0.85, 0.08, 1.265],
+         ],
+         [
+             [0.8, 0.1125, 1.08],
+             [0.8, 0.1125, 0.95],
+             [0.8, 0.088, 0.92],
+             [0.8, 0.077, 0.91],
+             [0.8, 0.067, 0.92],
+             [0.8, 0.054, 0.96],
+             [0.8, 0.045, 1.01],
+             [0.8, 0.042, 1.05],
+             [0.8, 0.041, 1.14],
+             [0.8, 0.043, 1.18],
+         ],
+         [
+             [0.75, 0.1175, 0.98],
+             [0.75, 0.113, 0.86],
+             [0.75, 0.1, 0.84],
+             [0.75, 0.083, 0.8],
+             [0.75, 0.058, 0.825],
+             [0.75, 0.04, 0.95],
+             [0.75, 0.035, 1.0],
+             [0.75, 0.036, 1.12],
+         ]
+     ]
+     efficiency_curve = []
+     for efficiency_points in efficiency_points_list:
+         condition_list = []
+         for point in efficiency_points:
+            efficiency_point = EfficiencyPoint(point[0], point[1], point[2])
+            condition_list.append(efficiency_point)
+         efficiency_curve.append(condition_list)
+
+     return efficiency_curve
+
+def print_obj(object):
+    for x,y in object.__dict__.items():
+        print("%s:%s" % (x, y))
+
+# 获取工况曲线所有工况点的集合
+def get_single_condition_collection(condition, post_data):
+    inlet_pressure = float(condition[0].get("pressure"))
+    temp = float(condition[1].get('temp'))
+    humi = float(condition[2].get('humi'))
+    is_imperial = get_is_imperial(post_data)
+
+    single_length = len(condition)
+    duty_point_collection = []
+    for x in range(3, single_length):
+        flow = float(condition[x].get("flow")) / 100
+        pressure = float(condition[x].get("pressure"))
+        duty_point = DutyPoint(temp, humi, pressure, flow, False, is_imperial, inlet_pressure)
+        duty_point_collection.append(duty_point)
+    return duty_point_collection
+
+# 获取普通工况点集合
+def get_normal_points(post_data, turbo_calculation):
+    condition_array = post_data.get('conditionArray', [])
+    condition_collection = []
+    for condition in condition_array:
+        duty_points_collection = get_single_condition_collection(condition, post_data)
+        condition_collection.append(duty_points_collection)
+    turbo_calculation.add_duty_point_list(condition_collection)
+
+# 插值计算
+def interpolation_calculation(times, point, normal_points_collection, base_points_collection):
+    for t in range(0, times):
+        rated_point_interpolation(point, normal_points_collection, base_points_collection)
+        for d in normal_points_collection:
+            for d_p in d:
+                normal_point_interpolation(d_p, point, base_points_collection)
+
+# 额定工况点插值计算
+def rated_point_interpolation(rated_point, normal_points_collection, base_points_collection):
+
+    eff_sum = calculate_efficiency_sum(base_points_collection, rated_point)
+
+    rated_point.update_data_relt_to_efficiency(eff_sum)
+    for x in normal_points_collection:
+        for y in x:
+            y.update_data_relt_to_rated_point(rated_point)
+
+# 普通工况点插值计算
+def normal_point_interpolation(normal_point, rated_point, base_points_collection):
+
+    eff_sum = calculate_efficiency_sum(base_points_collection, normal_point)
+
+    normal_point.update_data_relt_to_efficiency(eff_sum, rated_point)
+
+# 使用插值法算出某个工况点的效率插值总值
+def calculate_efficiency_sum(base_points_collection, design_point):
+    eff_sum = 0
+    a_len = len(base_points_collection) - 1
+    b_len = len(base_points_collection[0]) - 1
+    for x in range(0, a_len):
+        for y in range(0, b_len):
+            base_point_a = base_points_collection[x][y+1]
+            base_point_b = base_points_collection[x+1][y]
+            base_points_c = base_points_collection[x][y]
+            eff, _ = single_triangle_calculation(base_point_a, base_point_b, base_points_c, design_point)
+            eff_sum += eff
+
+        for y in range(0, b_len):
+            base_point_a = base_points_collection[x][y+1]
+            base_point_b = base_points_collection[x+1][y+1]
+            base_points_c = base_points_collection[x+1][y]
+            eff, _ = single_triangle_calculation(base_point_a, base_point_b, base_points_c, design_point)
+            eff_sum += eff
+
+    if eff_sum == 0.0:
+        eff_sum = 0.74
+    elif eff_sum > 1:
+        eff_sum /= 2
+
+    return eff_sum
+
+# 获取测试点数据
+def get_base_points_table_data(base_points_collection):
+    base_table = []
+    for points in base_points_collection:
+        points_array = []
+        for point in points:
+            single_pair = [point.final_flow_coef, point.final_pressure_coef]
+            points_array.append(single_pair)
+        base_table.append(points_array)
+    return base_table
+
+# 获取效率点数据
+def get_efficient_table_data(efficiency_points_collection):
+    efficiency_table = []
+    for points in efficiency_points_collection:
+        points_array = []
+        for point in points:
+            single_pair = [point.flow_coeff, point.pressure_coeff]
+            points_array.append(single_pair)
+        efficiency_table.append(points_array)
+    return efficiency_table
+
+# 获取普通工况点数据
+def get_normal_points_table_data(normal_points_collection):
+    normal_points_table = []
+    for points in normal_points_collection:
+        points_array = []
+        for point in points:
+            single_pair = [point.phi, point.psi]
+            points_array.append(single_pair)
+        normal_points_table.append(points_array)
+    return normal_points_table
+
+# 获取额定工况点数据
+def get_rated_point_table_data(rated_point):
+    return [rated_point.phi, rated_point.psi]
+
+# 获取返回数据
+def get_turbo_efficiency_graph(rated_point, normal_points_collection,
+                               efficiency_points_collection, base_points_collection):
+    base_points_table = get_base_points_table_data(base_points_collection)
+    efficiency_points_table = get_efficient_table_data(efficiency_points_collection)
+    normal_points_table = get_normal_points_table_data(normal_points_collection)
+    rated_point_table = get_rated_point_table_data(rated_point)
+    return {
+        "baseTableData": base_points_table,
+        "efficiencyTableData": efficiency_points_table,
+        "normalTableData": normal_points_table,
+        "ratedTableData": rated_point_table
+    }
 
 class SelectView(View):
     login_url = "/login"
 
-    # def get(self, request):
-    #     return render(request, 'turbo_selection.html', {
-    #         "turboActive": True
-    #     })
-
     def get(self, request):
         return render(request, 'turbo.html')
 
-
     def post(self, request):
 
-        selection_form = SelectionForm(request.POST)
-        if selection_form.is_valid():
-            pj = initiate_project(request)
-            motor_table = initiate_motor_table()
-            motor_power = initiate_motor_power()
+        # TODO 数据验证
+        post_data = json.loads(request.body.decode())
+        # TODO round 精度差距
+        turbo_calculation = TurboCalculation()
+        pj = initiate_project(post_data)
 
-            # 初始化额定工况点
-            point = initiate_rated_point(request, pj)
+        # 初始化额定工况点
+        initiate_rated_point(post_data, pj, turbo_calculation)
+        # 计算鼓风机的选择
+        turbo_calculation.calculate_selected_turbo()
 
-            # 初始化三个工况下的各个设计工况点
-            duty_points_one = get_design_points_of_cond_one(request, point)
-            duty_points_two = get_design_points_of_cond_two(request, point)
-            duty_points_three = get_design_points_of_cond_three(request, point)
-            duty_points_collection = [duty_points_one, duty_points_two, duty_points_three]
+        # 获取测试点
+        get_all_base_points(turbo_calculation)
 
-            # 获取测试数据点
-            base_points_collection = get_all_base_points()
+        # 获取普通工况点
+        get_normal_points(post_data, turbo_calculation)
 
-            # 进行插值计算
-            interpolation_calculation(10, point, duty_points_collection, base_points_collection)
+        # 进行插值计算
+        turbo_calculation.interpolation_calculation(10)
 
-            # 开始计算流量压力以及轴功率曲线
-            cond_one_graph_data = get_condition_graph_data(duty_points_one, base_points_collection, point)
-            cond_two_graph_data = get_condition_graph_data(duty_points_two, base_points_collection, point)
-            cond_three_graph_data = get_condition_graph_data(duty_points_three, base_points_collection, point)
+        # 获取最终返回数据
+        final_table_data = turbo_calculation.get_all_data()
 
-            # 计算进线功率
-            # 首先获取motor_rating
-            motor_rating = get_motor_rating(point, duty_points_collection, motor_table)
-            motor_loss_trend = get_motor_loss_trend(motor_rating)
-            calc_motor_data(duty_points_collection, motor_loss_trend, motor_rating)
-            glt_data = initiate_glt_data()
-            max_mechanical_loss = calc_max_mechanical_loss(duty_points_collection)
-            max_t2 = calc_max_t2(duty_points_collection)
-            max_motor_loss = cal_max_motor_loss(duty_points_collection)
-            heat_loss = calc_heat_loss(point, glt_data, max_mechanical_loss, pj.amb_temp, motor_power, max_t2,
-                                       max_motor_loss)
-            update_total_wire_power(duty_points_collection, heat_loss)
-            project_info = {"projectName": pj.name, "projectNumber": pj.serial_num}
-            table_data = get_table_data(point, duty_points_collection)
+        return HttpResponse(
+            json.dumps(final_table_data),
+            content_type="application/json",
+        )
 
-            # 绘图所需数据
-            graph_data = {
-                "tableData": table_data,
-                "projectInfo": project_info,
-                "condOne": cond_one_graph_data,
-                "condTwo": cond_two_graph_data,
-                "condThree": cond_three_graph_data,
-            }
+class ExcelView(View):
+    def post(self, request):
+        data = [
+            ["风机型号：GL1","40C/90%"],
+            ["进气压力", "0.988 bara"],
+            ["相对流量", "ΔP", "流量", "轴功率"],
+            ["%", "barG", "m3/h", "kW"],
+            [45, 0.6, 1812.6, 47.3],
+            [60, 0.6, 2416.9, 47.3],
+            [70, 0.6, 2819.7, 53.8],
+            [80, 0.6, 3222.5, 60.4],
+            [90, 0.6, 3625.3, 67.6],
+            [100, 0.6, 4028.1, 78.6],
+        ]
+        output = io.BytesIO()
 
-            # 转换为json数据
-            json_data = json.dumps(graph_data)
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet()
 
-            # 初始化测试点
-            return HttpResponse(
-                json_data,
-                content_type="application/json"
-            )
-        else:
-            return HttpResponse(
-                form_validation_errors(selection_form),
-                content_type='application/json')
+        for row_num, columns in enumerate(data):
+            for col_num, cell_data in enumerate(columns):
+                worksheet.write(row_num, col_num, cell_data)
 
+        merge_format = workbook.add_format({
+            'bold': True,
+            'align': 'center',
+            'valign': 'vcenter',
+        })
+
+        worksheet.merge_range('B1:D1', data[0][1], merge_format)
+        worksheet.merge_range('B2:D2', data[1][1], merge_format)
+
+        chart = workbook.add_chart({'type': 'line'})
+
+        chart.add_series({
+            'name': '',
+            'categories': '=Sheet1!$C$10:$C$5',
+            'values': '=Sheet1!$D$10:$D$5',
+        })
+
+        worksheet.insert_chart('A12', chart, {'x_offset': 25, 'y_offset': 10})
+
+        # Close the workbook before sending the data.
+        workbook.close()
+
+        # Rewind the buffer.
+        output.seek(0)
+
+        # Set up the Http response.
+        filename = 'turbo_result.xlsx'
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+        return response

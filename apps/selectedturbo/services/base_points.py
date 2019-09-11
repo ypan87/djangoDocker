@@ -20,16 +20,24 @@ class BasePoint(object):
         efficiency_factor  Efficiency sky factor of the tested point
         """
         x = isinstance(test_point, TestPoints)
-        self.flow_coef = test_point.flow_coef * test_point.flow_factor if x else 0
-        self.pressure_coef = test_point.pressure_coef * test_point.pressure_factor if x else 0
-        self.efficiency = test_point.efficiency * test_point.efficiency_factor if x else 0
-        self.flow_factor = test_point.flow_factor if x else 0
-        self.pressure_factor = test_point.pressure_factor if x else 0
-        self.efficiency_factor = test_point.efficiency_factor if x else 0
-        self.vinl = self.h_diff = self.p_diff = self.v = self.p = 0.0
+        if x:
+            self.flow_coef = test_point.flow_coef
+            self.final_flow_coef = test_point.flow_factor  * self.flow_coef
+            self.pressure_coef = test_point.pressure_coef
+            self.final_pressure_coef = test_point.pressure_factor * self.pressure_coef
+            self.efficiency = test_point.efficiency
+            self.final_efficiency = test_point.efficiency_factor * self.efficiency
+            self.flow_factor = test_point.flow_factor
+            self.pressure_factor = test_point.pressure_factor
+            self.efficiency_factor = test_point.efficiency_factor
+        else:
+            self.flow_coef = self.final_flow_coef = self.pressure_coef = self.final_pressure_coef = None
+            self.efficiency = self.final_efficiency = self.flow_factor = self.pressure_factor = self.efficiency_factor = None
+
+        self.vinl = self.h_diff = self.p_diff = self.v = self.p = None
 
     def update_data(self, rated_point, duty_point):
-        d2 = rated_point.selected_turbo.d2/1000
+        d2 = rated_point.project.selected_turbo.d2/1000
         u2 = rated_point.u2
         rho_inlet = duty_point.air_cond.air_rho_inlet
         rho_amb = duty_point.air_cond.air_rho_amb
@@ -41,9 +49,10 @@ class BasePoint(object):
         mass_flow = 1.0
         psi = 1.0
         bhp = 1.0
-        self.vinl = self.flow_coef*math.pi*d2**2*u2*rho_inlet/rho_amb*3600/4*rated_point.cut_back_width
-        self.h_diff = u2**2 * self.pressure_coef / 2
-        self.p_diff = ((self.h_diff/(t0*k_k_minus_one*rg*self.efficiency)+1)**(1/(1/k_k_minus_one/self.efficiency))
+        self.vinl = self.final_flow_coef*math.pi*d2**2*u2*rho_inlet/rho_amb*3600/\
+                    4*rated_point.project.selected_turbo.cut_back
+        self.h_diff = u2**2 * self.final_pressure_coef / 2
+        self.p_diff = ((self.h_diff/(t0*k_k_minus_one*rg*self.final_efficiency)+1)**(1/(1/k_k_minus_one/self.final_efficiency))
                        *(p0-rho_amb*self.vinl**2*rated_point.c_inl_loss)-p0)*1000
         self.v = self.vinl * mass_flow
         self.p = self.p_diff * psi

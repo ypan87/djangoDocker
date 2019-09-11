@@ -35,9 +35,8 @@ function inputFocusEvent() {
 function errorClickEvent() {
     this.innerHTML="";
     this.classList.add("hidden");
-    let input = this.previousElementSibling.firstElementChild;
     if (this.id = "captchaError") {}
-    input = this.previousElementSibling.lastElementChild;
+    let input = this.previousElementSibling.lastElementChild;
     input.focus();
 }
 
