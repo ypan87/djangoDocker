@@ -9,5 +9,5 @@ app_name = "turbo"
 
 urlpatterns = [
     path("selection/", SelectView.as_view(), name="selection"),
-    path("excel", ExcelView.as_view(), name="excel"),
+    path("excel/", ExcelView.as_view(), name="excel"),
 ]

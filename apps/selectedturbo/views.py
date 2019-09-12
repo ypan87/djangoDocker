@@ -721,47 +721,126 @@ class SelectView(View):
             content_type="application/json",
         )
 
+
+
 class ExcelView(View):
     def post(self, request):
-        data = [
-            ["风机型号：GL1","40C/90%"],
-            ["进气压力", "0.988 bara"],
-            ["相对流量", "ΔP", "流量", "轴功率"],
-            ["%", "barG", "m3/h", "kW"],
-            [45, 0.6, 1812.6, 47.3],
-            [60, 0.6, 2416.9, 47.3],
-            [70, 0.6, 2819.7, 53.8],
-            [80, 0.6, 3222.5, 60.4],
-            [90, 0.6, 3625.3, 67.6],
-            [100, 0.6, 4028.1, 78.6],
-        ]
+        post_data =  request.POST.get('excelValue')
+        post_data = json.loads(post_data)
+        table_data = post_data.get('tableData')
+
         output = io.BytesIO()
 
         workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet()
 
-        for row_num, columns in enumerate(data):
-            for col_num, cell_data in enumerate(columns):
-                worksheet.write(row_num, col_num, cell_data)
+        add_table_to_excel(worksheet, workbook, table_data)
 
-        merge_format = workbook.add_format({
-            'bold': True,
-            'align': 'center',
-            'valign': 'vcenter',
-        })
+        worksheet2 = workbook.add_worksheet()
+        conditions = post_data.get("conditions")
 
-        worksheet.merge_range('B1:D1', data[0][1], merge_format)
-        worksheet.merge_range('B2:D2', data[1][1], merge_format)
+        row_start_index = 0
+        column_start_index = 0
+        graph_column_index = 6
+        graph_row_index = 0
+        for condition in conditions:
+            # chart需要首先在表格中加入数据
+            chart = workbook.add_chart({'type': 'scatter','subtype': 'smooth'})
+            base_data_set = condition[0]
+            curve_position_list = []
+            for curve in base_data_set:
+                curve_length = len(curve)
+                point_position = {"start_row": row_start_index, "end_row": row_start_index + curve_length - 1}
+                curve_position_list.append(point_position)
+                for num, value in enumerate(curve):
+                    worksheet2.write(row_start_index+num, column_start_index, value[0])
+                    worksheet2.write(row_start_index+num, column_start_index + 1, value[1])
+                row_start_index += curve_length + 2
+                chart.add_series({
+                    'categories': [
+                        'Sheet2',
+                        point_position.get('start_row'),
+                        column_start_index,
+                        point_position.get("end_row"),
+                        column_start_index
+                    ],
+                    'values': [
+                        'Sheet2',
+                        point_position.get("start_row"),
+                        column_start_index + 1,
+                        point_position.get("end_row"),
+                        column_start_index + 1
+                    ],
+                    'smooth': True,
+                })
 
-        chart = workbook.add_chart({'type': 'line'})
+            flow_pressure_data_set = condition[2]
+            row_start_index = 0
+            flow_pressure_data_set_length = len(flow_pressure_data_set)
+            point_position = {"start_row": row_start_index, "end_row": row_start_index + flow_pressure_data_set_length - 1}
+            for num, value in enumerate(flow_pressure_data_set):
+                worksheet2.write(row_start_index + num, column_start_index + 3, value[0])
+                worksheet2.write(row_start_index + num, column_start_index + 4, value[1])
+                pass
+            chart.add_series({
+                'categories': [
+                    'Sheet2',
+                    point_position.get('start_row'),
+                    column_start_index + 3,
+                    point_position.get("end_row"),
+                    column_start_index + 3
+                ],
+                'values': [
+                    'Sheet2',
+                    point_position.get("start_row"),
+                    column_start_index + 4,
+                    point_position.get("end_row"),
+                    column_start_index + 4
+                ],
+                "marker": {
+                    'type': 'triangle',
+                    'size': 8
+                },
+                "line": {
+                    "none": True
+                }
+            })
 
-        chart.add_series({
-            'name': '',
-            'categories': '=Sheet1!$C$10:$C$5',
-            'values': '=Sheet1!$D$10:$D$5',
-        })
-
-        worksheet.insert_chart('A12', chart, {'x_offset': 25, 'y_offset': 10})
+            power_data_set = condition[1]
+            row_start_index = 0
+            power_data_set_length = len(power_data_set)
+            point_position = {"start_row": row_start_index, "end_row": row_start_index + power_data_set_length - 1}
+            for num, value in enumerate(power_data_set):
+                worksheet2.write(row_start_index + num, column_start_index + 6, value[0])
+                worksheet2.write(row_start_index + num, column_start_index + 7, value[1])
+                pass
+            chart.add_series({
+                'categories': [
+                    'Sheet2',
+                    point_position.get('start_row'),
+                    column_start_index + 6,
+                    point_position.get("end_row"),
+                    column_start_index + 6
+                ],
+                'values': [
+                    'Sheet2',
+                    point_position.get("start_row"),
+                    column_start_index + 7,
+                    point_position.get("end_row"),
+                    column_start_index + 7
+                ],
+                "marker": {
+                    'type': 'circle',
+                    'size': 8
+                },
+                'y2_axis': True,
+                "smooth": False,
+                'line': {'dash_type': 'dash'},
+            })
+            # 插入图表
+            chart.set_legend({'none': True})
+            worksheet.insert_chart(graph_row_index, graph_column_index, chart, {'x_offset': 10, 'y_offset': 10})
+            graph_row_index += 20
 
         # Close the workbook before sending the data.
         workbook.close()
@@ -778,3 +857,72 @@ class ExcelView(View):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
+def add_table_to_excel(worksheet, workbook, table_data):
+    start_row_index = 0
+    start_column_index = 0
+    table_format = workbook.add_format({
+        'bold': True,
+        'align': 'center',
+        'valign': 'vcenter',
+    })
+
+    for condition in table_data.get('conditions'):
+        dataset = condition.get("dataSet")
+        new_dataset = []
+        for point in dataset:
+            point_data = []
+            point_data.append(point.get("relativeFlow"))
+            point_data.append(point.get("outletPress"))
+            point_data.append(point.get("flowAmb"))
+            point_data.append(point.get("shaftPower"))
+            point_data.append(point.get("wirePower"))
+            new_dataset.append(point_data)
+
+        data = [
+                   [
+                       "风机型号：%s" % table_data.get("turbo"),
+                       "%sC/%s%%" % (condition.get("temp"), condition.get("humidity")),
+                   ],
+                   [
+                       "进气压力",
+                       "%s bara" % condition.get("baraPressure"),
+                   ],
+                   [
+                       "相对流量",
+                       "ΔP",
+                       "流量",
+                       "轴功率",
+                       "进线功率"
+                   ],
+                   ["%", "barG", "m3/h", "kW", "kW"],
+               ] + new_dataset
+
+        for row_num, columns in enumerate(data):
+            worksheet.write_row(start_row_index + row_num, start_column_index, columns, table_format)
+
+        worksheet.merge_range(
+            start_row_index,
+            start_column_index + 1,
+            start_row_index,
+            start_column_index + 4,
+            data[0][1],
+            table_format
+        )
+        worksheet.merge_range(
+            start_row_index + 1,
+            start_column_index + 1,
+            start_row_index + 1,
+            start_column_index + 4,
+            data[1][1],
+            table_format
+        )
+
+        start_row_index += len(data) + 2
+
+    # 设置单元格大小
+    worksheet.set_column(0, 0, 30)
+    for n in range(start_column_index + 1, start_column_index + 10):
+        worksheet.set_column(n, n, 15)
+
+    return start_row_index
