@@ -721,8 +721,6 @@ class SelectView(View):
             content_type="application/json",
         )
 
-
-
 class ExcelView(View):
     def post(self, request):
         post_data =  request.POST.get('excelValue')
