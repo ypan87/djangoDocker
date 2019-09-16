@@ -479,7 +479,7 @@ def initiate_project(post_data):
     pj_location = post_data.get("projectLocation", "")
     pj_altitude = float(post_data.get("projectAltitude", ""))
     pj_inlet_press = float(post_data.get("projectInletPres", ""))
-    # pj_frequency = int(post_data.get("projectFrequency", ""))
+    pj_frequency = int(post_data.get("frequencySelect", ""))
     pj_machine_num = int(post_data.get("projectUnitsNum", ""))
     pj_volt = int(post_data.get("projectVolt", ""))
     pj_security_coeff = float(post_data.get("projectSafetyFactor", ""))
@@ -489,14 +489,13 @@ def initiate_project(post_data):
     pj_standard_press = float(post_data.get("ratingPressure", 0))
     pj_standard_temp = float(post_data.get("ratingTemp", 0))
     pj_standard_humi = float(post_data.get("ratingHumi", 0))
-    # pj_is_wet = float(post_data.get("is_wet", False))
     pj_is_imperial = get_is_imperial(post_data)
     pj_max_flow_coeff = float(post_data.get("maxFlowCoeff", 0))
     pj_pressure_coeff = float(post_data.get("maxPressureCoeff", 0))
 
     return Project(pj_name, pj_serial_num, pj_location, pj_max_flow_coeff,
                    pj_pressure_coeff, turbo_list, pj_altitude, pj_is_imperial, False,
-                   pj_inlet_press, 50, pj_machine_num, pj_volt, "ALU", pj_security_coeff,
+                   pj_inlet_press, pj_frequency, pj_machine_num, pj_volt, "ALU", pj_security_coeff,
                    pj_ei_rating, pj_amb_temp, pj_standard_flow, pj_standard_press,
                    pj_standard_temp, pj_standard_humi)
 
@@ -575,7 +574,7 @@ def get_single_condition_collection(condition, post_data):
 
 # 获取普通工况点集合
 def get_normal_points(post_data, turbo_calculation):
-    condition_array = post_data.get('conditionArray', [])
+    condition_array = post_data.get('workingConditions', [])
     condition_collection = []
     for condition in condition_array:
         duty_points_collection = get_single_condition_collection(condition, post_data)
@@ -693,33 +692,38 @@ class SelectView(View):
 
     def post(self, request):
 
-        # TODO 数据验证
-        post_data = json.loads(request.body.decode())
-        # TODO round 精度差距
-        turbo_calculation = TurboCalculation()
-        pj = initiate_project(post_data)
+        # 数据验证
+        form = SelectionForm(request.POST)
 
-        # 初始化额定工况点
-        initiate_rated_point(post_data, pj, turbo_calculation)
-        # 计算鼓风机的选择
-        turbo_calculation.calculate_selected_turbo()
+        if form.is_valid():
 
-        # 获取测试点
-        get_all_base_points(turbo_calculation)
+            # TODO round 精度差距
+            turbo_calculation = TurboCalculation()
+            pj = initiate_project(form.cleaned_data)
 
-        # 获取普通工况点
-        get_normal_points(post_data, turbo_calculation)
+            # 初始化额定工况点
+            initiate_rated_point(form.cleaned_data, pj, turbo_calculation)
+            # 计算鼓风机的选择
+            turbo_calculation.calculate_selected_turbo()
 
-        # 进行插值计算
-        turbo_calculation.interpolation_calculation(10)
+            # 获取测试点
+            get_all_base_points(turbo_calculation)
 
-        # 获取最终返回数据
-        final_table_data = turbo_calculation.get_all_data()
+            # 获取普通工况点
+            get_normal_points(form.cleaned_data, turbo_calculation)
 
-        return HttpResponse(
-            json.dumps(final_table_data),
-            content_type="application/json",
-        )
+            # 进行插值计算
+            turbo_calculation.interpolation_calculation(10)
+
+            # 获取最终返回数据
+            final_table_data = turbo_calculation.get_all_data()
+
+            return HttpResponse(
+                json.dumps(final_table_data),
+                content_type="application/json",
+            )
+        else:
+            pass
 
 class ExcelView(View):
     def post(self, request):
@@ -732,113 +736,14 @@ class ExcelView(View):
         workbook = xlsxwriter.Workbook(output)
         worksheet = workbook.add_worksheet()
 
+        # 向excel中添加表格
         add_table_to_excel(worksheet, workbook, table_data)
 
         worksheet2 = workbook.add_worksheet()
         conditions = post_data.get("conditions")
 
-        row_start_index = 0
-        column_start_index = 0
-        graph_column_index = 6
-        graph_row_index = 0
-        for condition in conditions:
-            # chart需要首先在表格中加入数据
-            chart = workbook.add_chart({'type': 'scatter','subtype': 'smooth'})
-            base_data_set = condition[0]
-            curve_position_list = []
-            for curve in base_data_set:
-                curve_length = len(curve)
-                point_position = {"start_row": row_start_index, "end_row": row_start_index + curve_length - 1}
-                curve_position_list.append(point_position)
-                for num, value in enumerate(curve):
-                    worksheet2.write(row_start_index+num, column_start_index, value[0])
-                    worksheet2.write(row_start_index+num, column_start_index + 1, value[1])
-                row_start_index += curve_length + 2
-                chart.add_series({
-                    'categories': [
-                        'Sheet2',
-                        point_position.get('start_row'),
-                        column_start_index,
-                        point_position.get("end_row"),
-                        column_start_index
-                    ],
-                    'values': [
-                        'Sheet2',
-                        point_position.get("start_row"),
-                        column_start_index + 1,
-                        point_position.get("end_row"),
-                        column_start_index + 1
-                    ],
-                    'smooth': True,
-                })
-
-            flow_pressure_data_set = condition[2]
-            row_start_index = 0
-            flow_pressure_data_set_length = len(flow_pressure_data_set)
-            point_position = {"start_row": row_start_index, "end_row": row_start_index + flow_pressure_data_set_length - 1}
-            for num, value in enumerate(flow_pressure_data_set):
-                worksheet2.write(row_start_index + num, column_start_index + 3, value[0])
-                worksheet2.write(row_start_index + num, column_start_index + 4, value[1])
-                pass
-            chart.add_series({
-                'categories': [
-                    'Sheet2',
-                    point_position.get('start_row'),
-                    column_start_index + 3,
-                    point_position.get("end_row"),
-                    column_start_index + 3
-                ],
-                'values': [
-                    'Sheet2',
-                    point_position.get("start_row"),
-                    column_start_index + 4,
-                    point_position.get("end_row"),
-                    column_start_index + 4
-                ],
-                "marker": {
-                    'type': 'triangle',
-                    'size': 8
-                },
-                "line": {
-                    "none": True
-                }
-            })
-
-            power_data_set = condition[1]
-            row_start_index = 0
-            power_data_set_length = len(power_data_set)
-            point_position = {"start_row": row_start_index, "end_row": row_start_index + power_data_set_length - 1}
-            for num, value in enumerate(power_data_set):
-                worksheet2.write(row_start_index + num, column_start_index + 6, value[0])
-                worksheet2.write(row_start_index + num, column_start_index + 7, value[1])
-                pass
-            chart.add_series({
-                'categories': [
-                    'Sheet2',
-                    point_position.get('start_row'),
-                    column_start_index + 6,
-                    point_position.get("end_row"),
-                    column_start_index + 6
-                ],
-                'values': [
-                    'Sheet2',
-                    point_position.get("start_row"),
-                    column_start_index + 7,
-                    point_position.get("end_row"),
-                    column_start_index + 7
-                ],
-                "marker": {
-                    'type': 'circle',
-                    'size': 8
-                },
-                'y2_axis': True,
-                "smooth": False,
-                'line': {'dash_type': 'dash'},
-            })
-            # 插入图表
-            chart.set_legend({'none': True})
-            worksheet.insert_chart(graph_row_index, graph_column_index, chart, {'x_offset': 10, 'y_offset': 10})
-            graph_row_index += 20
+        # 向excel中添加图表
+        add_chart_to_excel(conditions, worksheet, worksheet2, workbook)
 
         # Close the workbook before sending the data.
         workbook.close()
@@ -855,6 +760,101 @@ class ExcelView(View):
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
         return response
+
+def add_chart_to_excel(conditions, worksheet, worksheet2, workbook):
+    graph_column_index = 6
+    graph_row_index = 0
+    test_point_row_start_index = 0
+    test_point_column_start_index = 0
+    flow_pressure_row_start_index = 0
+    flow_pressure_column_start_index = 3
+    flow_power_row_start_index = 0
+    flow_power_column_start_index = 6
+
+    for condition in conditions:
+        # chart需要首先在表格中加入数据
+        chart = workbook.add_chart({'type': 'scatter', 'subtype': 'smooth'})
+        base_data_set = condition[0]
+        for curve in base_data_set:
+            test_point_row_start_index = add_chart_series(
+                chart,
+                curve,
+                test_point_row_start_index,
+                test_point_column_start_index,
+                worksheet2,
+                {
+                    "smooth": True
+                }
+            )
+
+
+        flow_pressure_data_set = condition[2]
+        flow_pressure_row_start_index = add_chart_series(
+            chart,
+            flow_pressure_data_set,
+            flow_pressure_row_start_index,
+            flow_pressure_column_start_index,
+            worksheet2,
+            {
+                "marker": {
+                    'type': 'triangle',
+                    'size': 8
+                },
+                "line": {
+                    "none": True
+                }
+            }
+        )
+
+        power_data_set = condition[1]
+        flow_power_row_start_index = add_chart_series(
+            chart,
+            power_data_set,
+            flow_power_row_start_index,
+            flow_power_column_start_index,
+            worksheet2,
+            {
+                "marker": {
+                    'type': 'circle',
+                    'size': 8
+                },
+                'y2_axis': True,
+                "smooth": False,
+                'line': {'dash_type': 'dash'},
+            }
+        )
+        # 插入图表
+        chart.set_legend({'none': True})
+        worksheet.insert_chart(graph_row_index, graph_column_index, chart, {'x_offset': 10, 'y_offset': 10})
+        graph_row_index += 20
+
+def add_chart_series(chart, curve_data_set, row_index, column_index, worksheet2, more_options):
+    curve_length = len(curve_data_set)
+    point_position = {"start_row": row_index, "end_row": row_index + curve_length - 1}
+    for num, value in enumerate(curve_data_set):
+        worksheet2.write(row_index + num, column_index, value[0])
+        worksheet2.write(row_index + num, column_index + 1, value[1])
+    opts = {
+        'categories': [
+            'Sheet2',
+            point_position.get('start_row'),
+            column_index,
+            point_position.get("end_row"),
+            column_index
+        ],
+        'values': [
+            'Sheet2',
+            point_position.get("start_row"),
+            column_index + 1,
+            point_position.get("end_row"),
+            column_index + 1
+        ],
+    }
+    chart.add_series({
+        **opts, **more_options
+    })
+
+    return row_index + curve_length + 2
 
 def add_table_to_excel(worksheet, workbook, table_data):
     start_row_index = 0
