@@ -1,20 +1,76 @@
 /**
  * Created by yifan_pan on 2019/9/11.
  */
-var baseView = (function() {
+var baseController = (function(){
+
+    var getCookie = function(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+
+    var Requester = function(url, data) {
+        this.url = url;
+        this.data = data;
+    };
+
+    Requester.prototype.ajaxRequest = function() {
+        var self = this;
+
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: self.url,
+                headers:{ "X-CSRFtoken": getCookie('csrftoken')},
+                data: self.data,
+                async: true,
+                beforeSend:function (xhr,settings) {
+                },
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                }
+            });
+        });
+    };
+
+    return {
+        createRequester: function(url, data) {
+            return new Requester(url, data);
+        },
+        getCookie: function(name) {
+            return getCookie(name);
+        }
+    }
+})();
+
+var baseView = (function(baseCtrl) {
     var DOMs = {
         form: document.querySelector('#turboForm'),
         addCondBtn: document.querySelector('.condition-table-add'),
         condTableWrapper: document.querySelector('.condition-table-wrapper'),
-        subBtn: document.querySelector('.sub-btn'),
+        checkBtn: document.querySelector('#checkBtn'),
         loadIcon: document.querySelector('.wrapper'),
         projectSec: document.querySelector('.project-sec'),
         defSec: document.querySelector('.def-sec'),
         rateSec: document.querySelector('.rate-sec'),
         conditionSec: document.querySelector('.condition-sec'),
-        performenceSec: document.querySelector('.performence-sec'),
+        performanceSec: document.querySelector('.performance-sec'),
         imperialSelect: document.querySelector('#isImperial'),
-        languageSelect: document.querySelector('#lang-select'),
+        languageSelect: document.querySelector('#langSelect'),
+        wkConditionInput: document.querySelector('#workingConditions'),
     };
 
     var DOMStrings = {
@@ -23,6 +79,18 @@ var baseView = (function() {
         graphCardBody: "graphCardBody",
         turboInfo: "turboInfo",
         turboGraph: "turboGraph",
+        exportExcel: "exportExcel",
+        excelForm: "excelForm",
+        saveBtn: "saveSizer",
+        turboForm: "turboForm",
+        csrfToken: "csrfmiddlewaretoken",
+        excelField: "excelValue",
+    };
+
+    var URLs = {
+        checkBlower: "/projects/sizers/check/",
+        downloadExcel: "/projects/sizers/excel/",
+        createSizer: window.location.pathname,
     };
 
     var colors = {
@@ -60,8 +128,12 @@ var baseView = (function() {
                                     鼓风机选择                            
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-light export-excel mr-24">输出excel</button>
-                                    <button type="button" class="btn btn-light save-project ml-24">保存项目</button>
+                                    <form method="post" action="${URLs.downloadExcel}" id="excelForm">
+                                        <button type="submit" class="btn btn-light mr-24">输出excel</button>
+                                        <input type="hidden" name="csrfmiddlewaretoken">
+                                        <input type="hidden" name="excelValue">
+                                    </form>
+                                    <button type="submit" class="btn btn-light ml-24" id="saveSizer">创建选型</button>
                                 </div>
                             </div>
                         </div>
@@ -79,6 +151,8 @@ var baseView = (function() {
             </div> 
         `;
         DOMs.form.insertAdjacentHTML("afterend", markup);
+        var excelForm = document.getElementById(DOMStrings.excelForm);
+        excelForm.querySelector(`[name=${DOMStrings.csrfToken}]`).value = baseCtrl.getCookie("csrftoken");
     };
 
     var insertEffGraph = function(data) {
@@ -385,6 +459,9 @@ var baseView = (function() {
         getDOMS: function() {
             return DOMs;
         },
+        getDOMStrings: function() {
+            return DOMStrings;
+        },
         renderErrorTip: function() {
             var markup = `
                 <div class="alert alert-danger error-tip">
@@ -414,6 +491,12 @@ var baseView = (function() {
                 }
             }
         },
+        diableCheckBtn: function() {
+            DOMs.checkBtn.disabled = true;
+        },
+        ableCheckBtn: function() {
+            DOMs.checkBtn.disabled = false;
+        },
         diableSubBtn: function() {
             DOMs.subBtn.disabled = true;
         },
@@ -434,7 +517,7 @@ var baseView = (function() {
             var projectData = getSectionData(DOMs.projectSec);
             var defData = getSectionData(DOMs.defSec);
             var rateData = getSectionData(DOMs.rateSec);
-            var performanceData = getSectionData(DOMs.performenceSec);
+            var performanceData = getSectionData(DOMs.performanceSec);
             var imperialSelectData = getSelectData(DOMs.imperialSelect);
             return Object.assign(projectData, defData, rateData, performanceData, imperialSelectData);
         },
@@ -452,64 +535,12 @@ var baseView = (function() {
             if (graphSec) {
                 graphSec.parentElement.removeChild(graphSec);
             }
+        },
+        getURLs: function() {
+            return URLs;
         }
     }
-})();
-
-var baseController = (function(){
-
-    var getCookie = function(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    };
-
-    var Sizer = function(data) {
-        this.data = data;
-        this.result = "";
-    };
-
-    Sizer.prototype.searchTurbo = function() {
-        var self = this;
-
-        return new Promise(function(resolve, reject) {
-            $.ajax({
-                cache: false,
-                type: 'POST',
-                dataType:'json',
-                contentType: "application/json; charset=UTF-8",
-                url:"/turbo/selection/",
-                headers:{ "X-CSRFtoken": getCookie('csrftoken')},
-                data: self.data,
-                async: true,
-                beforeSend:function (xhr,settings) {
-                },
-                success: function(data) {
-                    resolve(data);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                }
-            });
-        });
-
-    };
-
-    return {
-        createSizer: function(data) {
-            return new Sizer(data);
-        }
-    }
-})();
+})(baseController);
 
 var cardController = (function() {
     return {
@@ -533,11 +564,6 @@ var validateCtrl = (function(baseView) {
 
     validator.add(form.projectAltitude, [{
         strategy: 'isNumber',
-        errorMsg: '请填写数字',
-    }]);
-
-    validator.add(form.projectEnvPres, [{
-        strategy: "isNumber",
         errorMsg: '请填写数字',
     }]);
 
@@ -606,7 +632,7 @@ var validateCtrl = (function(baseView) {
         }
     ]);
 
-    validator.add(form.ratingPointInletTmep, [
+    validator.add(form.ratingPointInletTemp, [
         {
             strategy: "isNumber",
             errorMsg: '请填写数字',
@@ -745,6 +771,9 @@ var workingConditionController = (function() {
             ids.push(id);
             var index = findIdIndexInAry(wkCondsInUse, id);
             wkCondsInUse.splice(index, 1);
+        },
+        getWkCondInUse: function() {
+            return wkCondsInUse.length;
         }
     }
 })();
@@ -754,19 +783,21 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
     var DOMs = baseView.getDOMS();
 
     var getTableData = function(table) {
-        var tableData = [];
+        var tableData = {};
 
         var generalRows = table.querySelectorAll('tr.general');
-        pressureData = {pressure: generalRows[0].querySelector('input').value};
-        tempData = {temp: generalRows[1].querySelector('input').value};
-        humiData = {humi: generalRows[2].querySelector('input').value};
-        tableData.push(pressureData, tempData, humiData);
+        tableData["pressure"] = generalRows[0].querySelector('input').value;
+        tableData["temp"] = generalRows[1].querySelector('input').value;
+        tableData["humi"] = generalRows[2].querySelector('input').value;
 
         var pointRows = table.querySelectorAll("tr.point");
+        points = [];
         for (var i = 0; i < pointRows.length; i++) {
             var inputs = pointRows[i].querySelectorAll('input');
-            tableData.push({flow: inputs[0].value, pressure: inputs[1].value});
+            points.push({flow: inputs[0].value, pressure: inputs[1].value});
         }
+
+        tableData["points"] = points;
 
         return tableData;
     };
@@ -957,9 +988,7 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                 var tableData = getTableData(table);
                 tablesData.push(tableData);
             }
-            return {
-                conditionArray: tablesData,
-            };
+            return tablesData
         }
     }
 })(baseView, validateCtrl);
@@ -968,6 +997,8 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
 
     var setupEventListeners = function() {
         var DOM = baseView.getDOMS();
+        var DOMStrings = baseView.getDOMStrings();
+        var URLs = baseView.getURLs();
         // 表格中card折叠
         DOM.form.addEventListener('click', function(event) {
             if(event.target.matches('.card-header, .card-header *')) {
@@ -998,39 +1029,70 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
             }
         });
 
-        // 提交按钮
-        DOM.form.addEventListener('submit', function(event) {
-            // 停止默认提交事件，使用ajax
-            event.preventDefault();
+        // 查看性能曲线
+        DOM.checkBtn.addEventListener('click', function(event) {
             // 删除图表区域
             baseView.deleteGraphSec();
             // disable提交按钮
-            baseView.diableSubBtn();
+            baseView.diableCheckBtn();
             // loading图标
             baseView.renderLoading();
             if (!formValidation()) {
                 baseView.removeLoading();
-                baseView.ableSubBtn();
+                baseView.ableCheckBtn();
                 return false;
             }
             // 获取最终传输数据
-            var formData = getFormSubmitData();
-            var sizer = baseCtrl.createSizer(formData);
-            var promise = sizer.searchTurbo();
+            DOM.wkConditionInput.value = JSON.stringify(wkViewCtrl.getConditionTablesData());
+            var formData = $(`#${DOMStrings.turboForm}`).serialize();
+            var sizerRequester = baseCtrl.createRequester(URLs.checkBlower, formData);
+            var promise = sizerRequester.ajaxRequest();
 
-            promise.then(function(result) {
-                console.log(result);
+            promise.then(function (result) {
+                if (result.status == "failure") {
+                    toastr.options = {
+                        timeOut: 200,
+                        positionClass: 'toast-top-right'
+                    };
+                    toastr.error(result.errorCode);
+                    return;
+                }
                 baseView.generateGraph(result);
                 baseView.removeLoading();
-                baseView.ableSubBtn();
+                baseView.ableCheckBtn();
+                var form = document.getElementById(DOMStrings.excelForm);
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    form.querySelector(`[name=${DOMStrings.excelField}]`).value = JSON.stringify(result);
+                    form.submit();
+                });
+                var saveBtn = document.getElementById(DOMStrings.saveBtn);
+                saveBtn.addEventListener("click", function(event) {
+                    baseView.renderLoading();
+                    saveBtn.disabled = true;
+                    var sizerSaveRequester = baseCtrl.createRequester(URLs.createSizer, formData);
+                    var newPromise = sizerSaveRequester.ajaxRequest();
+                    newPromise.then(function (result) {
+                        if (result.status == "success") {
+                            toastr.options = {
+                                timeOut: 200,
+                                positionClass: 'toast-top-right',
+                                onHidden: function() {window.location.href=result.url}
+                            };
+                            toastr.success("创建选型成功");
+                        } else if (result.status == "failure") {
+                            toastr.options = {
+                                timeOut: 200,
+                                positionClass: 'toast-top-right'
+                            };
+                            toastr.error(result.errorCode);
+                        }
+                        baseView.removeLoading();
+                        saveBtn.disabled = false;
+                    })
+                });
             });
         });
-    };
-
-    var getFormSubmitData = function() {
-        var formData = baseView.getFormInputExceptWorkingCondition();
-        var conditionData = wkViewCtrl.getConditionTablesData();
-        return JSON.stringify(Object.assign(formData, conditionData));
     };
 
     var clearFormInputError = function(event) {
@@ -1053,6 +1115,11 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
 
     var ctrlDeleteWorkingCondition = function(event) {
         var table = event.target.closest('.col-sm-4');
+        var cond_length = wkCondCtrl.getWkCondInUse();
+        if (cond_length <= 1) {
+            toastr.error("无法删除，至少需要一组工况点");
+            return;
+        }
         wkViewCtrl.deleteWkTable(table);
         var id = parseInt(table.dataset.tableid);
         wkCondCtrl.deleteWkCond(id);
@@ -1066,6 +1133,11 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
     };
 
     var ctrlDeleteWorkingPoint = function(event) {
+        var pointLength = event.target.closest('table').querySelectorAll(".point").length;
+        if (pointLength <= 1) {
+            toastr.error("无法删除，每组工况至少需要一个工况点");
+            return;
+        }
         var row = event.target.closest('tr');
         wkViewCtrl.deleteWkPoint(row);
     };

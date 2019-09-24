@@ -473,8 +473,8 @@ class TurboCalculation(object):
 
     def get_project_data(self):
         return {
-            "projectName": self.rated_point.project.name,
-            "projectNumber": self.rated_point.project.serial_num
+            "projectName": "",
+            "projectNumber": ""
         }
 
     def get_all_data(self):

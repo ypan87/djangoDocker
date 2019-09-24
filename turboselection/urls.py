@@ -15,15 +15,15 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import path, include
-from users.views import IndexView, RegisterView, LoginView, LogoutView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, EmailRegisterView
+from users.views import RegisterView, LoginView, LogoutView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, EmailRegisterView
+from selectedturbo.views import GetAllProjectsView, CreateSizerView, ProjectView, CheckBlowerView, ExcelView, GetGraphDataView, SizerView, EditSizerView, EditProjectView
 
 import xadmin
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
-    path('turbo/', include('selectedturbo.urls', namespace="turbo")),
-    path('', IndexView.as_view(), name="index"),
+    path('users/', include('selectedturbo.urls', namespace="users")),
     path('login/', LoginView.as_view(), name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('register/', RegisterView.as_view(), name="register"),
@@ -32,5 +32,14 @@ urlpatterns = [
     path("forget/", ForgetPwdView.as_view(), name="forget_pwd"),
     path("reset/<str:active_code>", ResetView.as_view(), name="reset_pwd"),
     path("modify_pwd/", ModifyPwdView.as_view(), name="modify_pwd"),
-    path("email_register/", EmailRegisterView.as_view())
+    path("email_register/", EmailRegisterView.as_view()),
+    path("projects/", GetAllProjectsView.as_view(), name="all_projects"),
+    path("projects/<int:project_id>/sizer/create/", CreateSizerView.as_view(), name="sizer_create"),
+    path("projects/<int:project_id>/", ProjectView.as_view(), name="project"),
+    path("projects/<int:project_id>/edit", EditProjectView.as_view(), name="project_edit"),
+    path("projects/sizers/check/", CheckBlowerView.as_view(), name="check_blower"),
+    path("projects/sizers/excel/", ExcelView.as_view(), name="excel"),
+    path("projects/sizers/graph/", GetGraphDataView.as_view(), name="get_graph"),
+    path("sizers/<int:sizer_id>/", SizerView.as_view(), name="sizer"),
+    path("sizers/<int:sizer_id>/edit/", EditSizerView.as_view(), name="sizer_edit")
 ]

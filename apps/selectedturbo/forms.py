@@ -4,10 +4,6 @@ import json
 from django import forms
 
 class SelectionForm(forms.Form):
-    LANG_CHOICES = [
-        ("cn", "中文"),
-        ("en", "English")
-    ]
     UNIT_CHOICES = [
         ("metric", "公制/metric"),
         ("imperial", "英制/imperial")
@@ -16,12 +12,7 @@ class SelectionForm(forms.Form):
         ("50", "50HZ"),
         ("60", "60HZ")
     ]
-    langSelect = forms.ChoiceField(required=True, choices=LANG_CHOICES)
     isImperial = forms.ChoiceField(required=True, choices=UNIT_CHOICES)
-    projectName = forms.CharField(required=False, max_length=30, error_messages={"max_length": "输入值不能超过30个字符"})
-    projectNumber = forms.CharField(required=False, max_length=30, error_messages={"max_length": "输入值不能超过30个字符"})
-    projectLocation = forms.CharField(required=False, max_length=30, error_messages={"max_length": "输入值不能超过30个字符"})
-    projectEngineer = forms.CharField(required=False)
     projectAltitude = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     # projectEnvPres = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     projectInletPres = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
@@ -37,7 +28,7 @@ class SelectionForm(forms.Form):
     ratingTemp = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     ratingHumi = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     ratingPointInletPressure = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
-    ratingPointInletTmep = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
+    ratingPointInletTemp = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     ratingPointHumi = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     ratingPointInletLoss = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
     ratingPointOutletLoss = forms.FloatField(required=True, error_messages={"required": "输入值不能为空"})
@@ -50,4 +41,8 @@ class SelectionForm(forms.Form):
         data = self.cleaned_data["workingConditions"]
         return json.loads(data)
 
-
+class ProjectForm(forms.Form):
+    projectName = forms.CharField(required=True, max_length=100, error_messages={"required": "输入值不能为空", "max_length": "字符长度不能超过100"})
+    projectAddress = forms.CharField(required=True, max_length=100, error_messages={"required": "输入值不能为空", "max_length": "字符长度不能超过100"})
+    projectIndex = forms.CharField(required=True, max_length=100, error_messages={"required": "输入值不能为空", "max_length": "字符长度不能超过100"})
+    projectEngineer = forms.CharField(required=True, max_length=100, error_messages={"required": "输入值不能为空", "max_length": "字符长度不能超过100"})

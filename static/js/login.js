@@ -73,7 +73,7 @@ function valueSubmit() {
         beforeSend:function(XMLHttpRequest){},
         success: function(data){
             if (data.status == "ok") {
-                window.location.href = "/";
+                window.location.href = data.url;
                 return false;
             }
 

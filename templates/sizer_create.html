@@ -5,31 +5,28 @@
 {% endblock %}
 {% block custom_css %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
 {% endblock %}
 
 {% block content %}
 	<main class="container">
+
         <div class="alert alert-danger error-tip hidden">
             输入有错误，请修改错误后再提交
         </div>
 
-		<form action="" id="turboForm">
+		<form id="turboForm" method="post">
             <!-- 选择单位组件 -->
             <div class="selection">
-                <label for="lang-select">选择语言</label>
-                <select name="lang-select" id="lang-select">
-                    <option value="cn">中文</option>
-                    <option value="en">English</option>
-                </select>
-
                 <label for="isImperial">选择单位</label>
                 <select name="isImperial" id="isImperial">
-                    <option value="metric">公制</option>
-                    <option value="imperial">英制</option>
+                    <option value="metric">公制/metric</option>
+                    <option value="imperial">英制/imperial</option>
                 </select>
             </div>
 
             <div class="selection">
+{#                <button type="button" class="btn btn-light">使用测试数据</button>#}
                 <label for="uploadTestData">上传测试数据</label>
                 <input type="file" id="uploadTestData" name="uploadTestData">
             </div>
@@ -43,37 +40,6 @@
 
 				<div class="card-body scroll-hidden flex-card-body">
 					<div class="form-row">
-                        <div class="col-sm-2 form-group">
-                            <label for="projectName">项目名称</label>
-                            <div class="value-input">
-                            	<input type="text" class="form-control" id="projectName" name="projectName">
-                                <div class="input-error hidden"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2 form-group">
-                            <label for="projectNumber">项目编号</label>
-                            <div class="value-input">
-                                <input type="text" class="form-control" id="projectNumber" name="projectNumber">
-                                <div class="input-error hidden"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2 form-group">
-                            <label for="projectLocation">现场位置</label>
-                            <div class="value-input">
-                                <input type="text" class="form-control" id="projectLocation" name="projectLocation">
-                                <div class="input-error hidden"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2 form-group">
-                        	<label for="projectEngineer">工程师</label>
-                            <div class="value-input">
-                            	<input type="text" class="form-control" id="projectEngineer" name="projectEngineer" value="tom">
-                                <div class="input-error hidden"></div>
-                            </div>
-                        </div>
 
                         <div class="col-sm-2 form-group">
                             <label for="projectAltitude">现场海拔
@@ -92,10 +58,8 @@
                                 <div class="input-error hidden"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-row">
-                    	<div class="col-sm-2 form-group">
+                        <div class="col-sm-2 form-group">
                             <label for="projectInletPres">系统进口压力
                                 <span data-unit="absPress">bara</span>
                             </label>
@@ -106,8 +70,8 @@
                         </div>
 
                         <div class="col-sm-2 form-group">
-                            <label for="projectFrequency">电网频率</label>
-                            <select name="frequency-select" id="requency-select" class="form-control">
+                            <label for="frequencySelect">电网频率</label>
+                            <select name="frequencySelect" id="frequencySelect" class="form-control">
                                 <option value="50">50HZ</option>
                                 <option value="60">60HZ</option>
                             </select>
@@ -131,9 +95,12 @@
                                 <div class="input-error hidden"></div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-row">
 
                         <div class="col-sm-2 form-group">
-                            <label for="projectAltitude">叶轮材料</label>
+                            <label for="projectMaterial">叶轮材料</label>
                             <div class="value-input">
                                 <input type="text" class="form-control" id="projectMaterial" name="projectMaterial" value="ALU">
                                 <div class="input-error hidden"></div>
@@ -147,10 +114,8 @@
                                 <div class="input-error hidden"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-row">
-                    	<div class="col-sm-2 form-group">
+                        <div class="col-sm-2 form-group">
                             <label for="projectEIRating">EI Rating</label>
                             <div class="value-input">
                                 <input type="text" class="form-control" id="projectEIRating" name="projectEIRating" value="3">
@@ -220,7 +185,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -241,8 +205,11 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row">系统进口压力
-                                        <span data-unit="absPress">bara</span>
+                                    <th scope="row">
+                                        <label for="ratingPointInletPressure">
+                                            系统进口压力
+                                            <span data-unit="absPress">bara</span>
+                                        </label>
                                     </th>
                                     <td colspan="2">
                                         <div class="value-input">
@@ -252,19 +219,25 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">进气温度
-                                        <span data-unit="temp">&#8451;</span>
+                                    <th scope="row">
+                                        <label for="ratingPointInletTemp">
+                                            进气温度
+                                            <span data-unit="temp">&#8451;</span>
+                                        </label>
                                     </th>
                                     <td colspan="2">
                                         <div class="value-input">
-                                            <input type="text" class="form-control" value="40" id="ratingPointInletTmep" name="ratingPointInletTmep">
+                                            <input type="text" class="form-control" value="40" id="ratingPointInletTemp" name="ratingPointInletTemp">
                                             <div class="input-error hidden"></div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope=row>进气相对湿度
-                                        <span>%</span>
+                                    <th scope=row>
+                                        <label for="ratingPointHumi">
+                                            进气相对湿度
+                                            <span>%</span>
+                                        </label>
                                     </th>
                                     <td colspan="2">
                                         <div class="value-input">
@@ -274,8 +247,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope=row>进气损失（过滤袋）
-                                        <span data-unit="gaugePress">barg</span>
+                                    <th scope=row>
+                                        <label for="ratingPointInletLoss">
+                                            进气损失（过滤袋）
+                                            <span data-unit="gaugePress">barg</span>
+                                        </label>
                                     </th>
                                     <td colspan="2">
                                         <div class="value-input">
@@ -285,8 +261,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope=row>出气损失
-                                        <span data-unit="gaugePress">barg</span>
+                                    <th scope=row>
+                                        <label for="ratingPointOutletLoss">
+                                            出气损失
+                                            <span data-unit="gaugePress">barg</span>
+                                        </label>
                                     </th>
                                     <td colspan="2">
                                         <div class="value-input">
@@ -296,8 +275,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope=row>出口压力
-                                        <span data-unit="gaugePress">barg</span>
+                                    <th scope=row>
+                                        <label for="ratingPointOutPressure">
+                                            出口压力
+                                            <span data-unit="gaugePress">barg</span>
+                                        </label>
                                     </th>
                                     <td colspan="2">
                                         <div class="value-input">
@@ -345,8 +327,10 @@
 
             </div>
 
+            <input type="hidden" name="workingConditions" id="workingConditions">
+
             <!-- 性能调节 -->
-            <div class="card performence-sec">
+            <div class="card performance-sec">
                 <div class="card-header card-header-active">
                     <span class="card-header-icon"></span>
                     性能调节
@@ -373,9 +357,12 @@
                 </div>
             </div>
             {% csrf_token %}
-            <button type="submit" class="btn btn-secondary sub-btn" id="btn">提交</button>
+            <div class="form-row">
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-secondary sub-btn" id="checkBtn">查看性能曲线</button>
+                </div>
+            </div>
         </form>
-
 	</main>
 
     <div class="wrapper hidden">
@@ -395,5 +382,6 @@
     <script src="{% static 'js/unit.js' %}"></script>
     <script src="{% static 'js/validation.js' %}"></script>
     <script src="{% static 'js/Chart.bundle.min.js' %}"></script>
-    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/sizer_create.js' %}"></script>
 {% endblock %}

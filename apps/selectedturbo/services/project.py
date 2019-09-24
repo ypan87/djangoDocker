@@ -6,7 +6,7 @@ from utils.utility import *
 
 class Project(object):
 
-    def __init__(self, name, serial_num, location, max_flow_coef, pressure_coef, turbo_list,
+    def __init__(self, max_flow_coef, pressure_coef, turbo_list,
                  altitude=0, is_imperial=False, is_wet=False, inlet_pressure=0.988, grid_freq=50,
                  num=0, volt=400, mat="ALU", safe_coef=1, ei_rating=3, amb_temp=45,
                  stand_flow=3486.0, stand_pressure=1.0133, stand_temp=20, stand_rh=70):
@@ -28,10 +28,7 @@ class Project(object):
         stand_temp      rating temperature of the turbo
         stand_rh        rating relative humidity
         """
-        self.name = name
-        self.serial_num = serial_num
         self.altitude = altitude
-        self.location = location
         self.inlet_pressure = inlet_pressure
         self.grid_freq = grid_freq
         self.num = num

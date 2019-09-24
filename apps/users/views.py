@@ -23,10 +23,9 @@ def guest_required(func):
     @wraps(func)
     def wrapper(view, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("users:user_projects", kwargs={"user_id": request.user.id}))
         return func(view, request, *args, **kwargs)
     return wrapper
-
 
 class LogoutView(LoginRequiredMixin, View):
     login_url = "/login/"
@@ -118,8 +117,13 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    url = reverse("users:user_projects", kwargs={"user_id": user.id})
+                    redirect_url = request.POST.get('next', '')
+                    if redirect_url:
+                        url = redirect_url
                     return HttpResponse(json.dumps({
-                        "status": "ok"
+                        "status": "ok",
+                        "url": url
                     }), content_type="application/json")
                 else:
                     return HttpResponse(json.dumps({
@@ -158,14 +162,6 @@ class ForgetPwdView(View):
                 form_validation_errors(forget_form),
                 content_type="application/json"
             )
-
-
-
-class IndexView(View):
-    def get(self, request):
-        return render(request, 'index.html')
-
-
 
 class ResetView(View):
     def get(self, request, active_code):

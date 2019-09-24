@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    GL-TURBO 用户项目列表
+{% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="container">
+        <div class="d-flex justify-content-between">
+            <h3>我的项目</h3>
+            <form action="{% url "users:create_project" request.user.id %}" method="get">
+                <button type="submit" class="btn btn-secondary">创建项目</button>
+            </form>
+        </div>
+        <hr>
+
+        <table id="projects" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>项目名称</th>
+                    <th>项目地址</th>
+                    <th>工程师</th>
+                    <th>项目创建者</th>
+                    <th>项目创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <th>{{ project.project_name }}</th>
+                        <th>{{ project.project_address }}</th>
+                        <th>{{ project.project_engineer }}</th>
+                        <th>{{ project.creator.username }}</th>
+                        <th>{{ project.create_time }}</th>
+                        <th>
+                            <form action="">
+                                <button class="btn btn-danger">删除</button>
+                            </form>
+
+                            <form action="{% url "project" project.id %}" method="get">
+                                <button class="btn btn-success">编辑</button>
+                            </form>
+                        </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <div class="wrapper hidden">
+    	<div class="load-background">
+    		<div class="load">
+    			<p>loading</p>
+    			<div class="k-line k-line1-1"></div>
+    			<div class="k-line k-line1-2"></div>
+    			<div class="k-line k-line1-3"></div>
+    		</div>
+    	</div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/user_project_list.js' %}"></script>
+{% endblock %}

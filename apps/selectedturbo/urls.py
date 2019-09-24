@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from django.urls import path
-from .views import SelectView
-from .views import ExcelView
+from .views import CreateProjectView
+from .views import GetUserProjectsView
 
-app_name = "turbo"
+app_name = "users"
 
 urlpatterns = [
-    path("selection/", SelectView.as_view(), name="selection"),
-    path("excel/", ExcelView.as_view(), name="excel"),
+    path("<int:user_id>/projects/create/", CreateProjectView.as_view(), name="create_project"),
+    path("<int:user_id>/projects/", GetUserProjectsView.as_view(), name="user_projects"),
 ]

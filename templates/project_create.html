@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    GL-TURBO 创建项目
+{% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+        <h3>创建项目</h3>
+        <hr>
+
+        <form action="{% url "users:create_project" user_id %}" method="post" id="projectForm">
+            <div class="form-group row">
+                <label for="projectName" class="col-sm-2 col-form-label">项目名称</label>
+                <div class="col-sm-6 value-input">
+                    <input type="text" class="form-control" id="projectName" name="projectName">
+                    <div class="input-error hidden"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="projectAddress" class="col-sm-2 col-form-label">项目地址</label>
+                <div class="col-sm-6 value-input">
+                    <input type="text" class="form-control" id="projectAddress" name="projectAddress">
+                    <div class="input-error hidden"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="projectIndex" class="col-sm-2 col-form-label">项目编号</label>
+                <div class="col-sm-6 value-input">
+                    <input type="text" class="form-control" id="projectIndex" name="projectIndex">
+                    <div class="input-error hidden"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="projectEngineer" class="col-sm-2 col-form-label">项目工程师</label>
+                <div class="col-sm-6 value-input">
+                    <input type="text" class="form-control" id="projectEngineer" name="projectEngineer">
+                    <div class="input-error hidden"></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-secondary mb-10">创建项目</button>
+                </div>
+            </div>
+
+            {% csrf_token %}
+        </form>
+
+    </main>
+
+    <div class="wrapper hidden">
+    	<div class="load-background">
+    		<div class="load">
+    			<p>loading</p>
+    			<div class="k-line k-line1-1"></div>
+    			<div class="k-line k-line1-2"></div>
+    			<div class="k-line k-line1-3"></div>
+    		</div>
+    	</div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/validation.js' %}"></script>
+    <script src="{% static 'js/project_create.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+{% endblock %}

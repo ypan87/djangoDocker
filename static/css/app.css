@@ -3,19 +3,29 @@
 	font-size: .5rem;
 }
 
-/* 按钮样式 */
-button {
-	margin-top: 1.5rem;
+table label {
+	margin-bottom: 0;
 }
 
+/* 按钮样式 */
 .card button {
-	margin-top: 0;
 	font-size: .5rem;
 }
 
 tr button {
-	margin-top: 0;
 	font-size: .5rem;
+}
+
+.form-row button {
+	margin-top: 1.5rem;
+}
+
+.form-row td button {
+	margin-top: 0;
+}
+
+.form-row tr button {
+	margin-top: 0;
 }
 
 /* 选择文字大小 */
