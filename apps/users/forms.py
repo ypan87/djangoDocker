@@ -17,8 +17,6 @@ class LoginForm(forms.Form):
             if not UserProfile.objects.filter(email=email) and not UserProfile.objects.filter(username=email):
                 raise forms.ValidationError("该用户还未注册")
 
-
-
 class RegisterForm(forms.Form):
     email = forms.EmailField(required=True, error_messages={"required": "邮箱不能为空"})
     password = forms.CharField(required=True, min_length=6, max_length=20, error_messages={
@@ -32,14 +30,6 @@ class RegisterForm(forms.Form):
             p = re.compile(regex_password)
             if not p.match(password):
                 raise forms.ValidationError("密码格式错误", code="passwordInvalid")
-
-
-    def clean_email(self):
-        email = self.cleaned_data["email"]
-        if email:
-            if UserProfile.objects.filter(email=email):
-                raise forms.ValidationError("邮箱已经被注册", code="userExist")
-
 
 class ActiveForm(forms.Form):
     captcha = CaptchaField(error_messages={"invalid": u"验证码错误"})

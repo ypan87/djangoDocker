@@ -6,9 +6,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GL-TURBO 登录</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title>GL-TURBO Login</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/register_login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
 </head>
 <body>
 <div>
@@ -19,7 +20,7 @@
                 <div class="register-login-header">
                     <div class="header-text">GL-TURBO</div>
                     <div class="header-slogan">
-                        登录GL-TURBO账号，选择适合您的鼓风机
+                        Welcome Back! Please Log In
                     </div>
                 </div>
 
@@ -35,35 +36,42 @@
                         <form action="" method="post" id="loginForm">
                             <div class="register-login-block">
                                 <div class="register-login-form-group">
-                                    <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="用户名或邮箱" required>
+                                    <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Username Or Email" required>
                                 </div>
                                 <div class="register-login-common-error hidden" id="emailError"></div>
                             </div>
                             <div class="register-login-block">
                                 <div class="register-login-form-group">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="密码" required>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                 </div>
                                 <div class="register-login-common-error hidden" id="passwordError"></div>
                             </div>
                             <div class="login-option">
-                                <button type="button" class="login-forget-password-btn">忘记密码？</button>
+                                <button type="button" class="login-forget-password-btn">Forget Password?</button>
                             </div>
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary register-login-submit-button" id="loginBtn">登录</button>
+                            {% if next %}
+                                <button type="button" class="btn btn-primary register-login-submit-button" id="loginBtn" data-url="{{ next }}">Login</button>
+                            {% else %}
+                                <button type="button" class="btn btn-primary register-login-submit-button" id="loginBtn" data-url="">Login</button>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
                 <div class="register-login-switch">
-                        还没有账号？<span id="switchBtn">注册</span>
+                        Not a member？<span id="switchBtn">Sign Up</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="{% static 'js/toastr_time.js' %}"></script>
+<script src="{% static 'js/error_code.js' %}"></script>
+<script src="{% static 'js/validation.js' %}"></script>
 <script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
 <script src="{% static 'js/login.js'%}"></script>
 </body>
 </html>

@@ -5,6 +5,13 @@ import math
 from .const import *
 from selectedturbo.models import TestPoints
 
+class UploadPoint(object):
+
+    def __init__(self, flow_coef, pressure_coef, efficiency):
+        self.flow_coef = flow_coef
+        self.pressure_coef = pressure_coef
+        self.efficiency = efficiency
+
 class BasePoint(object):
 
     def __init__(self, test_point=None):
@@ -19,20 +26,18 @@ class BasePoint(object):
         pressure_factor    Pressure sky factor of the tested point
         efficiency_factor  Efficiency sky factor of the tested point
         """
-        x = isinstance(test_point, TestPoints)
-        if x:
+        if isinstance(test_point, TestPoints):
             self.flow_coef = test_point.flow_coef
             self.final_flow_coef = test_point.flow_factor  * self.flow_coef
             self.pressure_coef = test_point.pressure_coef
             self.final_pressure_coef = test_point.pressure_factor * self.pressure_coef
             self.efficiency = test_point.efficiency
             self.final_efficiency = test_point.efficiency_factor * self.efficiency
-            self.flow_factor = test_point.flow_factor
-            self.pressure_factor = test_point.pressure_factor
-            self.efficiency_factor = test_point.efficiency_factor
-        else:
-            self.flow_coef = self.final_flow_coef = self.pressure_coef = self.final_pressure_coef = None
-            self.efficiency = self.final_efficiency = self.flow_factor = self.pressure_factor = self.efficiency_factor = None
+        elif isinstance(test_point, UploadPoint):
+            self.flow_coef = self.pressure_coef = self.efficiency = 0.0
+            self.final_flow_coef = test_point.flow_coef
+            self.final_pressure_coef = test_point.pressure_coef
+            self.final_efficiency = test_point.efficiency
 
         self.vinl = self.h_diff = self.p_diff = self.v = self.p = None
 

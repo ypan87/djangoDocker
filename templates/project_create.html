@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
-    GL-TURBO 创建项目
+    {% if lang == langCategory.cn %}
+        GL-TURBO 创建项目
+    {% elif lang == langCategory.en %}
+        GL-TURBO Create Project
+    {% endif %}
 {% endblock %}
 {% block custom_css %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
@@ -10,12 +14,23 @@
 
 {% block content %}
 <main class="container">
-        <h3>创建项目</h3>
+        {% if lang == langCategory.cn %}
+            <h3>创建项目</h3>
+        {% elif lang == langCategory.en %}
+            <h3>Create Project</h3>
+        {% endif %}
         <hr>
 
-        <form action="{% url "users:create_project" user_id %}" method="post" id="projectForm">
+        <form action="{% url "create_project" lang user_id %}" method="post" id="projectForm">
             <div class="form-group row">
-                <label for="projectName" class="col-sm-2 col-form-label">项目名称</label>
+
+                <label for="projectName" class="col-sm-2 col-form-label">
+                    {% if lang == langCategory.cn %}
+                        项目名称
+                    {% elif lang == langCategory.en %}
+                        Project Name
+                    {% endif %}
+                </label>
                 <div class="col-sm-6 value-input">
                     <input type="text" class="form-control" id="projectName" name="projectName">
                     <div class="input-error hidden"></div>
@@ -23,7 +38,13 @@
             </div>
 
             <div class="form-group row">
-                <label for="projectAddress" class="col-sm-2 col-form-label">项目地址</label>
+                <label for="projectAddress" class="col-sm-2 col-form-label">
+                    {% if lang == langCategory.cn %}
+                        项目地址
+                    {% elif lang == langCategory.en %}
+                        Project Address
+                    {% endif %}
+                </label>
                 <div class="col-sm-6 value-input">
                     <input type="text" class="form-control" id="projectAddress" name="projectAddress">
                     <div class="input-error hidden"></div>
@@ -31,7 +52,13 @@
             </div>
 
             <div class="form-group row">
-                <label for="projectIndex" class="col-sm-2 col-form-label">项目编号</label>
+                <label for="projectIndex" class="col-sm-2 col-form-label">
+                    {% if lang == langCategory.cn %}
+                        项目编号
+                    {% elif lang == langCategory.en %}
+                        Project Reference
+                    {% endif %}
+                </label>
                 <div class="col-sm-6 value-input">
                     <input type="text" class="form-control" id="projectIndex" name="projectIndex">
                     <div class="input-error hidden"></div>
@@ -39,7 +66,13 @@
             </div>
 
             <div class="form-group row">
-                <label for="projectEngineer" class="col-sm-2 col-form-label">项目工程师</label>
+                <label for="projectEngineer" class="col-sm-2 col-form-label">
+                    {% if lang == langCategory.cn %}
+                        项目工程师
+                    {% elif lang == langCategory.en %}
+                        Project Engineer
+                    {% endif %}
+                </label>
                 <div class="col-sm-6 value-input">
                     <input type="text" class="form-control" id="projectEngineer" name="projectEngineer">
                     <div class="input-error hidden"></div>
@@ -48,7 +81,13 @@
 
             <div class="form-group row">
                 <div class="col-sm-10">
-                    <button type="submit" class="btn btn-secondary mb-10">创建项目</button>
+                    <button type="submit" class="btn btn-secondary mb-10">
+                        {% if lang == langCategory.cn %}
+                            创建项目
+                        {% elif lang == langCategory.en %}
+                            Create Project
+                        {% endif %}
+                    </button>
                 </div>
             </div>
 
@@ -70,7 +109,9 @@
 {% endblock %}
 
 {% block custom_js %}
+    <script src="{% static 'js/error_code.js' %}"></script>
     <script src="{% static 'js/validation.js' %}"></script>
-    <script src="{% static 'js/project_create.js' %}"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/toastr_time.js' %}"></script>
+    <script src="{% static 'js/project_create.js' %}"></script>
 {% endblock %}

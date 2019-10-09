@@ -1,128 +1,233 @@
-let form = document.getElementById("pwdResetForm");
-let firstError = document.getElementById("password1Error");
-let secondError = document.getElementById("password2Error");
-let password1 = document.getElementById("password1");
-let password2 = document.getElementById("password2");
-let passwordRegExp = /^[a-zA-Z0-9_-]{6,20}$/;
+var baseView = (function() {
+    var DOMs = {
+        emailError: document.getElementById("emailError"),
+        captchaError: document.getElementById("captchaError"),
+        forgetPwdForm: document.getElementById("forgetPwdForm"),
+        email: document.getElementById("email"),
+        captcha: document.getElementById("id_captcha_1"),
+        forgetPwdBtn: document.getElementsByClassName("forget-pwd-submit-button")[0],
+    };
 
-// 初次点击再离开输入框之后进行value值检查
-function inputBlurEvent() {
-    if (this.value == "") {
-        let error = this.parentElement.nextElementSibling;
-        error.className = "forget-pwd-require-error";
-        if (this.id == "password1") {
-            error.innerHTML="请输入密码";
-        } else if (this.id == "password2") {
-            error.innerHTML="请输入密码";
+    var URLs = {
+        forgetPwd: "/forget/"
+    };
+
+    var DOMStrings = {
+        forgetPwdForm: "forgetPwdForm"
+    };
+
+    return {
+        getDOMs: function() {
+            return DOMs;
+        },
+        getDOMStrings: function() {
+            return DOMStrings;
+        },
+        getLang: function() {
+            return window.location.pathname.split('/')[1];
+        },
+        getURLs: function() {
+            return URLs;
+        },
+    }
+
+})();
+
+var baseController = (function() {
+    var getCookie = function(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
         }
+        return cookieValue;
+    };
+
+    var Requester = function(url, data) {
+        this.data = data;
+        this.url = url;
+    };
+
+    Requester.prototype.ajaxRequest = function() {
+        var self = this;
+
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: self.url,
+                headers:{ "X-CSRFtoken": getCookie('csrftoken')},
+                data: self.data,
+                async: true,
+                beforeSend:function (xhr,settings) {
+                },
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                }
+            });
+        });
+    };
+
+    return {
+        createRequester: function(url, data) {
+            return new Requester(url, data);
+        },
     }
-}
+})();
 
-// 点击输入框进行输入时进行检查
-function inputFocusEvent() {
-    let error = this.parentElement.nextElementSibling;
-    if (!error.classList.contains("hidden")) {
-        error.innerHTML = "";
-        error.classList.add("hidden");
-    }
-}
+var validateCtrl = (function(baseView) {
+    var lang = baseView.getLang();
+    var form = baseView.getDOMs().forgetPwdForm;
+    var validator = new Validator();
 
-// 点击错误提醒时
-function errorClickEvent() {
-    this.innerHTML="";
-    this.classList.add("hidden");
-    let input = this.previousElementSibling.firstElementChild;
-    if (this.id = "captchaError") {}
-    input = this.previousElementSibling.lastElementChild;
-    input.focus();
-}
-
-function formSubmit() {
-    event.preventDefault();
-    let isRight = formValidate();
-    if (!isRight) {
-        return false;
-    }
-
-    valueSubmit();
-}
-
-// 前端数据验证
-// require验证由input required检查
-function formValidate() {
-    let isRight = true;
-    let password1Errors = [];
-
-    // password长度检查
-    let password1Value = password1.value;
-    if (password1Value.length < 6) {
-        password1Errors.push("密码长度不足");
-        if (isRight == true) {
-            isRight = false;
+    validator.add(form.email, [
+        {
+            strategy: 'isNonEmpty',
+            errorMsg: {
+                "en": "Input Value Required",
+                "cn": "输入值不能为空"
+            },
+        },
+        {
+            strategy: "email",
+            errorMsg: {
+                "en": "Email Format Incorrect",
+                "cn": "邮箱格式错误"
+            }
         }
-    } else if (password1Value.length > 20) {
-        password1Errors.push("密码长度过长");
-        if (isRight == true) {
-            isRight = false;
-        }
-    }
 
-    // password 正则表达式检查
-    let password1Test = passwordRegExp.test(password1Value);
-    if (!password1Test) {
-        password1Errors.push("密码格式错误");
-        if (isRight == true) {
-            isRight = false;
-        }
-    }
+    ]);
 
-    // 检查之后动作
-    if (password1Errors.length > 0) {
-        firstError.className = "forget-pwd-common-error";
-        firstError.innerHTML = password1Errors[0];
-    }
-    return isRight;
-}
+    var displayError = function(errorMsg) {
+        let inputError = this.parentElement.nextElementSibling;
+        if (!inputError) return;
+        inputError.className = "forget-pwd-common-error";
+        inputError.innerHTML = errorMsg[lang];
+    };
 
-function valueSubmit() {
-    $.ajax({
-        cache: false,
-        type: "post",
-        dataType:'json',
-        url:"/modify_pwd/",
-        data: $('#pwdResetForm').serialize(),
-        async: true,
-        beforeSend:function(XMLHttpRequest){},
-        success: function(data){
-            if (data.status == "ok") {
-                window.location.href = "/login";
+    return {
+        validateFields: function() {
+            var results = validator.start();
+            if(results.length == 0) {
+                return true;
+            }
+            for (let i = 0, result; result = results[i++];) {
+                if (result.msg) {
+                    displayError.call(result.dom, result.msg);
+                }
+            }
+            return false;
+        },
+    }
+})(baseView);
+
+var controller = (function(baseView, baseCtrl, vldCtrl) {
+
+    var DOMs = baseView.getDOMs();
+    var DOMStrings = baseView.getDOMStrings();
+    var lang = baseView.getLang();
+    var URLs = baseView.getURLs();
+    var setupEventListeners = function() {
+        DOMs.forgetPwdBtn.addEventListener("click", function(event) {
+            if (!vldCtrl.validateFields()) {
+                toastr.options = {
+                    timeOut: 200,
+                    positionClass: 'toast-top-right'
+                };
+                toastr.error(
+                    "Parameters Wrong, Please Correct"
+                );
                 return false;
             }
-            for (let key in data) {
-                if (key == "user") {
-                    window.location.href = "/forget"
-                } else if (key == "password1") {
-                    firstError.className = "forget-pwd-common-error";
-                    firstError.innerHTML = data[key];
-                } else if (key == "password2") {
-                    secondError.className = "forget-pwd-common-error";
-                    secondError.innerHTML = data[key];
+            var formData = $(`#${DOMStrings.forgetPwdForm}`).serialize();
+            var url = "/" + lang + URLs.forgetPwd;
+            var requester = baseCtrl.createRequester(url, formData);
+            var promise = requester.ajaxRequest();
+            promise.then(function(result) {
+                if (result.status == "success") {
+                    toastr.options = {
+                        timeOut: 200,
+                        positionClass: 'toast-top-right',
+                        onHidden: function() {window.location.href=result.url}
+                    };
+                    toastr.success(
+                        errorCode[lang]["findPwdSuccess"]
+                    );
+                    return false;
+                } else if (result.status == "failure") {
+                    toastr.options = {
+                        timeOut: 200,
+                        positionClass: 'toast-top-right'
+                    };
+                    toastr.error(
+                        errorCode[lang][result.errorCode]
+                    );
                 }
+            })
+        });
 
+        DOMs.forgetPwdForm.addEventListener("blur", function(event) {
+            if (!event.target.matches("input")) {return false;}
+            if (event.target.value == "") {
+                var error = event.target.parentElement.nextElementSibling;
+                error.className = "forget-pwd-require-error";
+                if (event.target.id == "email") {
+                    error.innerHTML = language[lang]["emailNonEmpty"];
+                } else if (event.target.id == "id_captcha_1") {
+                    error.innerHTML = language[lang]["captchaNonEmpty"];
+                }
             }
-        },
+        }, true);
 
-        complete: function(XMLHttpRequest){}
-    })
-}
+        DOMs.forgetPwdForm.addEventListener("focus", function(event) {
+            if (!event.target.matches("input")) {return false;}
+            var error = event.target.parentElement.nextElementSibling;
+            if (!error.classList.contains("hidden")) {
+                error.innerHTML = "";
+                error.classList.add("hidden");
+            }
+        }, true);
 
-password1.addEventListener("blur", inputBlurEvent);
-password1.addEventListener("focus", inputFocusEvent);
+        DOMs.emailError.addEventListener("click", errorClickEvent);
+        DOMs.captchaError.addEventListener("click", errorClickEvent);
+    };
 
-password2.addEventListener("blur", inputBlurEvent);
-password2.addEventListener("focus", inputFocusEvent);
+    var setupCaptcha = function() {
+        DOMs.captcha.placeholder = language[lang]["captcha"];
 
-firstError.addEventListener("click", errorClickEvent);
-secondError.addEventListener("click", errorClickEvent);
+        $('.captcha').click(function () {
+            $.getJSON("/captcha/refresh/", function (result) {
+                $('.captcha').attr('src', result['image_url']);
+                $('#id_captcha_0').val(result['key'])
+            });
+        });
+    };
 
-form.addEventListener("submit", formSubmit);
+    function errorClickEvent() {
+        this.innerHTML="";
+        this.classList.add("hidden");
+        let input = this.previousElementSibling.firstElementChild;
+        if (this.id == "captchaError") {
+            input = this.previousElementSibling.lastElementChild;
+        }
+        input.focus();
+    }
+    return {
+        init: function() {
+            setupEventListeners();
+            setupCaptcha();
+        }
+    }
+})(baseView, baseController, validateCtrl);
+
+controller.init();
+

@@ -1,10 +1,9 @@
 import json
+from functools import wraps
+
 from django.shortcuts import render
 from django.views.generic import View
-from .forms import RegisterForm, LoginForm, ActiveForm, ForgetForm, ModifyPwdForm
-from .models import UserProfile, EmailVerifyRecord
 from django.contrib.auth.hashers import make_password
-from utils.email_send import send_register_email
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
@@ -12,20 +11,39 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from functools import wraps
-from utils.form_validation import form_validation_errors
+from .forms import RegisterForm, LoginForm, ForgetForm, ModifyPwdForm
+from .models import UserProfile, EmailVerifyRecord
+from utils.email_send import send_register_email
+from selectedturbo.services.const import LANGUAGE
 
-class EmailRegisterView(View):
-    def get(self, request):
-        return render(request, 'email_register.html')
+def get_messages():
+    return {
+        "cn": {
+            "resetLinkInvalid": "重置密码链接无效，请重新填写表格"
+        },
+        "en": {
+            "resetLinkInvalid": "Reset password link is invalid. Please refill the form."
+        }
+    }
+
+def get_lang_url(alias_name, kwargs):
+    lang_urls = {
+        LANGUAGE["en"]: reverse(alias_name, kwargs={**{"lang": LANGUAGE["en"]}, **kwargs}),
+        LANGUAGE["cn"]: reverse(alias_name, kwargs={**{"lang": LANGUAGE["cn"]}, **kwargs})
+    }
+    return lang_urls
 
 def guest_required(func):
     @wraps(func)
     def wrapper(view, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("users:user_projects", kwargs={"user_id": request.user.id}))
+            return HttpResponseRedirect(reverse("user_projects", kwargs={"user_id": request.user.id, "lang":LANGUAGE["en"]}))
         return func(view, request, *args, **kwargs)
     return wrapper
+
+class EmailRegisterView(View):
+    def get(self, request):
+        return render(request, 'email_register.html')
 
 class LogoutView(LoginRequiredMixin, View):
     login_url = "/login/"
@@ -33,7 +51,6 @@ class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse("login"))
-
 
 class RegisterView(View):
     @guest_required
@@ -47,164 +64,230 @@ class RegisterView(View):
         register_form = RegisterForm(request.POST)
         # 获取host
         host = request.get_host()
-        if register_form.is_valid():
-            user_name = request.POST.get("email", "")
-            pass_word = request.POST.get("password", "")
-
-            # 实例化userProfile对象
-            user_profile = UserProfile()
-            user_profile.username = user_name
-            user_profile.email = user_name
-
-            # 默认注册状态为false
-            user_profile.is_active = False
-
-            # 加密密码
-            user_profile.password = make_password(pass_word)
-            user_profile.save()
-
-            # 发送注册激活邮件
-            send_register_email(user_name, host, "register")
-
-            # 发送成功注册消息
-            messages.success(request, '注册成功，请前往邮箱激活账户，邮件可能会被放入垃圾邮件中')
-
-            # 发送正确信息
-            return HttpResponse(
+        if not register_form.is_valid():
+            if "captcha" in register_form.errors.keys():
+                return HttpResponse(
                     json.dumps({
-                        "status": "ok",
+                        "status": "failure",
+                        "errorCode": "CaptchaError"
                     }),
                     content_type="application/json"
-            )
-        else:
+                )
             # 获取所有错误
             return HttpResponse(
-                form_validation_errors(register_form),
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "ParameterError"
+                }),
                 content_type="application/json"
             )
+        email = request.POST.get("email", "")
+        pass_word = request.POST.get("password", "")
 
+        user_record = UserProfile.objects.filter(email=email)
+        if user_record:
+            return HttpResponse(
+                    json.dumps({
+                        "status": "failure",
+                        "errorCode": "EmailAlreadyExist"
+                    }),
+                    content_type="application/json"
+                )
 
+        # 实例化userProfile对象
+        user_profile = UserProfile()
+        user_profile.username = email
+        user_profile.email = email
+
+        # 默认注册状态为false
+        user_profile.is_active = False
+
+        # 加密密码
+        user_profile.password = make_password(pass_word)
+        user_profile.save()
+
+        # 发送注册激活邮件
+        send_register_email(email, host, "register")
+
+        # 发送成功注册消息
+        messages.success(request, "Sign up successfully. Please check your email to activate your account.")
+
+        # 发送正确信息
+        return HttpResponse(
+                json.dumps({
+                    "status": "success",
+                    "url": reverse("login"),
+                }),
+                content_type="application/json"
+        )
 # 激活用户
 class ActiveUserView(View):
     def get(self, request, active_code):
         all_record = EmailVerifyRecord.objects.filter(code=active_code, send_type="register")
-        if all_record:
-            for record in all_record:
-                email = record.email
-                user = UserProfile.objects.get(email=email)
-                user.is_active = True
-                user.save()
-        else:
-            messages.error(request, "您的激活链接无效")
+        if not all_record:
+            messages.error(request, "Your activate link is invalid")
             return HttpResponseRedirect(reverse("register"))
-        messages.success(request, "账号激活成功，请登录账户")
+        record = all_record[0]
+        email = record.email
+        user = UserProfile.objects.get(email=email)
+        user.is_active = True
+        user.save()
+        messages.success(request, "Activate successfully，please Log in")
         return render(request, "login.html")
-
 
 class LoginView(View):
     @guest_required
     def get(self, request):
-        return render(request, "login.html", {})
+        next = ""
+        if "next" in request.GET:
+            next = request.GET["next"]
+
+        return render(request, "login.html", {"next": next})
 
     @guest_required
     def post(self, request):
         login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            user_name = request.POST.get("email", "")
-            pass_word = request.POST.get("password", "")
-            user = authenticate(username=user_name, password=pass_word)
-            # TODO next 获取
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    url = reverse("users:user_projects", kwargs={"user_id": user.id})
-                    redirect_url = request.POST.get('next', '')
-                    if redirect_url:
-                        url = redirect_url
-                    return HttpResponse(json.dumps({
-                        "status": "ok",
-                        "url": url
-                    }), content_type="application/json")
-                else:
-                    return HttpResponse(json.dumps({
-                        "status": "error",
-                        "email": "用户尚未激活，请前往邮箱激活"
-                    }), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps({
-                    "status": "error",
-                    "password": "密码错误"
-                }), content_type="application/json")
-        else:
+        if not login_form.is_valid():
             return HttpResponse(
-                form_validation_errors(login_form),
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "ParameterError",
+                }),
                 content_type="application/json"
             )
+        user_name = request.POST.get("email", "")
+        pass_word = request.POST.get("password", "")
+        user = authenticate(username=user_name, password=pass_word)
 
+        if not user:
+            return HttpResponse(json.dumps({
+                "status": "failure",
+                "errorCode": "PasswordIncorrect"
+            }), content_type="application/json")
+
+        if not user.is_active:
+            return HttpResponse(json.dumps({
+                "status": "failure",
+                "errorCode": "UserNotActive",
+            }), content_type="application/json")
+
+        login(request, user)
+        url = reverse("user_projects", kwargs={"user_id": user.id, "lang": LANGUAGE["en"]})
+        redirect_url = request.GET.get('next', '')
+        if redirect_url:
+            url = redirect_url
+        return HttpResponse(json.dumps({
+            "status": "success",
+            "url": url,
+            "errorCode": ""
+        }), content_type="application/json")
 
 class ForgetPwdView(View):
-    def get(self, request):
+    def get(self, request, lang="cn"):
         forget_form = ForgetForm()
-        return render(request, "forget_pwd.html", {"forget_form": forget_form})
+        lang_urls = get_lang_url("forget_pwd", {})
+        return render(request, "forget_pwd.html", {
+            "forget_form": forget_form,
+            "lang": lang,
+            "langCategory": LANGUAGE,
+            "langUrls": lang_urls
+        })
 
-    def post(self, request):
+    def post(self, request, lang="cn"):
         host = request.get_host()
         forget_form = ForgetForm(request.POST)
-        if forget_form.is_valid():
-            email = request.POST.get("email", "")
-            send_register_email(email, host, "forget")
+        if not forget_form.is_valid():
+            if "captcha" in forget_form.errors.keys():
+                return HttpResponse(
+                    json.dumps({
+                        "status": "failure",
+                        "errorCode": "CaptchaError"
+                    }),
+                    content_type="application/json"
+                )
             return HttpResponse(
-                json.dumps({"status": "ok"}),
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "ParameterError",
+                }),
                 content_type="application/json"
             )
-        else:
-            return HttpResponse(
-                form_validation_errors(forget_form),
-                content_type="application/json"
-            )
+
+        email = request.POST.get("email", "")
+        send_register_email(email, host, "forget")
+        return HttpResponse(
+            json.dumps(
+                {
+                    "status": "success",
+                    "errorCode": "",
+                    "lang": lang,
+                }
+            ),
+            content_type="application/json"
+        )
 
 class ResetView(View):
-    def get(self, request, active_code):
+    def get(self, request, lang, active_code):
         all_record = EmailVerifyRecord.objects.filter(code=active_code, send_type="forget")
-        if all_record:
-            for record in all_record:
-                email = record.email
-                return render(
-                    request, "password_reset.html", {
-                        "email": email,
-                    }
-                )
-        else:
-            messages.error(request, '您的重置密码链接无效，请重新请求')
-            return HttpResponseRedirect(reverse("forget_pwd"))
+        if not all_record:
+            messages.error(request, get_messages()[lang]["resetLinkInvalid"])
+            return HttpResponseRedirect(reverse("forget_pwd", kwargs={"lang": lang}))
 
+        email = all_record[0].email
+        lang_urls = get_lang_url("reset_pwd", {"active_code": active_code})
+        return render(
+            request, "password_reset.html", {
+                "lang": lang,
+                "langCategory": LANGUAGE,
+                "langUrls": lang_urls,
+                "email": email,
+            }
+        )
 
 class ModifyPwdView(View):
-    def post(self, request):
+    def post(self, request, lang="cn"):
         modify_form = ModifyPwdForm(request.POST)
-        if modify_form.is_valid():
-            pwd1 = request.POST.get("password1", "")
-            pwd2 = request.POST.get("password2", "")
-            email = request.POST.get("email", "")
-            if pwd1 != pwd2:
-                return HttpResponse(json.dumps({
-                    "status": "error",
-                    "password2": "密码不一致"
-                }), content_type="application/json")
-            user = UserProfile.objects.get(email=email)
-            if user:
-                user.password = make_password(pwd2)
-                user.save()
-                messages.success(request, "密码重置成功")
-                return HttpResponse(json.dumps({"status": "ok"}), content_type="application/json")
-            else:
-                messages.error(request, "用户不存在，请重新请求")
-                return HttpResponse(json.dumps({"status": "error", "user":"用户不存在"}))
-        else:
-            return HttpResponse(
-                form_validation_errors(modify_form),
-                content_type="application/json"
-            )
+        if not modify_form.is_valid():
+            return HttpResponse(json.dumps(
+                {
+                    "status": "failure",
+                    "errorCode": "ParameterError",
+                    "lang": lang,
+                }
+            ), content_type="application/json")
+        pwd1 = request.POST.get("password1", "")
+        pwd2 = request.POST.get("password2", "")
+        email = request.POST.get("email", "")
+        if pwd1 != pwd2:
+            return HttpResponse(json.dumps(
+                {
+                    "status": "failure",
+                    "errorCode": "PasswordNotEqual",
+                    "lang": lang
+                }
+            ), content_type="application/json")
+        user = UserProfile.objects.get(email=email)
+        if not user:
+            return HttpResponse(json.dumps(
+                {
+                    "status": "failure",
+                    "errorCode": "UserNotExist",
+                    "lang": lang,
+                }
+            ), content_type="application/json")
+
+        user.password = make_password(pwd2)
+        user.save()
+        messages.success(request, "Update password successfully")
+        url = reverse("login")
+        return HttpResponse(json.dumps(
+            {
+                "status": "success",
+                "errorCode": "",
+                "lang": lang,
+                "url": url,
+            }
+        ), content_type="application/json")
 
 class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):

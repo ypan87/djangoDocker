@@ -1,53 +1,103 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
-    GL-TURBO 找回密码
+    {% if lang == langCategory.cn %}
+        GL-TURBO 找回密码
+    {% elif lang == langCategory.en %}
+        GL-TURBO Reset Password
+    {% endif %}
 {% endblock %}
 
 {% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/forget_pwd.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="forget-password-container">
-        <div class="forget-password-form-container">
-            <form action="" id="forgetPwdForm">
-                <div class="forget-pwd-form-header">
-                    <div class="forget-pwd-form-header-title">找回密码</div>
-                    <div class="forget-pwd-form-header-subtitle">链接将会发送到你的邮箱</div>
-                </div>
-                {% if messages %}
+    {% if lang == langCategory.cn %}
+        <div class="forget-password-container">
+            <div class="forget-password-form-container">
+                <form action="" id="forgetPwdForm">
+                    <div class="forget-pwd-form-header">
+                        <div class="forget-pwd-form-header-title">找回密码</div>
+                        <div class="forget-pwd-form-header-subtitle">链接将会发送到你的邮箱</div>
+                    </div>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     <ul class="messages">
-                        {% for message in messages %}
-                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
+                        <li class="success hidden"></li>
                     </ul>
-                {% endif %}
-                <ul class="messages">
-                    <li class="success hidden"></li>
-                </ul>
-                <div class="forget-pwd-block">
-                    <div class="forget-pwd-form-group">
-                        <input type="email" id="email" name="email" class="form-control" placeholder="邮箱" required>
+                    <div class="forget-pwd-block">
+                        <div class="forget-pwd-form-group">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="邮箱" required>
+                        </div>
+                        <div class="forget-pwd-common-error hidden" id="emailError"></div>
                     </div>
-                    <div class="forget-pwd-common-error hidden" id="emailError"></div>
-                </div>
 
-                <div class="forget-pwd-block">
-                    <div class="forget-pwd-captcha-group">
-                        {{ forget_form.captcha }}
+                    <div class="forget-pwd-block">
+                        <div class="forget-pwd-captcha-group">
+                            {{ forget_form.captcha }}
+                        </div>
+                        <div class="forget-captcha-error hidden" id="captchaError"></div>
                     </div>
-                    <div class="forget-captcha-error hidden" id="captchaError"></div>
-                </div>
 
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary forget-pwd-submit-button">提交</button>
-            </form>
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-primary forget-pwd-submit-button">提交</button>
+                </form>
+            </div>
         </div>
-    </div>
+    {% elif lang == langCategory.en %}
+        <div class="forget-password-container">
+            <div class="forget-password-form-container">
+                <form action="" id="forgetPwdForm">
+                    <div class="forget-pwd-form-header">
+                        <div class="forget-pwd-form-header-title">Find Password Back</div>
+                        <div class="forget-pwd-form-header-subtitle">The link will be sent to your email</div>
+                    </div>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <ul class="messages">
+                        <li class="success hidden"></li>
+                    </ul>
+                    <div class="forget-pwd-block">
+                        <div class="forget-pwd-form-group">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="forget-pwd-common-error hidden" id="emailError"></div>
+                    </div>
+
+                    <div class="forget-pwd-block">
+                        <div class="forget-pwd-captcha-group">
+                            {{ forget_form.captcha }}
+                        </div>
+                        <div class="forget-captcha-error hidden" id="captchaError"></div>
+                    </div>
+
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-primary forget-pwd-submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}
 
 {% block custom_js%}
+    <script src="{% static 'js/toastr_time.js' %}"></script>
+    <script src="{% static 'js/language.js' %}"></script>
+    <script src="{% static 'js/error_code.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/validation.js' %}"></script>
     <script src="{% static 'js/forget_pwd.js' %}"></script>
 {% endblock %}

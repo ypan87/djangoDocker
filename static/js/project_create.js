@@ -39,7 +39,18 @@ var baseView = (function() {
         ableCreateBtn: function() {
             DOMs.createBtn.disabled = false;
         },
-
+        getLang: function() {
+            return window.location.pathname.split('/')[1];
+        },
+        clearFormInputError: function(input) {
+            var inputError = input.parentElement.querySelector(".input-error");
+            if (inputError) {
+                inputError.innerHTML = '';
+                if (!inputError.classList.contains('hidden')) {
+                    inputError.classList.add('hidden');
+                }
+            }
+        },
     }
 })();
 
@@ -99,33 +110,45 @@ var baseController = (function() {
 var validateCtrl = (function(baseView) {
 
     var form = baseView.getDOMs().form;
-
+    var lang = baseView.getLang();
     var validator = new Validator();
 
     validator.add(form.projectName, [{
         strategy: 'isNonEmpty',
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     validator.add(form.projectAddress, [{
         strategy: "isNonEmpty",
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     validator.add(form.projectIndex, [{
         strategy: 'isNonEmpty',
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     validator.add(form.projectEngineer, [{
         strategy: "isNonEmpty",
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     var displayError = function(errorMsg) {
         let inputError = this.parentElement.getElementsByClassName('input-error')[0];
         if (!inputError) return;
-        inputError.innerHTML = errorMsg;
+        inputError.innerHTML = errorMsg[lang];
         if (inputError.classList.contains('hidden')) {
             inputError.classList.remove('hidden');
         }
@@ -153,6 +176,7 @@ var controller = (function(baseView, baseCtrl, vldCtrl) {
         var DOMs = baseView.getDOMs();
         var DOMStrings = baseView.getDOMStrings();
         var URLs = baseView.getURLs();
+        var lang = baseView.getLang();
         DOMs.form.addEventListener("submit", function(event) {
             event.preventDefault();
             baseView.disableCreateBtn();
@@ -161,10 +185,12 @@ var controller = (function(baseView, baseCtrl, vldCtrl) {
                 baseView.removeLoading();
                 baseView.ableCreateBtn();
                 toastr.options = {
-                    timeOut: 200,
+                    timeOut: toastr_time["danger"],
                     positionClass: 'toast-top-right'
                 };
-                toastr.error("参数错误，请修改后提交");
+                toastr.error(
+                    errorCode[lang]["ParameterError"]
+                );
                 return false;
             }
             var formData = $(`#${DOMStrings.form}`).serialize();
@@ -175,20 +201,34 @@ var controller = (function(baseView, baseCtrl, vldCtrl) {
                 baseView.ableCreateBtn();
                 if (result.status == "success") {
                     toastr.options = {
-                        timeOut: 200,
+                        timeOut: toastr_time["success"],
                         positionClass: 'toast-top-right',
                         onHidden: function() {window.location.href=result.url}
                     };
-                    toastr.success("创建成功");
+                    toastr.success(
+                        errorCode[lang]["createProjectSuccess"]
+                    );
                 } else if (result.status == "failure") {
                     toastr.options = {
-                        timeOut: 200,
+                        timeOut: toastr_time["danger"],
                         positionClass: 'toast-top-right'
                     };
-                    toastr.error(result.errorCode);
+                    toastr.error(
+                        errorCode[lang][result.errorCode]
+                    );
                 }
             })
-        })
+        });
+
+        DOMs.form.addEventListener("keyup", function(event) {
+            if (event.target.matches('.value-input input')) {
+                clearFormInputError(event);
+            }
+        });
+    };
+
+    var clearFormInputError = function(event) {
+        baseView.clearFormInputError(event.target);
     };
 
     var formValidation = function() {

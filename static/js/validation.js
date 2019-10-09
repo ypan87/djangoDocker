@@ -35,6 +35,17 @@ let strategies = {
 			dom: this
 		}
 	},
+	maxLength: function(value, length, errorMsg) {
+		if (value.length > length) {
+			return {
+                dom: this,
+                msg: errorMsg
+            };
+		}
+		return {
+			dom: this
+		}
+	},
 	minValue: function(value, minValue, errorMsg) {
 		if (value < parseInt(minValue)) {
             return {
@@ -48,6 +59,30 @@ let strategies = {
 	},
 	maxValue: function(value, maxValue, errorMsg) {
 		if (value > parseInt(maxValue)) {
+			return {
+				dom: this,
+				msg: errorMsg
+			}
+		}
+		return {
+			dom: this
+		}
+	},
+	email: function(value, errorMsg) {
+		var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+		if (!emailRegExp.test(value)) {
+			return {
+				dom: this,
+				msg: errorMsg
+			}
+		}
+		return {
+			dom: this
+		}
+	},
+	password: function(value, errorMsg) {
+		var passwordRegExp = /^[a-zA-Z0-9_-]{6,20}$/;
+		if (!passwordRegExp.test(value)) {
 			return {
 				dom: this,
 				msg: errorMsg

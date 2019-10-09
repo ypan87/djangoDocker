@@ -24,3 +24,25 @@ LENGTH = "length"
 FLOW = "flow"
 TEMP = "temp"
 PRES = "pressure"
+LANGUAGE = {
+    "cn": "cn",
+    "en": "en"
+}
+TRANSLATION = {
+    "cn": {
+        "blower_category": "风机型号",
+        "inlet_pressure": "进气压力",
+        "relative_flow": "相对流量",
+        "flow": "流量",
+        "shaftPower": "轴功率",
+        "wirePower": "进线功率",
+    },
+    "en": {
+        "blower_category": "Blower Category",
+        "inlet_pressure": "Inlet Pressure",
+        "relative_flow": "Relative Flow",
+        "flow": "Flow",
+        "shaftPower": "Shaft Power",
+        "wirePower": "Wire Power",
+    }
+}

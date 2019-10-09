@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
-    GL-TURBO 用户项目列表
+    {% if lang == langCategory.cn %}
+        GL-TURBO 项目详情
+    {% elif lang == langCategory.en %}
+        GL-TURBO Project Detail
+    {% endif %}
 {% endblock %}
 {% block custom_css %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
@@ -12,117 +16,227 @@
 {% block content %}
 
     <main class="container">
-        <h3>项目信息</h3>
-        <hr>
+        {% if lang == langCategory.cn %}
+            <h3>项目信息</h3>
+            <hr>
 
-        {% if request.user.id == project.creator.id %}
-            <form action="" id="projectForm">
-                <div class="form-group row">
-                    <label for="projectName" class="col-sm-1 col-form-label">项目名称</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectName" name="projectName" value="{{ project.project_name }}">
-                        <div class="input-error hidden"></div>
-                    </div>
-
-                    <label for="projectAddress" class="col-sm-1 col-form-label">项目地址</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectAddress" name="projectAddress" value="{{ project.project_address }}">
-                        <div class="input-error hidden"></div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="projectIndex" class="col-sm-1 col-form-label">项目编号</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectIndex" name="projectIndex" value="{{ project.project_index }}">
-                        <div class="input-error hidden"></div>
-                    </div>
-
-                    <label for="projectEngineer" class="col-sm-1 col-form-label">项目工程师</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectEngineer" name="projectEngineer" value="{{ project.project_engineer }}">
-                        <div class="input-error hidden"></div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-secondary mb-10">提交</button>
-                    </div>
-                </div>
-            </form>
-        {% else %}
-            <form action="" id="projectForm">
-                <div class="form-group row">
-                    <label for="projectName" class="col-sm-1 col-form-label">项目名称</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectName" value="{{ project.project_name }}" disabled>
-                        <div class="input-error hidden"></div>
-                    </div>
-
-                    <label for="projectAddress" class="col-sm-1 col-form-label">项目地址</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectAddress" value="{{ project.project_address }}" disabled>
-                        <div class="input-error hidden"></div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="projectIndex" class="col-sm-1 col-form-label">项目编号</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectIndex" value="{{ project.project_index }}" disabled>
-                        <div class="input-error hidden"></div>
-                    </div>
-
-                    <label for="projectEngineer" class="col-sm-1 col-form-label">项目工程师</label>
-                    <div class="col-sm-5 value-input">
-                        <input type="text" class="form-control" id="projectEngineer" value="{{ project.project_engineer }}" disabled>
-                        <div class="input-error hidden"></div>
-                    </div>
-                </div>
-            </form>
-        {% endif %}
-
-
-        <div class="d-flex justify-content-between">
-            <h3>项目选型</h3>
             {% if request.user.id == project.creator.id %}
-                <form action="{% url "sizer_create" project.id %}" method="get">
-                    <button class="btn btn-secondary" type="submit">创建选型</button>
+                <form action="" id="projectForm">
+                    <div class="form-group row">
+                        <label for="projectName" class="col-sm-1 col-form-label">项目名称</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectName" name="projectName" value="{{ project.project_name }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectAddress" class="col-sm-1 col-form-label">项目地址</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectAddress" name="projectAddress" value="{{ project.project_address }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="projectIndex" class="col-sm-1 col-form-label">项目编号</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectIndex" name="projectIndex" value="{{ project.project_index }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectEngineer" class="col-sm-1 col-form-label">项目工程师</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectEngineer" name="projectEngineer" value="{{ project.project_engineer }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-secondary mb-10">修改项目</button>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <form action="" id="projectForm">
+                    <div class="form-group row">
+                        <label for="projectName" class="col-sm-1 col-form-label">项目名称</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectName" value="{{ project.project_name }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectAddress" class="col-sm-1 col-form-label">项目地址</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectAddress" value="{{ project.project_address }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="projectIndex" class="col-sm-1 col-form-label">项目编号</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectIndex" value="{{ project.project_index }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectEngineer" class="col-sm-1 col-form-label">项目工程师</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectEngineer" value="{{ project.project_engineer }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
                 </form>
             {% endif %}
-        </div>
-        <hr>
 
-        <table id="sizerTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>索引</th>
-                    <th>选型创建者</th>
-                    <th>选型创建时间</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
 
-            {% for sizer in sizers %}
-                <tr>
-                    <th>{{ sizer.sizer_index}}</th>
-                    <th>{{ sizer.creator.username }}</th>
-                    <th>{{ sizer.create_time}}</th>
-                    <th>
-                        {% if request.user.id == project.creator.id %}
-                        <form action="">
-                            <button class="btn btn-danger">删除</button>
-                        </form>
-                        {% endif %}
+            <div class="d-flex justify-content-between">
+                <h3>项目选型</h3>
+                {% if request.user.id == project.creator.id %}
+                    <form action="{% url "sizer_create" lang project.id %}" method="get">
+                        <button class="btn btn-secondary" type="submit">创建选型</button>
+                    </form>
+                {% endif %}
+            </div>
+            <hr>
 
-                        <form action="{% url "sizer" sizer.id %}" method="get">
-                            <button class="btn btn-success">编辑</button>
-                        </form>
-                    </th>
-                </tr>
-            {% endfor %}
-        </table>
+            <table id="sizerTable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>索引</th>
+                        <th>选型创建者</th>
+                        <th>选型创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+
+                {% for sizer in sizers %}
+                    <tr>
+                        <th>{{ sizer.sizer_index}}</th>
+                        <th>{{ sizer.creator.username }}</th>
+                        <th>{{ sizer.create_time}}</th>
+                        <th>
+                            {% if request.user.id == project.creator.id %}
+                                <button class="btn btn-danger delete" data-url="{% url "sizer_delete" lang sizer.id %}">删除</button>
+                            {% endif %}
+
+                            <form action="{% url "sizer" lang sizer.id %}" method="get">
+                                <button class="btn btn-success">编辑</button>
+                            </form>
+                        </th>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% elif lang == langCategory.en %}
+            <h3>Project Detail</h3>
+            <hr>
+
+            {% if request.user.id == project.creator.id %}
+                <form action="" id="projectForm">
+                    <div class="form-group row">
+                        <label for="projectName" class="col-sm-1 col-form-label">Project Name</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectName" name="projectName" value="{{ project.project_name }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectAddress" class="col-sm-1 col-form-label">Project Address</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectAddress" name="projectAddress" value="{{ project.project_address }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="projectIndex" class="col-sm-1 col-form-label">Project Number</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectIndex" name="projectIndex" value="{{ project.project_index }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectEngineer" class="col-sm-1 col-form-label">Project Engineer</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectEngineer" name="projectEngineer" value="{{ project.project_engineer }}">
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-secondary mb-10">Update Project</button>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <form action="" id="projectForm">
+                    <div class="form-group row">
+                        <label for="projectName" class="col-sm-1 col-form-label">Project Name</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectName" value="{{ project.project_name }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectAddress" class="col-sm-1 col-form-label">Project Address</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectAddress" value="{{ project.project_address }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="projectIndex" class="col-sm-1 col-form-label">Project Reference</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectIndex" value="{{ project.project_index }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+
+                        <label for="projectEngineer" class="col-sm-1 col-form-label">Project Engineer</label>
+                        <div class="col-sm-5 value-input">
+                            <input type="text" class="form-control" id="projectEngineer" value="{{ project.project_engineer }}" disabled>
+                            <div class="input-error hidden"></div>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+
+
+            <div class="d-flex justify-content-between">
+                <h3>Project Blower Sizer</h3>
+                {% if request.user.id == project.creator.id %}
+                    <form action="{% url "sizer_create" lang project.id %}" method="get">
+                        <button class="btn btn-secondary" type="submit">Create Sizer</button>
+                    </form>
+                {% endif %}
+            </div>
+            <hr>
+
+            <table id="sizerTable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Sizer Creator</th>
+                        <th>Sizer Create Time</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+
+                {% for sizer in sizers %}
+                    <tr>
+                        <th>{{ sizer.sizer_index}}</th>
+                        <th>{{ sizer.creator.username }}</th>
+                        <th>{{ sizer.create_time}}</th>
+                        <th>
+                            {% if request.user.id == project.creator.id %}
+                                <button class="btn btn-danger delete" data-url="{% url "sizer_delete" lang sizer.id %}">Delete</button>
+                            {% endif %}
+
+                            <form action="{% url "sizer" lang sizer.id %}" method="get">
+                                <button class="btn btn-success">Edit</button>
+                            </form>
+                        </th>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </main>
 
     <div class="wrapper hidden">
@@ -135,12 +249,57 @@
     		</div>
     	</div>
     </div>
+
+    <!-- Modal -->
+    {% if lang == langCategory.cn %}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">删除选型</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  确认删除该选型吗？
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger confirm-delete">确定</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% elif lang == langCategory.en %}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Sizer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  Are you sure to delete this Sizer?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger confirm-delete">Confirm</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block custom_js %}
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/error_code.js' %}"></script>
     <script src="{% static 'js/validation.js' %}"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/toastr_time.js' %}"></script>
     <script src="{% static 'js/project_edit.js' %}"></script>
 {% endblock %}

@@ -8,6 +8,10 @@ table label {
 }
 
 /* 按钮样式 */
+.selection button {
+	font-size: .5rem;
+}
+
 .card button {
 	font-size: .5rem;
 }

@@ -5,11 +5,14 @@ var baseView = (function() {
     var DOMs = {
         form: document.querySelector('#projectForm'),
         loadIcon: document.querySelector('.wrapper'),
-        createBtn: document.querySelector('button')
+        createBtn: document.querySelector('button'),
+        table: document.querySelector("#sizerTable"),
+        confirmDeleteBtn: document.querySelector(".confirm-delete"),
     };
 
     var DOMStrings = {
-        form: "projectForm"
+        form: "projectForm",
+        deleteModal: "deleteModal"
     };
 
     var URLs = {
@@ -42,7 +45,18 @@ var baseView = (function() {
         ableCreateBtn: function() {
             DOMs.createBtn.disabled = false;
         },
-
+        getLang: function() {
+            return window.location.pathname.split('/')[1];
+        },
+        clearFormInputError: function(input) {
+            var inputError = input.parentElement.querySelector(".input-error");
+            if (inputError) {
+                inputError.innerHTML = '';
+                if (!inputError.classList.contains('hidden')) {
+                    inputError.classList.add('hidden');
+                }
+            }
+        },
     }
 })();
 
@@ -102,33 +116,45 @@ var baseController = (function() {
 var validateCtrl = (function(baseView) {
 
     var form = baseView.getDOMs().form;
-
+    var lang = baseView.getLang();
     var validator = new Validator();
 
     validator.add(form.projectName, [{
         strategy: 'isNonEmpty',
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     validator.add(form.projectAddress, [{
         strategy: "isNonEmpty",
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     validator.add(form.projectIndex, [{
         strategy: 'isNonEmpty',
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     validator.add(form.projectEngineer, [{
         strategy: "isNonEmpty",
-        errorMsg: '输入值不能为空',
+        errorMsg: {
+            "cn": "输入值不能为空",
+            "en": "Input value cannot be empty"
+        },
     }]);
 
     var displayError = function(errorMsg) {
         let inputError = this.parentElement.getElementsByClassName('input-error')[0];
         if (!inputError) return;
-        inputError.innerHTML = errorMsg;
+        inputError.innerHTML = errorMsg[lang];
         if (inputError.classList.contains('hidden')) {
             inputError.classList.remove('hidden');
         }
@@ -151,11 +177,12 @@ var validateCtrl = (function(baseView) {
 })(baseView);
 
 var controller = (function(baseView, baseCtrl, vldCtrl) {
+    var DOMs = baseView.getDOMs();
+    var DOMStrings = baseView.getDOMStrings();
+    var URLs = baseView.getURLs();
+    var lang = baseView.getLang();
 
     var setupEventListeners = function() {
-        var DOMs = baseView.getDOMs();
-        var DOMStrings = baseView.getDOMStrings();
-        var URLs = baseView.getURLs();
         DOMs.form.addEventListener("submit", function(event) {
             event.preventDefault();
             baseView.disableCreateBtn();
@@ -164,10 +191,12 @@ var controller = (function(baseView, baseCtrl, vldCtrl) {
                 baseView.removeLoading();
                 baseView.ableCreateBtn();
                 toastr.options = {
-                    timeOut: 200,
+                    timeOut: toastr_time["danger"],
                     positionClass: 'toast-top-right'
                 };
-                toastr.error("参数错误，请修改后提交");
+                toastr.error(
+                    errorCode[lang]["ParameterError"]
+                );
                 return false;
             }
             var formData = $(`#${DOMStrings.form}`).serialize();
@@ -178,20 +207,74 @@ var controller = (function(baseView, baseCtrl, vldCtrl) {
                 baseView.ableCreateBtn();
                 if (result.status == "success") {
                     toastr.options = {
-                        timeOut: 200,
+                        timeOut: toastr_time["success"],
                         positionClass: 'toast-top-right',
                         onHidden: function() {window.location.href=result.url}
                     };
-                    toastr.success("修改项目成功");
+                    toastr.success(
+                        errorCode[lang]["editProjectSuccess"]
+                    );
                 } else if (result.status == "failure") {
                     toastr.options = {
-                        timeOut: 200,
+                        timeOut: toastr_time["danger"],
                         positionClass: 'toast-top-right'
                     };
-                    toastr.error(result.errorCode);
+                    toastr.error(
+                        errorCode[lang][result.errorCode]
+                    );
                 }
-            })
-        })
+            });
+        });
+
+        DOMs.form.addEventListener("keyup", function(event) {
+            if (event.target.matches('.value-input input')) {
+                clearFormInputError(event);
+            }
+        });
+
+        DOMs.table.addEventListener("click", function(event) {
+            if (event.target.matches('.delete')) {
+                showDeleteTipModal();
+                var url = event.target.dataset.url;
+                DOMs.confirmDeleteBtn.addEventListener("click", function(e) {
+                    var requester = baseCtrl.createRequester(url, "");
+                    var promise = requester.ajaxRequest();
+                    promise.then(function(result) {
+                        hideDeleteTipModal();
+                        if (result.status == "success") {
+                            toastr.options = {
+                                timeOut: 200,
+                                positionClass: 'toast-top-right',
+                                onHidden: function() {window.location.href=result.url}
+                            };
+                            toastr.success(
+                                errorCode[lang]["deleteSizerSuccess"]
+                            );
+                        } else if (result.status == "failure") {
+                            toastr.options = {
+                                timeOut: 200,
+                                positionClass: 'toast-top-right'
+                            };
+                            toastr.error(
+                                errorCode[lang][result.errorCode]
+                            );
+                        }
+                    });
+                })
+            }
+        });
+    };
+
+    var showDeleteTipModal = function() {
+        $(`#${DOMStrings.deleteModal}`).modal('show');
+    };
+
+    var hideDeleteTipModal = function() {
+        $(`#${DOMStrings.deleteModal}`).modal('hide');
+    };
+
+    var clearFormInputError = function(event) {
+        baseView.clearFormInputError(event.target);
     };
 
     var setupTables = function() {

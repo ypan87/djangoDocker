@@ -39,8 +39,7 @@ def send_register_email(email, host, send_type="register"):
     email_body = ""
 
     if send_type == "register":
-        email_title = "GL-TURBO 注册激活链接"
-        # email_body = "欢迎注册GL-TURBO：请点击下面的链接激活你的账户：" + "https://" + host + "/active/{0}".format(code)
+        email_title = "GL-TURBO Activate Link"
 
         email_body = loader.render_to_string(
             "email_register.html",
@@ -49,9 +48,8 @@ def send_register_email(email, host, send_type="register"):
                 "host": host
             }
         )
-
     elif send_type == "forget":
-        email_title = "GL-TURBO 找回密码链接"
+        email_title = "GL-TURBO Reset Password"
         email_body = loader.render_to_string(
             "email_forget.html",
             {
@@ -60,7 +58,7 @@ def send_register_email(email, host, send_type="register"):
             }
         )
     elif send_type == "update_email":
-        email_title = "GL-TURBO 修改邮箱验证码"
+        email_title = "GL-TURBO Update Email"
         email_body = loader.render_to_string(
             "email_update_email.html",
             {

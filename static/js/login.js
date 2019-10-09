@@ -1,141 +1,231 @@
-let email = document.getElementById("email");
-let password = document.getElementById("password");
-let emailError = document.getElementById("emailError");
-let passwordError = document.getElementById("passwordError");
-let loginBtn = document.getElementById("loginBtn");
-let passwordRegExp = /^[a-zA-Z0-9_-]{6,20}$/;
-let switchBth = document.getElementById("switchBtn");
-let forgetPwdBth = document.getElementsByClassName("login-forget-password-btn")[0];
+var baseView = (function() {
+    var DOMs = {
+        email: document.getElementById("email"),
+        password: document.getElementById("password"),
+        emailError: document.getElementById("emailError"),
+        passwordError: document.getElementById("passwordError"),
+        loginBtn: document.getElementById("loginBtn"),
+        switchBtn: document.getElementById("switchBtn"),
+        forgetPwdBtn: document.querySelector(".login-forget-password-btn"),
+        loginForm: document.getElementById("loginForm")
+    };
 
-// 点击跳转到注册页面
-switchBth.onclick = function () {
-    location.href = "/register";
-};
+    var URLs = {
+        register: "/register",
+        forget: "/en/forget",
+        login: "/login",
+    };
 
-forgetPwdBth.onclick = function () {
-    window.open("/forget", "_blank");
-};
+    var DOMStrings = {
+        loginForm: "loginForm",
+    };
 
-// 初次点击再离开输入框之后进行value值检查
-function inputBlurEvent() {
-    if (this.value == "") {
-        let error = this.parentElement.nextElementSibling;
-        error.className = "register-login-require-error";
-        if (this.id == "email") {
-            error.innerHTML = "请输入邮箱";
-        } else if (this.id == "password") {
-            error.innerHTML = "请输入密码"
+    return {
+        getDOMs: function() {
+            return DOMs;
+        },
+        getDOMStrings: function() {
+            return DOMStrings;
+        },
+        getURLs: function() {
+            return URLs;
         }
     }
-}
+})();
 
-// 点击输入框进行输入时进行检查
-function inputFocusEvent() {
-    let error = this.parentElement.nextElementSibling;
-    if (!error.classList.contains("hidden")) {
-        error.innerHTML = "";
-        error.classList.add("hidden");
-    }
-}
-
-// 点击错误提醒时
-function errorClickEvent() {
-    this.innerHTML="";
-    this.classList.add("hidden");
-    let input = this.previousElementSibling.firstElementChild;
-    input.focus();
-}
-
-// form表单进行提交后的动作
-// 分为两种错误进行显示
-// 一种是require显示在input中显示
-// 另一种是其他错误，在input后面显示
-function formSubmit(event) {
-    event.preventDefault();
-    let isRight = formValidate();
-    if (!isRight) {
-        return false;
-    }
-    valueSubmit();
-    return false;
-}
-
-// ajax提交表达
-// 以及数据处理
-function valueSubmit() {
-    $.ajax({
-        cache: false,
-        type: "post",
-        dataType:'json',
-        url:"/login/",
-        data: $('#loginForm').serialize(),
-        async: true,
-        beforeSend:function(XMLHttpRequest){},
-        success: function(data){
-            if (data.status == "ok") {
-                window.location.href = data.url;
-                return false;
-            }
-
-            for (let key in data) {
-                if (key == "email") {
-                    emailError.className = "register-login-common-error";
-                    emailError.innerHTML = data[key];
-                } else if (key == "password") {
-                    passwordError.className = "register-login-common-error";
-                    passwordError.innerHTML = data[key];
+var baseController = (function() {
+    var getCookie = function(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
                 }
             }
+        }
+        return cookieValue;
+    };
+
+    var Requester = function(url, data) {
+        this.data = data;
+        this.url = url;
+    };
+
+    Requester.prototype.ajaxRequest = function() {
+        var self = this;
+
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: self.url,
+                headers:{ "X-CSRFtoken": getCookie('csrftoken')},
+                data: self.data,
+                async: true,
+                beforeSend:function (xhr,settings) {
+                },
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                }
+            });
+        });
+    };
+
+    return {
+        createRequester: function(url, data) {
+            return new Requester(url, data);
         },
 
-        complete: function(XMLHttpRequest){}
-    });
-}
+    }
+})();
 
-// 前端数据验证
-// require验证由input required检查
-function formValidate() {
-    let isRight = true;
-    let passwordErrors = [];
+var validateCtrl = (function(baseView) {
 
-    // 密码长度检差
-    let passwordValue = password.value;
-    if (passwordValue.length < 6) {
-        passwordErrors.push("密码长度不足");
-        if (isRight == true) {
-            isRight = false;
+    var form = baseView.getDOMs().loginForm;
+    var validator = new Validator();
+
+    validator.add(form.email, [{
+        strategy: 'isNonEmpty',
+        errorMsg: "Input Value Required",
+    }]);
+
+    validator.add(form.password, [
+        {
+            strategy: "isNonEmpty",
+            errorMsg: "Input Value Required",
+        },
+
+        {
+            strategy: "minLength:6",
+            errorMsg: "At Least 6 Characters Required"
+        },
+
+        {
+            strategy: "maxLength:20",
+            errorMsg: "Password Too Long"
         }
-    } else if (passwordValue.length > 20) {
-        passwordErrors.push("密码长度过长");
-        if (isRight == true) {
-            isRight = false;
+    ]);
+
+    var displayError = function(errorMsg) {
+        let inputError = this.parentElement.nextElementSibling;
+        if (!inputError) return;
+        inputError.className = "register-login-common-error";
+        inputError.innerHTML = errorMsg;
+    };
+
+    return {
+        validateFields: function() {
+            var results = validator.start();
+            if(results.length == 0) {
+                return true;
+            }
+            for (let i = 0, result; result = results[i++];) {
+                if (result.msg) {
+                    displayError.call(result.dom, result.msg);
+                }
+            }
+            return false;
+        },
+    }
+})(baseView);
+
+var controller = (function(baseView, baseCtrl, vldCtrl) {
+
+    var DOMs = baseView.getDOMs();
+    var DOMStrings = baseView.getDOMStrings();
+    var URLs = baseView.getURLs();
+    var setupEventListeners = function() {
+        DOMs.switchBtn.addEventListener("click", function(event) {
+            location.href = URLs.register;
+        });
+
+        DOMs.forgetPwdBtn.addEventListener("click", function(event) {
+            window.open(URLs.forget, "_blank");
+        });
+
+        DOMs.loginBtn.addEventListener("click", function(event) {
+            if (!vldCtrl.validateFields()) {
+                toastr.options = {
+                    timeOut: toastr_time["danger"],
+                    positionClass: 'toast-top-right'
+                };
+                toastr.error(
+                    "Parameters Wrong, Please Correct"
+                );
+                return false;
+            }
+            var formData = $(`#${DOMStrings.loginForm}`).serialize();
+            var url = URLs.login + "/?next=" + this.dataset.url;
+            var requester = baseCtrl.createRequester(url, formData);
+            var promise = requester.ajaxRequest();
+            promise.then(function(result) {
+                if (result.status == "success") {
+                    toastr.options = {
+                        timeOut: toastr_time["success"],
+                        positionClass: 'toast-top-right',
+                        onHidden: function() {window.location.href=result.url}
+                    };
+                    toastr.success(
+                        errorCode["en"]["loginSuccess"]
+                    );
+                    return false;
+                } else if (result.status == "failure") {
+                    toastr.options = {
+                        timeOut: toastr_time["danger"],
+                        positionClass: 'toast-top-right'
+                    };
+                    toastr.error(
+                        errorCode["en"][result.errorCode]
+                    );
+                }
+            })
+        });
+
+        DOMs.loginForm.addEventListener("blur", function(event) {
+            if (!event.target.matches("input")) {return false;}
+            if (event.target.value == "") {
+                var error = event.target.parentElement.nextElementSibling;
+                error.className = "register-login-require-error";
+                if (event.target.id == "email") {
+                    error.innerHTML = "Please Input Email";
+                } else if (event.target.id == "password") {
+                    error.innerHTML = "Please Input Password";
+                }
+            }
+        }, true);
+
+        DOMs.loginForm.addEventListener("focus", function(event) {
+            if (!event.target.matches("input")) {return false;}
+            var error = event.target.parentElement.nextElementSibling;
+            if (!error.classList.contains("hidden")) {
+                error.innerHTML = "";
+                error.classList.add("hidden");
+            }
+        }, true);
+
+        DOMs.emailError.addEventListener("click", errorClickEvent);
+        DOMs.passwordError.addEventListener("click", errorClickEvent);
+    };
+
+    function errorClickEvent() {
+        this.innerHTML="";
+        this.classList.add("hidden");
+        let input = this.previousElementSibling.firstElementChild;
+        input.focus();
+    }
+
+    return {
+        init: function() {
+            setupEventListeners();
         }
     }
-    // password 正则表达式检查
-    let passwordTest = passwordRegExp.test(passwordValue);
-    if (!passwordTest) {
-        passwordErrors.push("密码格式错误");
-        if (isRight == true) {
-            isRight = false;
-        }
-    }
 
-    // 检查之后动作
-    if (passwordErrors.length > 0) {
-        passwordError.className = "register-login-common-error";
-        passwordError.innerHTML=passwordErrors[0];
-    }
-    return isRight;
-}
+})(baseView, baseController, validateCtrl);
 
-email.addEventListener("blur", inputBlurEvent);
-email.addEventListener("focus", inputFocusEvent);
-
-password.addEventListener("blur", inputBlurEvent);
-password.addEventListener("focus", inputFocusEvent);
-
-emailError.addEventListener("click", errorClickEvent);
-passwordError.addEventListener("click", errorClickEvent);
-
-// 处理表单提交
-loginBtn.addEventListener("click", formSubmit);
+controller.init();

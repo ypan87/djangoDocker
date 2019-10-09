@@ -35,6 +35,8 @@ var baseController = (function(){
                 headers:{ "X-CSRFtoken": getCookie('csrftoken')},
                 data: self.data,
                 async: true,
+                processData: false,
+                contentType: false,
                 beforeSend:function (xhr,settings) {
                 },
                 success: function(data) {
@@ -71,6 +73,10 @@ var baseView = (function(baseCtrl) {
         imperialSelect: document.querySelector('#isImperial'),
         languageSelect: document.querySelector('#langSelect'),
         wkConditionInput: document.querySelector('#workingConditions'),
+        unitSelect: document.querySelector('#isImperial'),
+        uploadBtn: document.querySelector("#uploadBtn"),
+        uploadFile: document.querySelector("#uploadFile"),
+        uploadLb: document.querySelector("#uploadLb"),
     };
 
     var DOMStrings = {
@@ -85,12 +91,22 @@ var baseView = (function(baseCtrl) {
         turboForm: "turboForm",
         csrfToken: "csrfmiddlewaretoken",
         excelField: "excelValue",
+        unitAttribute: "data-unit",
+        dataAttribute: "unit"
     };
 
     var URLs = {
-        checkBlower: "/projects/sizers/check/",
-        downloadExcel: "/projects/sizers/excel/",
+        checkBlower: "/" + langCategory() + "/projects/sizers/check/",
+        downloadExcel: "/" + langCategory() + "/projects/sizers/excel/",
         createSizer: window.location.pathname,
+    };
+
+    var Units = {
+        length: "length",
+		absPress: "absPress",
+		temp: "temp",
+		flow: "flow",
+		gaugePress: "gaugePress"
     };
 
     var colors = {
@@ -98,6 +114,10 @@ var baseView = (function(baseCtrl) {
         red: "rgb(244,96,108)",
         green: "rgb(25,202,173)"
     };
+
+    function langCategory() {
+        return window.location.pathname.split('/')[1];
+    }
 
     var getSectionData = function(section) {
         var inputs = section.querySelectorAll('input');
@@ -118,6 +138,7 @@ var baseView = (function(baseCtrl) {
     };
 
     var insertGraphSection = function() {
+        var lang = langCategory();
         var markup = `
             <div class="row" id="graph-sec">
                 <div class="col-12">
@@ -125,15 +146,15 @@ var baseView = (function(baseCtrl) {
                         <div class="card-header card-header-active">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    鼓风机选择                            
+                                    ${language[lang]["blowerSelection"]}                           
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <form method="post" action="${URLs.downloadExcel}" id="excelForm">
-                                        <button type="submit" class="btn btn-light mr-24">输出excel</button>
+                                        <button type="submit" class="btn btn-light mr-24">${language[lang]["outputExcel"]}</button>
                                         <input type="hidden" name="csrfmiddlewaretoken">
                                         <input type="hidden" name="excelValue">
                                     </form>
-                                    <button type="submit" class="btn btn-light ml-24" id="saveSizer">创建选型</button>
+                                    <button type="submit" class="btn btn-light ml-24" id="saveSizer">${language[lang]["createSizer"]}</button>
                                 </div>
                             </div>
                         </div>
@@ -156,6 +177,7 @@ var baseView = (function(baseCtrl) {
     };
 
     var insertEffGraph = function(data) {
+        var lang = langCategory();
         var ctx = document.getElementById(DOMStrings.effChart).getContext('2d');
         var datasets = [], singleData, i;
 
@@ -164,7 +186,7 @@ var baseView = (function(baseCtrl) {
             singleData = getGraphData({
                 data: data.baseTableData[i],
                 category: "test",
-                label: "测试曲线" + i,
+                label: language[lang]["testingCurve"] + " " + i,
                 color: colors.black
             });
             datasets.push(singleData);
@@ -175,7 +197,7 @@ var baseView = (function(baseCtrl) {
             singleData = getGraphData({
                 data: data.normalTableData[i],
                 category: "condition",
-                label: "工况曲线" + i,
+                label: language[lang]["wkCurve"] + " " + i,
                 color: colors.red,
             });
             datasets.push(singleData);
@@ -186,7 +208,7 @@ var baseView = (function(baseCtrl) {
             singleData = getGraphData({
                 data: data.efficiencyTableData[i],
                 category: "efficiency",
-                label: "效率曲线" + i,
+                label: language[lang]["effCurve"] + " " + i,
                 color: colors.green
             });
             datasets.push(singleData);
@@ -196,7 +218,7 @@ var baseView = (function(baseCtrl) {
         singleData = getGraphData({
             data: [data.ratedTableData],
             category: "rating",
-            label: "额定工况点",
+            label: language[lang]["ratingPoint"],
             color: colors.red
         });
         datasets.push(singleData);
@@ -213,7 +235,7 @@ var baseView = (function(baseCtrl) {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: '最大流量系数'
+                            labelString: language[lang]["flowCoeff"]
                         }
                     }],
                     yAxes: [{
@@ -225,13 +247,13 @@ var baseView = (function(baseCtrl) {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: '压力系数'
+                            labelString: language[lang]["pressCoeff"]
                         }
                     }]
                 },
                 title: {
                     display: true,
-                    text: '效率曲线'
+                    text: language[lang]["effGraph"]
                 },
                 legend: {
                     position: 'bottom',
@@ -268,13 +290,14 @@ var baseView = (function(baseCtrl) {
     };
 
     var insertTurboSelectionTable = function(data) {
+        var lang = langCategory();
         var turboData = data.tableData;
         var markup = `
             <div class="table-responsive">
                 <table class="table table-bordered table-striped text-center">
                     <tr>
-                        <th>鼓风机型号</th>
-                        <th>叶轮机切顶</th>
+                        <th>${language[lang]["blowerCategory"]}</th>
+                        <th>${language[lang]["cutBack"]}</th>
                     </tr>
 
                     <tr>
@@ -303,6 +326,7 @@ var baseView = (function(baseCtrl) {
     };
 
     var getTurboSpecificsHTML = function(conditions, turbo) {
+        var lang = langCategory();
         var template = "";
         for (var i = 0; i < conditions.dataSet.length; i++) {
             var point = conditions.dataSet[i];
@@ -321,20 +345,27 @@ var baseView = (function(baseCtrl) {
             <div class="table-responsive col-6">
                 <table class="table table-bordered table-striped text-center final-table">
                     <tr>
-                        <td colspan="4">风机型号：${turbo}</td>
+                        <td colspan="4">${language[lang]["blowerCategory"]}：${turbo}</td>
                         <td colspan="4">${conditions.temp}&#8451;/${conditions.humidity}%</td>
                     </tr>
                     <tr>
-                        <td colspan="4">进气压力</td>
+                        <td colspan="4">${language[lang]["inletPressure"]}</td>
                         <td colspan="4">${conditions.baraPressure} bara</td>
                     </tr>
                     <tr>
-                        <td colspan="4">相对流量</td>
+                        <td colspan="4">${language[lang]["dutyRelativeFlow"]}</td>
                         <td colspan="1">ΔP</td>
-                        <td colspan="1">流量</td>
-                        <td colspan="1">轴功率</td>
-                        <td colspan="1">进线功率</td>
-                    </tr>              
+                        <td colspan="1">${language[lang]["flow"]}</td>
+                        <td colspan="1">${language[lang]["shaftPower"]}</td>
+                        <td colspan="1">${language[lang]["wirePower"]}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">%</td>
+                        <td colspan="1">barG</td>
+                        <td colspan="1">m<sup>3</sup>/h</td>
+                        <td colspan="1">kW</td>
+                        <td colspan="1">kW</td>
+                    </tr>  
         `
         + template + `
                 </table>
@@ -344,6 +375,7 @@ var baseView = (function(baseCtrl) {
     };
 
     var insertTurboGraph = function(data) {
+        var lang = langCategory();
         var templates = "";
         for (var i = 0; i < data.conditions.length; i++) {
             templates += `                        
@@ -362,7 +394,7 @@ var baseView = (function(baseCtrl) {
             insertSingleTurboGraph({
                 data: data.conditions[i],
                 ctx: canvasCollection[i].getContext("2d"),
-                title: "工况曲线" + index,
+                title: language[lang]["wkCurve"] + index,
             });
         }
     };
@@ -372,13 +404,14 @@ var baseView = (function(baseCtrl) {
         var condData = option.data[0];
         let powerData = option.data[1];
         let designData = option.data[2];
+        var lang = langCategory();
 
         for (let i = 0; i < condData.length; i++) {
             var index = i + 1;
             let singleData = getGraphData({
                 data: condData[i],
                 category: "condition",
-                label: "流量压升曲线" + index,
+                label:  language[lang]["pvCurve"]+ " " + index,
                 color: colors.black
             });
             datasets.push(singleData);
@@ -387,7 +420,7 @@ var baseView = (function(baseCtrl) {
         var powerGraphData = getGraphData({
             data: powerData,
             category: "power",
-            label: "流量轴功率曲线",
+            label: language[lang]["pShaftCurve"],
             color: colors.green
         });
         datasets.push(powerGraphData);
@@ -395,7 +428,7 @@ var baseView = (function(baseCtrl) {
         let designGraphData = getGraphData({
             data: designData,
             category: "design",
-            label: "设计点流量压升",
+            label: language[lang]["pvForDP"],
             color: colors.red
         });
         datasets.push(designGraphData);
@@ -413,7 +446,7 @@ var baseView = (function(baseCtrl) {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: '流量 - m3/h'
+                            labelString: language[lang]["flow"] + ' - m3/h'
                         }
                     }],
                     yAxes: [{
@@ -425,7 +458,7 @@ var baseView = (function(baseCtrl) {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: '压升 - mbarg'
+                            labelString: language[lang]["voltageRise"] + ' - mbarg'
                         }
                     }, {
                         ticks: {
@@ -436,13 +469,13 @@ var baseView = (function(baseCtrl) {
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: '轴功率 - kw'
+                            labelString: language[lang]["shaftPower"] + ' - kw'
                         }
                     }]
                 },
                 title: {
                     display: true,
-                    text: '流量压力曲线及轴功率' + option.title + '：'
+                    text: language[lang]["pvShaftCurve"] + option.title + '：'
                 },
                 legend: {
                     position: 'bottom',
@@ -461,22 +494,6 @@ var baseView = (function(baseCtrl) {
         },
         getDOMStrings: function() {
             return DOMStrings;
-        },
-        renderErrorTip: function() {
-            var markup = `
-                <div class="alert alert-danger error-tip">
-                    输入有错误，请修改错误后再提交
-                </div>
-            `;
-            DOMs.form.insertAdjacentHTML("beforebegin", markup);
-            var height = $(".error-tip").offset().top;
-            this.scrollAnimation(height);
-        },
-        deleteErrorTip: function() {
-            var error = document.querySelector('.error-tip');
-            if (error) {
-                error.parentElement.removeChild(error);
-            }
         },
         scrollAnimation: function(height) {
             var speed = 1600;
@@ -538,7 +555,16 @@ var baseView = (function(baseCtrl) {
         },
         getURLs: function() {
             return URLs;
-        }
+        },
+        getLang: function() {
+            return window.location.pathname.split('/')[1];
+        },
+        unitSelectValue: function() {
+            return DOMs.unitSelect.options[DOMs.unitSelect.selectedIndex].value;
+        },
+        getUnits: function() {
+            return Units;
+        },
     }
 })(baseController);
 
@@ -559,140 +585,206 @@ var cardController = (function() {
 
 var validateCtrl = (function(baseView) {
     var form = baseView.getDOMS().form;
-
+    var lang = baseView.getLang();
     var validator = new Validator();
 
     validator.add(form.projectAltitude, [{
         strategy: 'isNumber',
-        errorMsg: '请填写数字',
+        errorMsg: {
+            "cn": "请填写数字",
+            "en": "Please Input Number"
+        },
     }]);
 
     validator.add(form.projectInletPres, [{
         strategy: "isNumber",
-        errorMsg: '请填写数字',
+        errorMsg: {
+            "cn": "请填写数字",
+            "en": "Please Input Number"
+        },
     }]);
 
     validator.add(form.projectUnitsNum, [{
         strategy: "isNumber",
-        errorMsg: '请填写数字',
+        errorMsg: {
+            "cn": "请填写数字",
+            "en": "Please Input Number"
+        },
     }]);
 
     validator.add(form.projectSafetyFactor, [{
         strategy: "isNumber",
-        errorMsg: '请填写数字',
+        errorMsg: {
+            "cn": "请填写数字",
+            "en": "Please Input Number"
+        },
     }]);
 
     validator.add(form.projectEnvTemp, [{
         strategy: "isNumber",
-        errorMsg: '请填写数字',
+        errorMsg: {
+            "cn": "请填写数字",
+            "en": "Please Input Number"
+        },
     }]);
 
     validator.add(form.ratingFlow, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         },
         {
             strategy: "minValue:0",
-            errorMsg: '请填写大于0的数字',
+            errorMsg: {
+                "cn": "请填写大于0的数字",
+                "en": "Please Input Number Larger Than 0"
+            },
         }
     ]);
 
     validator.add(form.ratingPressure, [{
         strategy: "isNumber",
-        errorMsg: '请填写数字',
+        errorMsg: {
+            "cn": "请填写数字",
+            "en": "Please Input Number"
+        },
     }]);
 
     validator.add(form.ratingTemp, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.ratingHumi, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         },
         {
             strategy: "minValue:0",
-            errorMsg: '请填写大于0的数字',
+            errorMsg: {
+                "cn": "请填写大于0的数字",
+                "en": "Please Input Number Larger Than 0"
+            },
         },
         {
             strategy: "maxValue:100",
-            errorMsg: '请填写小于100的数字',
+            errorMsg: {
+                "cn": "请填写小于100的数字",
+                "en": "Please Input Number Smaller Than 100"
+            },
         }
     ]);
 
     validator.add(form.ratingPointInletPressure, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.ratingPointInletTemp, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.ratingPointHumi, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         },
         {
             strategy: "minValue:0",
-            errorMsg: '请填写大于0的数字',
+            errorMsg: {
+                "cn": "请填写大于0的数字",
+                "en": "Please Input Number Larger Than 0"
+            },
         },
         {
             strategy: "maxValue:100",
-            errorMsg: '请填写小于100的数字',
+            errorMsg: {
+                "cn": "请填写小于100的数字",
+                "en": "Please Input Number Smaller Than 100"
+            },
         }
     ]);
 
     validator.add(form.ratingPointInletLoss, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.ratingPointOutletLoss, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.ratingPointOutPressure, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.maxFlowCoeff, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     validator.add(form.maxPressureCoeff, [
         {
             strategy: "isNumber",
-            errorMsg: '请填写数字',
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
         }
     ]);
 
     var displayError = function(errorMsg) {
         let inputError = this.parentElement.getElementsByClassName('input-error')[0];
         if (!inputError) return;
-        inputError.innerHTML = errorMsg;
+        inputError.innerHTML = errorMsg[lang];
         if (inputError.classList.contains('hidden')) {
             inputError.classList.remove('hidden');
         }
@@ -781,6 +873,7 @@ var workingConditionController = (function() {
 var workingConditionViewController = (function(baseView, vldCtrl) {
     var condTables = [];
     var DOMs = baseView.getDOMS();
+    var lang = baseView.getLang();
 
     var getTableData = function(table) {
         var tableData = {};
@@ -791,7 +884,7 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
         tableData["humi"] = generalRows[2].querySelector('input').value;
 
         var pointRows = table.querySelectorAll("tr.point");
-        points = [];
+        var points = [];
         for (var i = 0; i < pointRows.length; i++) {
             var inputs = pointRows[i].querySelectorAll('input');
             points.push({flow: inputs[0].value, pressure: inputs[1].value});
@@ -818,14 +911,19 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                     <table class="table table-bordered table-striped text-center mt-24 condition-table">
                         <tr>
                             <th scope="col" colspan="3" class="condition-table-header">
-                                工况
+                                ${language[lang]["duty"]}
                                 <button type="button" class="close condition-table-close">
                                     <span>&times;</span>
                                 </button>
                             </th>
                         </tr>
                         <tr class="general">
-                            <th scope="row">系统进口压力</th>
+                            <th scope="row">
+                                ${language[lang]["dutyInletPressure"]} 
+                                <span data-unit=${baseView.getUnits().absPress}>
+                                    ${unit[baseView.unitSelectValue()][baseView.getUnits().absPress]}
+                                </span>
+                            </th>
                             <td colspan="2">
                                 <div class="value-input">
                                     <input type="text" class="form-control" value=${wkCond.inletPressure || ""}>
@@ -834,7 +932,12 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                             </td>
                         </tr>
                         <tr class="general">
-                            <th scope="row">进气温度</th>
+                            <th scope="row">
+                                ${language[lang]["dutyInletTemp"]}
+                                <span data-unit=${baseView.getUnits().temp}>
+                                    ${unit[baseView.unitSelectValue()][baseView.getUnits().temp]}
+                                </span>
+                            </th>
                             <td colspan="2">
                                 <div class="value-input">
                                     <input type="text" class="form-control" value=${wkCond.inletTemp || ""}>
@@ -843,7 +946,10 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                             </td>
                         </tr>
                         <tr class="general">
-                            <th scope=row>进气相对湿度</th>
+                            <th scope=row>
+                                ${language[lang]["dutyRelativeHumidity"]}
+                                <span>(%)</span>
+                            </th>
                             <td colspan="2">
                                 <div class="value-input">
                                     <input type="text" class="form-control" value=${wkCond.inletReltHumi || ""}>
@@ -855,9 +961,19 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                             <td colspan="3"></td>
                         </tr>
                         <tr class="pointHead">
-                            <th scope="col">相对流量</th>
-                            <th scope="col">压力</th>
-                            <th scope="col">操作</th>
+                            <th scope="col">
+                                ${language[lang]["dutyRelativeFlow"]}
+                                <span>(%)</span>
+                            </th>
+                            <th scope="col">
+                                ${language[lang]["dutyPressure"]}
+                                <span data-unit="${baseView.getUnits().gaugePress}">
+                                    ${unit[baseView.unitSelectValue()][baseView.getUnits().gaugePress]}
+                                </span>
+                            </th>
+                            <th scope="col">
+                                ${language[lang]["dutyOperation"]}
+                            </th>
                         </tr> 
                         <tr class="pointAdd">
                             <td>
@@ -868,7 +984,9 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                             </td>
                             <td>
                                 <span class="row-add">
-                                    <button type="button" class="btn btn-outline-success">添加</button>
+                                    <button type="button" class="btn btn-outline-success">
+                                        ${language[lang]["dutyAdd"]}
+                                    </button>
                                 </span>
                             </td>
                         </tr>
@@ -880,24 +998,39 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
             var inputs = newTable.querySelectorAll('input');
             vldCtrl.addValidatorRule(inputs[0], [{
                 strategy: "isNumber",
-                errorMsg: "请填写数字"
+                errorMsg: {
+                    "cn": "请填写数字",
+                    "en": "Please Input Number"
+                },
             }]);
             vldCtrl.addValidatorRule(inputs[1], [{
                 strategy: "isNumber",
-                errorMsg: "请填写数字"
+                errorMsg: {
+                    "cn": "请填写数字",
+                    "en": "Please Input Number"
+                },
             }]);
             vldCtrl.addValidatorRule(inputs[2], [
                 {
                     strategy: "isNumber",
-                    errorMsg: "请填写数字"
+                    errorMsg: {
+                        "cn": "请填写数字",
+                        "en": "Please Input Number"
+                    },
                 },
                 {
                     strategy: "maxValue:100",
-                    errorMsg: "请填写小于100的数字"
+                    errorMsg: {
+                        "cn": "请填写小于100的数字",
+                        "en": "Please Input Number Smaller Than 100"
+                    },
                 },
                 {
                     strategy: "minValue:0",
-                    errorMsg: "请填写大于0的数字"
+                    errorMsg: {
+                        "cn": "请填写大于0的数字",
+                        "en": "Please Input Number Larger Than 0"
+                    },
                 }
             ]);
             var addRow = newTable.querySelector(`.pointAdd`);
@@ -932,7 +1065,7 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
                 </td>
                 <td>
                     <span class="row-del">
-                        <button type="button" class="btn btn-outline-danger">删除</button>
+                        <button type="button" class="btn btn-outline-danger">${language[lang]["dutyDelete"]}</button>
                     </span>
                 </td>
             </tr>`;
@@ -944,21 +1077,33 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
             vldCtrl.addValidatorRule(inputs[0], [
                 {
                     strategy: "isNumber",
-                    errorMsg: "请填写数字"
+                    errorMsg: {
+                        "cn": "请填写数字",
+                        "en": "Please Input Number"
+                    },
                 },
                 {
                     strategy: "maxValue:100",
-                    errorMsg: "请填写小于100的数字"
+                    errorMsg: {
+                        "cn": "请填写小于100的数字",
+                        "en": "Please Input Number Smaller Than 100"
+                    },
                 },
                 {
                     strategy: "minValue:0",
-                    errorMsg: "请填写大于0的数字"
+                    errorMsg: {
+                        "cn": "请填写大于0的数字",
+                        "en": "Please Input Number Larger Than 0"
+                    },
                 }
             ]);
             vldCtrl.addValidatorRule(inputs[1], [
                 {
                     strategy: "isNumber",
-                    errorMsg: "请填写数字"
+                    errorMsg: {
+                        "cn": "请填写数字",
+                        "en": "Please Input Number"
+                    },
                 },
             ]);
         },
@@ -995,10 +1140,12 @@ var workingConditionViewController = (function(baseView, vldCtrl) {
 
 var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl, vldCtrl) {
 
+    var DOM = baseView.getDOMS();
+    var DOMStrings = baseView.getDOMStrings();
+    var URLs = baseView.getURLs();
+    var lang = baseView.getLang();
+
     var setupEventListeners = function() {
-        var DOM = baseView.getDOMS();
-        var DOMStrings = baseView.getDOMStrings();
-        var URLs = baseView.getURLs();
         // 表格中card折叠
         DOM.form.addEventListener('click', function(event) {
             if(event.target.matches('.card-header, .card-header *')) {
@@ -1040,26 +1187,34 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
             if (!formValidation()) {
                 baseView.removeLoading();
                 baseView.ableCheckBtn();
+                toastr.options = {
+                    timeOut: toastr_time["danger"],
+                    positionClass: 'toast-top-right'
+                };
+                toastr.error(
+                    errorCode[lang]["ParameterError"]
+                );
                 return false;
             }
             // 获取最终传输数据
             DOM.wkConditionInput.value = JSON.stringify(wkViewCtrl.getConditionTablesData());
-            var formData = $(`#${DOMStrings.turboForm}`).serialize();
+            var formData = new FormData(document.querySelector("#turboForm"));
+
             var sizerRequester = baseCtrl.createRequester(URLs.checkBlower, formData);
             var promise = sizerRequester.ajaxRequest();
 
             promise.then(function (result) {
+                baseView.removeLoading();
+                baseView.ableCheckBtn();
                 if (result.status == "failure") {
                     toastr.options = {
-                        timeOut: 200,
+                        timeOut: toastr_time["danger"],
                         positionClass: 'toast-top-right'
                     };
-                    toastr.error(result.errorCode);
+                    toastr.error(errorCode[lang][result.errorCode]);
                     return;
                 }
                 baseView.generateGraph(result);
-                baseView.removeLoading();
-                baseView.ableCheckBtn();
                 var form = document.getElementById(DOMStrings.excelForm);
                 form.addEventListener('submit', function(event) {
                     event.preventDefault();
@@ -1075,23 +1230,44 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
                     newPromise.then(function (result) {
                         if (result.status == "success") {
                             toastr.options = {
-                                timeOut: 200,
+                                timeOut: toastr_time["success"],
                                 positionClass: 'toast-top-right',
                                 onHidden: function() {window.location.href=result.url}
                             };
-                            toastr.success("创建选型成功");
+                            toastr.success(errorCode[lang]["createSizerSuccess"]);
                         } else if (result.status == "failure") {
                             toastr.options = {
-                                timeOut: 200,
-                                positionClass: 'toast-top-right'
+                                timeOut: toastr_time["danger"],
+                                positionClass: 'toast-top-right',
                             };
-                            toastr.error(result.errorCode);
+                            toastr.error(
+                                errorCode[lang][result.errorCode]
+                            );
                         }
                         baseView.removeLoading();
                         saveBtn.disabled = false;
                     })
                 });
             });
+        });
+
+        DOM.unitSelect.addEventListener("change", function(event) {
+            baseView.renderLoading();
+            setupUnits();
+            baseView.removeLoading();
+        });
+
+        DOM.uploadBtn.addEventListener("click", function(event) {
+            DOM.uploadFile.click();
+        });
+
+        DOM.uploadFile.addEventListener("change", function(event) {
+            var fileName = this.files[0].name;
+            var translation = {
+                "cn": "文件名：",
+                "en": "Filename: "
+            };
+            DOM.uploadLb.innerHTML = translation[lang] + fileName;
         });
     };
 
@@ -1100,16 +1276,11 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
     };
 
     var formValidation = function() {
-        baseView.deleteErrorTip();
-        if (!vldCtrl.validateFields()) {
-            baseView.renderErrorTip();
-            return false;
-        }
-        return true;
+        return vldCtrl.validateFields();
     };
 
     var ctrlAddWorkingCondition = function(option) {
-        newWorkingOption = wkCondCtrl.addWkCond(option);
+        var newWorkingOption = wkCondCtrl.addWkCond(option);
          wkViewCtrl.addWkTable(newWorkingOption);
     };
 
@@ -1117,7 +1288,13 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
         var table = event.target.closest('.col-sm-4');
         var cond_length = wkCondCtrl.getWkCondInUse();
         if (cond_length <= 1) {
-            toastr.error("无法删除，至少需要一组工况点");
+            toastr.options = {
+                timeOut: 200,
+                positionClass: 'toast-top-right'
+            };
+            toastr.error(
+                errorCode[lang]["wkConditionDeleteError"]
+            );
             return;
         }
         wkViewCtrl.deleteWkTable(table);
@@ -1135,7 +1312,13 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
     var ctrlDeleteWorkingPoint = function(event) {
         var pointLength = event.target.closest('table').querySelectorAll(".point").length;
         if (pointLength <= 1) {
-            toastr.error("无法删除，每组工况至少需要一个工况点");
+            toastr.options = {
+                timeOut: 200,
+                positionClass: 'toast-top-right'
+            };
+            toastr.error(
+                errorCode[lang]["wkPointDeleteError"]
+            );
             return;
         }
         var row = event.target.closest('tr');
@@ -1153,10 +1336,22 @@ var controller = (function(baseView, baseCtrl, cardCtrl, wkCondCtrl, wkViewCtrl,
         })
     };
 
+    var setupUnits = function() {
+        var unitSelection = baseView.unitSelectValue();
+        var allUnits = document.querySelectorAll(`[${DOMStrings.unitAttribute}]`);
+        for (var i =0; i < allUnits.length; i++) {
+            var unitValue = allUnits[i].dataset[DOMStrings.dataAttribute];
+            allUnits[i].innerHTML = "(" + unit[unitSelection][unitValue] + ")";
+        }
+    };
+
     return {
         init: function() {
+            baseView.renderLoading();
             setupEventListeners();
             initTables();
+            setupUnits();
+            baseView.removeLoading();
         }
     };
 })(baseView, baseController, cardController, workingConditionController, workingConditionViewController, validateCtrl);

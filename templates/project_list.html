@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
-    GL-TURBO 用户项目列表
+    {% if lang == langCategory.cn %}
+        GL-TURBO 项目列表
+    {% elif lang == langCategory.en %}
+        GL-TURBO Project List
+    {% endif %}
 {% endblock %}
 {% block custom_css %}
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
@@ -11,35 +15,54 @@
 {% block content %}
     <main class="container">
         <div class="d-flex justify-content-between">
-            <h3>所有项目</h3>
+            {% if lang == langCategory.cn %}
+                <h3>所有项目</h3>
+            {% elif lang == langCategory.en %}
+                <h3>All Projects</h3>
+            {% endif %}
         </div>
         <hr>
 
         <table id="projectTable" class="table table-striped table-bordered" style="width:100%">
             <thead>
-                <tr>
-                    <th>项目名称</th>
-                    <th>项目地址</th>
-                    <th>工程师</th>
-                    <th>项目创建者</th>
-                    <th>项目创建时间</th>
-                    <th>操作</th>
-                </tr>
+                {% if lang == langCategory.cn %}
+                    <tr>
+                        <th>项目名称</th>
+                        <th>项目地址</th>
+                        <th>工程师</th>
+                        <th>项目创建者</th>
+                        <th>项目创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                {% elif lang == langCategory.en %}
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Project Address</th>
+                        <th>Project Engineer</th>
+                        <th>Project Creator</th>
+                        <th>Project Create Time</th>
+                        <th>Operation</th>
+                    </tr>
+                {% endif %}
             </thead>
 
             <tbody>
                 {% for project in projects %}
                     <tr>
                         <th>
-                            <a href="">{{ project.project_name }}</a>
+                            {{ project.project_name }}
                         </th>
                         <th>{{ project.project_address }}</th>
                         <th>{{ project.project_engineer }}</th>
                         <th>{{ project.creator.username }}</th>
                         <th>{{ project.create_time }}</th>
                         <th>
-                            <form action="{% url "project" project.id %}" method="get">
-                                <button class="btn btn-success">编辑</button>
+                            <form action="{% url "project" lang project.id %}" method="get">
+                                {% if lang == langCategory.cn %}
+                                    <button class="btn btn-success">编辑</button>
+                                {% elif lang == langCategory.en %}
+                                    <button class="btn btn-success">Edit</button>
+                                {% endif %}
                             </form>
                         </th>
                     </tr>
