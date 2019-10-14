@@ -29,6 +29,7 @@ const errorCode = {
         "DeleteSizerError": "删除选型失败",
         "NoBlowerFitError": "没有合适的鼓风机",
         "FileFormatError": "上传文件格式错误",
+        "NetworkError": "网络错误",
     },
     "en": {
         "createProjectSuccess": "Create Project Successfully",
@@ -56,6 +57,7 @@ const errorCode = {
         "EditSizerError": "Fail To Edit Sizer",
         "DeleteSizerError": "Fail To Delete Sizer",
         "NoBlowerFitError": "No Blower Fits",
-        "FileFormatError": "Upload File Format Incorrect"
+        "FileFormatError": "Upload File Format Incorrect",
+        "NetworkError": "Network Error",
     }
 };
