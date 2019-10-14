@@ -1,0 +1,17 @@
+{
+  "name": "blower-selection",
+  "version": "1.0.0",
+  "description": "blower selection project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development"
+  },
+  "author": "yifan pan",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.1",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^3.3.9"
+  }
+}

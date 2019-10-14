@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block webpack %}
+    {% load render_bundle from webpack_loader %}
+{% endblock %}
 {% load staticfiles %}
 {% block title %}
     {% if lang == langCategory.cn %}
@@ -87,5 +90,6 @@
     <script src="{% static 'js/validation.js' %}"></script>
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
-    <script src="{% static 'js/project_list.js' %}"></script>
+    {% render_bundle 'main' 'js' 'DEFAULT' %}
+{#    <script src="{% static 'js/project_list.js' %}"></script>#}
 {% endblock %}
