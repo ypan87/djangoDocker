@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load render_bundle from webpack_loader %}
 {% load staticfiles %}
 {% block title %}
     {% if lang == langCategory.cn %}
@@ -109,9 +110,10 @@
 {% endblock %}
 
 {% block custom_js %}
-    <script src="{% static 'js/error_code.js' %}"></script>
-    <script src="{% static 'js/validation.js' %}"></script>
+{#    <script src="{% static 'js/error_code.js' %}"></script>#}
+{#    <script src="{% static 'js/validation.js' %}"></script>#}
     <script src="{% static 'js/toastr.min.js' %}"></script>
-    <script src="{% static 'js/toastr_time.js' %}"></script>
-    <script src="{% static 'js/project_create.js' %}"></script>
+{#    <script src="{% static 'js/toastr_time.js' %}"></script>#}
+{#    <script src="{% static 'js/project_create.js' %}"></script>#}
+    {% render_bundle 'projectCreate' 'js' 'DEFAULT' %}
 {% endblock %}
