@@ -51,11 +51,11 @@ export const removeLoading = function(elem) {
     }
 };
 
-export const disableCreateBtn = function(btn) {
+export const disableBtn = function(btn) {
     btn.disabled = true;
 };
 
-export const ableCreateBtn = function(btn) {
+export const ableBtn = function(btn) {
     btn.disabled = false;
 };
 
@@ -95,4 +95,8 @@ export const handleResponse = function(result, successCode="", lang="en") {
             errorCode[lang][result.errorCode]
         );
     }
+};
+
+export const unitSelectValue = function(selectElem) {
+    return selectElem.options[selectElem.selectedIndex].value;
 };

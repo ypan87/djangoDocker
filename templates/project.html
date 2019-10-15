@@ -298,10 +298,6 @@
 {% block custom_js %}
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
-{#    <script src="{% static 'js/error_code.js' %}"></script>#}
-{#    <script src="{% static 'js/validation.js' %}"></script>#}
     <script src="{% static 'js/toastr.min.js' %}"></script>
-{#    <script src="{% static 'js/toastr_time.js' %}"></script>#}
     {% render_bundle 'project' 'js' 'DEFAULT' %}
-{#    <script src="{% static 'js/project_edit.js' %}"></script>#}
 {% endblock %}

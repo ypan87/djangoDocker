@@ -10,6 +10,7 @@ module.exports = {
         "userProjectList": "./static/js/es6/userProjectList.js",
         "projectCreate": "./static/js/es6/projectCreate.js",
         "project": "./static/js/es6/project.js",
+        "sizerCreate": "./static/js/es6/sizerCreate.js"
     },
     output: {
         path: path.resolve("./static/webpack_bundles/"),

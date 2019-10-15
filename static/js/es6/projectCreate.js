@@ -2,7 +2,7 @@
  * Created by yifan_pan on 2019/10/14.
  */
 import {
-    Request, getLang, ableCreateBtn, disableCreateBtn,
+    Request, getLang, ableBtn, disableBtn,
     clearFormInputError, removeLoading, renderLoading,
     handleResponse
 } from "../util/util";
@@ -70,13 +70,13 @@ const validateFields = function() {
 const formValidation = function() {
     if (!validateFields()) {
         removeLoading(DOMs.loadIcon);
-        ableCreateBtn(DOMs.createBtn);
+        ableBtn(DOMs.createBtn);
         toastr.options = {
-            timeOut: toastrTime.toastrTime["danger"],
+            timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
         };
         toastr.error(
-            errorCode.errorCode[lang]["ParameterError"]
+            errorCode[lang]["ParameterError"]
         );
         return false;
     }
@@ -92,7 +92,7 @@ DOMs.form.addEventListener("keyup", function(event) {
 
 DOMs.form.addEventListener("submit", function(event) {
     event.preventDefault();
-    disableCreateBtn(DOMs.createBtn);
+    disableBtn(DOMs.createBtn);
     renderLoading(DOMs.loadIcon);
     if (!formValidation()) {
         return false;
@@ -110,17 +110,17 @@ const sendCreateRequest = async function() {
     try {
         await request.getResults();
         removeLoading(DOMs.loadIcon);
-        ableCreateBtn(DOMs.createBtn);
+        ableBtn(DOMs.createBtn);
         handleResponse(request.data, "createProjectSuccess", lang);
     } catch (err) {
         removeLoading(DOMs.loadIcon);
-        ableCreateBtn(DOMs.createBtn);
+        ableBtn(DOMs.createBtn);
         toastr.options = {
-            timeOut: toastrTime.toastrTime["danger"],
+            timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
         };
         toastr.error(
-            errorCode.errorCode[lang]["NetworkError"]
+            errorCode[lang]["NetworkError"]
         );
     }
 };

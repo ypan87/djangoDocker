@@ -32,11 +32,11 @@ const sendDeleteRequest = async function(url) {
         handleResponse(request.data, "deleteProjectSuccess", lang);
     } catch (err) {
         toastr.options = {
-            timeOut: toastrTime.toastrTime["danger"],
+            timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
         };
         toastr.error(
-            errorCode.errorCode[lang]["NetworkError"]
+            errorCode[lang]["NetworkError"]
         );
     }
 };
