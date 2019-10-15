@@ -2,7 +2,7 @@
  * Created by yifan_pan on 2019/10/14.
  */
 import {errorCode, toastrTime} from "./base";
-import {Request, getLang} from "../util/util";
+import {Request, getLang, handleResponse} from "../util/util";
 import {DOMs, DOMstrings} from "../user_project_list/views/userProjectListView";
 
 // delete project
@@ -29,25 +29,7 @@ const sendDeleteRequest = async function(url) {
     let request = new Request(url, "");
     try {
         await request.getResults();
-        let result = request.data;
-        if (result.status == "success") {
-            toastr.options = {
-                timeOut: toastrTime.toastrTime["success"],
-                positionClass: 'toast-top-right',
-                onHidden: function() {window.location.href=result.url}
-            };
-            toastr.success(
-                errorCode.errorCode[lang]["deleteProjectSuccess"]
-            );
-        } else if (result.status == "failure") {
-            toastr.options = {
-                timeOut: toastrTime.toastrTime["danger"],
-                positionClass: 'toast-top-right'
-            };
-            toastr.error(
-                errorCode.errorCode[lang][result.errorCode]
-            );
-        }
+        handleResponse(request.data, "deleteProjectSuccess", lang);
     } catch (err) {
         toastr.options = {
             timeOut: toastrTime.toastrTime["danger"],

@@ -1,13 +1,13 @@
 /**
- * Created by yifan_pan on 2019/10/14.
+ * Created by yifan_pan on 2019/10/15.
  */
+import {errorCode, Validation, toastrTime} from "./base";
+import {DOMs, DOMstrings, URLs} from "../project/views/projectView";
 import {
     Request, getLang, ableCreateBtn, disableCreateBtn,
     clearFormInputError, removeLoading, renderLoading,
     handleResponse
 } from "../util/util";
-import {errorCode, toastrTime, Validation} from "./base";
-import {DOMs, DOMstrings, URLs} from "../project_create/views/projectCreateView";
 
 // add the validation rule
 let validator = new Validation();
@@ -90,7 +90,11 @@ DOMs.form.addEventListener("keyup", function(event) {
     }
 });
 
-DOMs.form.addEventListener("submit", function(event) {
+DOMs.table.addEventListener("click", function(event) {
+    deleteSizer(event.target);
+});
+
+DOMs.form.addEventListener("submit", function() {
     event.preventDefault();
     disableCreateBtn(DOMs.createBtn);
     renderLoading(DOMs.loadIcon);
@@ -99,19 +103,30 @@ DOMs.form.addEventListener("submit", function(event) {
     }
 
     sendCreateRequest();
-
 });
+
+const deleteSizer = function(target) {
+    if (!target.matches(".delete")) return false;
+
+    showDeleteTipModal();
+
+    let url = target.dataset.url;
+
+    DOMs.confirmDeleteBtn.addEventListener("click", function(event) {
+        sendDeleteRequest(url);
+    })
+};
 
 // send create project request
 const sendCreateRequest = async function() {
     let formData = $(`#${DOMstrings.form}`).serialize();
-    let request = new Request(URLs.createProject, formData);
+    let request = new Request(URLs.editProject, formData);
 
     try {
         await request.getResults();
         removeLoading(DOMs.loadIcon);
         ableCreateBtn(DOMs.createBtn);
-        handleResponse(request.data, "createProjectSuccess", lang);
+        handleResponse(request.data, "editProjectSuccess", lang);
     } catch (err) {
         removeLoading(DOMs.loadIcon);
         ableCreateBtn(DOMs.createBtn);
@@ -124,3 +139,39 @@ const sendCreateRequest = async function() {
         );
     }
 };
+
+// send delete sizer request
+const sendDeleteRequest = async function(url) {
+    hideDeleteTipModal();
+    let request = new Request(url, "");
+
+    try {
+        await request.getResults();
+        handleResponse(request.data, "deleteSizerSuccess", lang);
+    } catch (err) {
+        toastr.options = {
+            timeOut: toastrTime.toastrTime["danger"],
+            positionClass: 'toast-top-right'
+        };
+        toastr.error(
+            errorCode.errorCode[lang]["NetworkError"]
+        );
+    }
+};
+
+const showDeleteTipModal = function() {
+    $(`#${DOMstrings.deleteModal}`).modal('show');
+};
+
+const hideDeleteTipModal = function() {
+    $(`#${DOMstrings.deleteModal}`).modal('hide');
+};
+
+const setupTables = function() {
+    $(document).ready(function() {
+        $('#sizerTable').DataTable();
+    } );
+};
+
+// setup the initial table
+setupTables();

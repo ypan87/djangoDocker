@@ -14,33 +14,3 @@ export const DOMstrings = {
 export const URLs = {
     createProject: window.location.pathname,
 };
-
-export const renderLoading = function() {
-    if (DOMs.loadIcon.classList.contains('hidden')) {
-        DOMs.loadIcon.classList.remove('hidden');
-    }
-};
-
-export const removeLoading = function() {
-    if (!DOMs.loadIcon.classList.contains('hidden')) {
-        DOMs.loadIcon.classList.add('hidden');
-    }
-};
-
-export const disableCreateBtn = function() {
-    DOMs.createBtn.disabled = true;
-};
-
-export const ableCreateBtn = function() {
-    DOMs.createBtn.disabled = false;
-};
-
-export const clearFormInputError = function(input) {
-    var inputError = input.parentElement.querySelector(".input-error");
-    if (inputError) {
-        inputError.innerHTML = '';
-        if (!inputError.classList.contains('hidden')) {
-            inputError.classList.add('hidden');
-        }
-    }
-};

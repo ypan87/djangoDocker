@@ -2,6 +2,8 @@
  * Created by yifan_pan on 2019/10/14.
  */
 import axios from "axios";
+import {toastrTime} from "./toastrTime";
+import {errorCode} from "./errorCode";
 
 export class Request {
     constructor(url, data) {
@@ -35,4 +37,62 @@ const getCookie = function(name) {
         }
     }
     return cookieValue;
+};
+
+export const renderLoading = function(elem) {
+    if (elem.classList.contains('hidden')) {
+        elem.classList.remove('hidden');
+    }
+};
+
+export const removeLoading = function(elem) {
+    if (!elem.classList.contains('hidden')) {
+        elem.classList.add('hidden');
+    }
+};
+
+export const disableCreateBtn = function(btn) {
+    btn.disabled = true;
+};
+
+export const ableCreateBtn = function(btn) {
+    btn.disabled = false;
+};
+
+export const clearFormInputError = function(input) {
+    var inputError = input.parentElement.querySelector(".input-error");
+    if (inputError) {
+        inputError.innerHTML = '';
+        if (!inputError.classList.contains('hidden')) {
+            inputError.classList.add('hidden');
+        }
+    }
+};
+
+export const handleResponse = function(result, successCode="", lang="en") {
+    if (result.status == "success") {
+        if (result.url) {
+            toastr.options = {
+                timeOut: toastrTime["success"],
+                positionClass: 'toast-top-right',
+                onHidden: function() {window.location.href=result.url}
+            };
+        } else {
+            toastr.options = {
+                timeOut: toastrTime["success"],
+                positionClass: 'toast-top-right',
+            };
+        }
+        toastr.success(
+            errorCode[lang][successCode]
+        );
+    } else if (result.status == "failure") {
+        toastr.options = {
+            timeOut: toastrTime["danger"],
+            positionClass: 'toast-top-right'
+        };
+        toastr.error(
+            errorCode[lang][result.errorCode]
+        );
+    }
 };

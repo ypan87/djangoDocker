@@ -3,6 +3,7 @@
  */
 export const errorCode = {
     "cn": {
+        "": "无信息",
         "createProjectSuccess": "项目创建成功",
         "deleteProjectSuccess": "项目删除成功",
         "createSizerSuccess": "创建选型成功",
@@ -32,6 +33,7 @@ export const errorCode = {
         "NetworkError": "网络错误",
     },
     "en": {
+        "": "empty message",
         "createProjectSuccess": "Create Project Successfully",
         "deleteProjectSuccess": "Delete Project Successfully",
         "createSizerSuccess": "Create Sizer Successfully",

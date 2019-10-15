@@ -4,3 +4,4 @@ venv
 settings.py
 db.sqlite3
 turboselection/__pycache__/
+static/webpack_bundles/
