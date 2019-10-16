@@ -1,49 +1,40 @@
 /**
  * Created by yifan_pan on 2019/10/16.
  */
-import {errorCode, Validation, toastrTime} from "./base";
-import {DOMs, DOMstrings, URLs} from "../register/views/registerView";
-import {Request, handleResponse} from "../util/util";
+import {errorCode, Validation, toastrTime, language} from "./base";
+import {DOMs, DOMstrings, URLs} from "../forgetPwd/views/forgetPwdView";
+import {Request, handleResponse, getLang} from "../util/util";
 
 let validator = new Validation();
+let lang = getLang();
 
-validator.add(DOMs.registerForm.email, [
+validator.add(DOMs.forgetPwdForm.email, [
     {
         strategy: 'isNonEmpty',
-        errorMsg: "Input Value Required",
+        errorMsg: {
+            "en": "Input Value Required",
+            "cn": "输入值不能为空"
+        },
     },
     {
         strategy: "email",
-        errorMsg: "Email Format Wrong",
-    },
-]);
-
-validator.add(DOMs.registerForm.password, [
-    {
-        strategy: "isNonEmpty",
-        errorMsg: "Input Value Required",
-    },
-
-    {
-        strategy: "minLength:6",
-        errorMsg: "At Least 6 Characters Required"
-    },
-
-    {
-        strategy: "maxLength:20",
-        errorMsg: "Password Too Long"
+        errorMsg: {
+            "en": "Email Format Incorrect",
+            "cn": "邮箱格式错误"
+        }
     }
+
 ]);
 
 const displayError = function(errorMsg) {
     let inputError = this.parentElement.nextElementSibling;
     if (!inputError) return;
-    inputError.className = "register-login-common-error";
-    inputError.innerHTML = errorMsg;
+    inputError.className = "forget-pwd-common-error";
+    inputError.innerHTML = errorMsg[lang];
 };
 
 const validateFields = function() {
-    let results = validator.start();
+    var results = validator.start();
     if(results.length == 0) {
         return true;
     }
@@ -65,14 +56,13 @@ const errorClickEvent = function() {
     input.focus();
 };
 
-// send register request
-const sendRegisterRequest = async function() {
-    let formData = $(`#${DOMstrings.registerForm}`).serialize();
-    let url = URLs.register;
+const sendForgetRequest = async function() {
+    var formData = $(`#${DOMstrings.forgetPwdForm}`).serialize();
+    var url = "/" + lang + URLs.forgetPwd;
     let request = new Request(url, formData);
     try {
         await request.getResults();
-        handleResponse(request.data, "registerSuccess");
+        handleResponse(request.data, "findPwdSuccess", lang);
         if (request.data.status == "failure") {
             refreshCaptcha();
         }
@@ -82,42 +72,14 @@ const sendRegisterRequest = async function() {
             positionClass: 'toast-top-right'
         };
         toastr.error(
-            errorCode["en"]["NetworkError"]
+            errorCode[lang]["NetworkError"]
         );
         refreshCaptcha();
     }
 };
 
 // add event listener
-DOMs.switchBtn.addEventListener("click", function(event) {
-    window.location.href = URLs.login;
-});
-
-DOMs.registerForm.addEventListener("blur", function(event) {
-    if (!event.target.matches("input")) {return false;}
-    if (event.target.value == "") {
-        let error = event.target.parentElement.nextElementSibling;
-        error.className = "register-login-require-error";
-        if (event.target.id == "email") {
-            error.innerHTML = "Please Input Email";
-        } else if (event.target.id == "password") {
-            error.innerHTML = "Please Input Password";
-        } else if (event.target.id == "id_captcha_1") {
-            error.innerHTML = "Please Input Captcha";
-        }
-    }
-}, true);
-
-DOMs.registerForm.addEventListener("focus", function(event) {
-    if (!event.target.matches("input")) {return false;}
-    let error = event.target.parentElement.nextElementSibling;
-    if (!error.classList.contains("hidden")) {
-        error.innerHTML = "";
-        error.classList.add("hidden");
-    }
-}, true);
-
-DOMs.registerBtn.addEventListener("click", function(event) {
+DOMs.forgetPwdBtn.addEventListener("click", function(event) {
     if (!validateFields()) {
         toastr.options = {
             timeOut: toastrTime["danger"],
@@ -128,16 +90,37 @@ DOMs.registerBtn.addEventListener("click", function(event) {
         );
         return false;
     }
-    sendRegisterRequest();
+    sendForgetRequest();
 });
 
+DOMs.forgetPwdForm.addEventListener("blur", function(event) {
+    if (!event.target.matches("input")) {return false;}
+    if (event.target.value == "") {
+        var error = event.target.parentElement.nextElementSibling;
+        error.className = "forget-pwd-require-error";
+        if (event.target.id == "email") {
+            error.innerHTML = language[lang]["emailNonEmpty"];
+        } else if (event.target.id == "id_captcha_1") {
+            error.innerHTML = language[lang]["captchaNonEmpty"];
+        }
+    }
+}, true);
+
+DOMs.forgetPwdForm.addEventListener("focus", function(event) {
+    if (!event.target.matches("input")) {return false;}
+    var error = event.target.parentElement.nextElementSibling;
+    if (!error.classList.contains("hidden")) {
+        error.innerHTML = "";
+        error.classList.add("hidden");
+    }
+}, true);
+
 DOMs.emailError.addEventListener("click", errorClickEvent);
-DOMs.passwordError.addEventListener("click", errorClickEvent);
 DOMs.captchaError.addEventListener("click", errorClickEvent);
 
-// set up captcha
+// setup captcha
 const setupCaptcha = function() {
-    DOMs.captcha.placeholder = "Captcha";
+    DOMs.captcha.placeholder = language[lang]["captcha"];
 
     $('.captcha').click(function () {
         refreshCaptcha();
@@ -153,4 +136,3 @@ const refreshCaptcha = function() {
 };
 
 setupCaptcha();
-

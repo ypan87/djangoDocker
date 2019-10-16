@@ -14,6 +14,7 @@ module.exports = {
         "sizerEdit": ["@babel/polyfill", "./static/js/es6/sizerEdit.js"],
         "login": ["@babel/polyfill", "./static/js/es6/login.js"],
         "register": ["@babel/polyfill", "./static/js/es6/register.js"],
+        "forgetPwd": ["@babel/polyfill", "./static/js/es6/forgetPwd.js"],
     },
     output: {
         path: path.resolve("./static/webpack_bundles/"),
