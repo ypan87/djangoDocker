@@ -71,7 +71,7 @@ const sendLoginRequest = async function() {
             positionClass: 'toast-top-right'
         };
         toastr.error(
-            errorCode[lang]["NetworkError"]
+            errorCode["en"]["NetworkError"]
         );
     }
 };
