@@ -20,18 +20,8 @@ validator.add(DOMs.registerForm.email, [
 
 validator.add(DOMs.registerForm.password, [
     {
-        strategy: "isNonEmpty",
-        errorMsg: "Input Value Required",
-    },
-
-    {
-        strategy: "minLength:6",
-        errorMsg: "At Least 6 Characters Required"
-    },
-
-    {
-        strategy: "maxLength:20",
-        errorMsg: "Password Too Long"
+        strategy: "password",
+        errorMsg: "Password Format Incorrect"
     }
 ]);
 

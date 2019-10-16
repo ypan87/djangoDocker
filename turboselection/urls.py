@@ -31,7 +31,7 @@ urlpatterns = [
     path("active/<str:active_code>/", ActiveUserView.as_view(), name="user_active"),
     path("<str:lang>/forget/", ForgetPwdView.as_view(), name="forget_pwd"),
     path("<str:lang>/reset/<str:active_code>", ResetView.as_view(), name="reset_pwd"),
-    path("modify_pwd/", ModifyPwdView.as_view(), name="modify_pwd"),
+    path("<str:lang>/modify_pwd/", ModifyPwdView.as_view(), name="modify_pwd"),
     path("email_register/", EmailRegisterView.as_view()),
     path("<str:lang>/projects/", GetAllProjectsView.as_view(), name="all_projects"),
     path("<str:lang>/projects/<int:project_id>/", ProjectView.as_view(), name="project"),

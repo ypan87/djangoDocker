@@ -15,6 +15,7 @@ module.exports = {
         "login": ["@babel/polyfill", "./static/js/es6/login.js"],
         "register": ["@babel/polyfill", "./static/js/es6/register.js"],
         "forgetPwd": ["@babel/polyfill", "./static/js/es6/forgetPwd.js"],
+        "passwordReset": ["@babel/polyfill", "./static/js/es6/passwordReset.js"],
     },
     output: {
         path: path.resolve("./static/webpack_bundles/"),

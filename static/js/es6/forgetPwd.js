@@ -2,7 +2,7 @@
  * Created by yifan_pan on 2019/10/16.
  */
 import {errorCode, Validation, toastrTime, language} from "./base";
-import {DOMs, DOMstrings, URLs} from "../forgetPwd/views/forgetPwdView";
+import {DOMs, DOMstrings, URLs} from "../forget_pwd/views/forgetPwdView";
 import {Request, handleResponse, getLang} from "../util/util";
 
 let validator = new Validation();
@@ -34,7 +34,7 @@ const displayError = function(errorMsg) {
 };
 
 const validateFields = function() {
-    var results = validator.start();
+    let results = validator.start();
     if(results.length == 0) {
         return true;
     }
@@ -57,8 +57,8 @@ const errorClickEvent = function() {
 };
 
 const sendForgetRequest = async function() {
-    var formData = $(`#${DOMstrings.forgetPwdForm}`).serialize();
-    var url = "/" + lang + URLs.forgetPwd;
+    let formData = $(`#${DOMstrings.forgetPwdForm}`).serialize();
+    let url = "/" + lang + URLs.forgetPwd;
     let request = new Request(url, formData);
     try {
         await request.getResults();
@@ -96,7 +96,7 @@ DOMs.forgetPwdBtn.addEventListener("click", function(event) {
 DOMs.forgetPwdForm.addEventListener("blur", function(event) {
     if (!event.target.matches("input")) {return false;}
     if (event.target.value == "") {
-        var error = event.target.parentElement.nextElementSibling;
+        let error = event.target.parentElement.nextElementSibling;
         error.className = "forget-pwd-require-error";
         if (event.target.id == "email") {
             error.innerHTML = language[lang]["emailNonEmpty"];
@@ -108,7 +108,7 @@ DOMs.forgetPwdForm.addEventListener("blur", function(event) {
 
 DOMs.forgetPwdForm.addEventListener("focus", function(event) {
     if (!event.target.matches("input")) {return false;}
-    var error = event.target.parentElement.nextElementSibling;
+    let error = event.target.parentElement.nextElementSibling;
     if (!error.classList.contains("hidden")) {
         error.innerHTML = "";
         error.classList.add("hidden");

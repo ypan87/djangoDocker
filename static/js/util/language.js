@@ -38,6 +38,8 @@ export const language = {
         "emailNonEmpty": "请输入邮箱",
         "captchaNonEmpty": "请输入验证码",
         "captcha": "验证码",
+        "password1NonEmpty": "请输入密码",
+        "password2NonEmpty": "请输入确认密码",
     },
     "en": {
         "duty": "Duty",
@@ -74,5 +76,7 @@ export const language = {
         "emailNonEmpty": "Please input email",
         "captchaNonEmpty": "Please input captcha",
         "captcha": "Captcha",
+        "password1NonEmpty": "Please input password",
+        "password2NonEmpty": "Please input confirmed password",
     }
 };

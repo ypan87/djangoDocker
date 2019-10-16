@@ -115,6 +115,10 @@ var validateCtrl = (function(baseView) {
         {
             strategy: "maxLength:20",
             errorMsg: "Password Too Long"
+        },
+        {
+            strategy: "password",
+            errorMsg: "Password format is wrong"
         }
     ]);
 
