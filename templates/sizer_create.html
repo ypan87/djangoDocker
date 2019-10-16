@@ -737,7 +737,7 @@
 {% endblock %}
 
 {% block custom_js %}
-    <script src="{% static 'js/Chart.bundle.min.js' %}"></script>
-    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/vendor/Chart.bundle.min.js' %}"></script>
+    <script src="{% static 'js/vendor/toastr.min.js' %}"></script>
     {% render_bundle 'sizerCreate' 'js' 'DEFAULT' %}
 {% endblock %}

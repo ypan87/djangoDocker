@@ -140,8 +140,8 @@
 {% endblock %}
 
 {% block custom_js %}
-    <script src="{% static 'js/datatables.min.js' %}"></script>
-    <script src="{% static 'js/datatables.bootstrap4.min.js' %}"></script>
-    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/vendor/datatables.min.js' %}"></script>
+    <script src="{% static 'js/vendor/datatables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/vendor/toastr.min.js' %}"></script>
     {% render_bundle 'userProjectList' 'js' 'DEFAULT' %}
 {% endblock %}

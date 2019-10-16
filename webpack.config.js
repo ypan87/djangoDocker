@@ -6,12 +6,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     context: __dirname,
     entry: {
-        "projectList": "./static/js/es6/projectList.js",
-        "userProjectList": "./static/js/es6/userProjectList.js",
-        "projectCreate": "./static/js/es6/projectCreate.js",
-        "project": "./static/js/es6/project.js",
-        "sizerCreate": "./static/js/es6/sizerCreate.js",
-        "sizerEdit": "./static/js/es6/sizerEdit.js"
+        "projectList": ["@babel/polyfill", "./static/js/es6/projectList.js"],
+        "userProjectList": ["@babel/polyfill", "./static/js/es6/userProjectList.js"],
+        "projectCreate": ["@babel/polyfill", "./static/js/es6/projectCreate.js"],
+        "project": ["@babel/polyfill", "./static/js/es6/project.js"],
+        "sizerCreate": ["@babel/polyfill", "./static/js/es6/sizerCreate.js"],
+        "sizerEdit": ["@babel/polyfill", "./static/js/es6/sizerEdit.js"]
     },
     output: {
         path: path.resolve("./static/webpack_bundles/"),
@@ -20,5 +20,14 @@ module.exports = {
     plugins:[
         new BundleTracker({filename: "./webpack-stats.json"}),
         new CleanWebpackPlugin(),
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                "test": /\.js$/,
+                exclude: /node_modules/,
+                use: "babel-loader",
+            }
+        ]
+    }
 };
