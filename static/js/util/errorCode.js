@@ -31,6 +31,8 @@ export const errorCode = {
         "NoBlowerFitError": "没有合适的鼓风机",
         "FileFormatError": "上传文件格式错误",
         "NetworkError": "网络错误",
+        "EmailSendFail": "邮件发送失败，请稍后再试",
+        "InternalError": "内部错误",
     },
     "en": {
         "": "empty message",
@@ -61,5 +63,7 @@ export const errorCode = {
         "NoBlowerFitError": "No Blower Fits",
         "FileFormatError": "Upload File Format Incorrect",
         "NetworkError": "Network Error",
+        "EmailSendFail": "Fail To Send Email, Please Try It Later",
+        "InternalError": "Internal Error",
     }
 };

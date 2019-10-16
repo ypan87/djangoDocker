@@ -6,6 +6,7 @@ from django.views.generic import View
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
+from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -95,22 +96,41 @@ class RegisterView(View):
                 )
 
         # 实例化userProfile对象
-        user_profile = UserProfile()
-        user_profile.username = email
-        user_profile.email = email
-
-        # 默认注册状态为false
-        user_profile.is_active = False
-
-        # 加密密码
-        user_profile.password = make_password(pass_word)
-        user_profile.save()
-
         # 发送注册激活邮件
-        send_register_email(email, host, "register")
+        try:
+            send_register_email(email, host, "register")
+        except Exception as e:
+            return HttpResponse(
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "EmailSendFail"
+                }),
+                content_type="application/json"
+            )
 
-        # 发送成功注册消息
-        messages.success(request, "Sign up successfully. Please check your email to activate your account.")
+        try:
+            with transaction.atomic():
+                user_profile = UserProfile()
+                user_profile.username = email
+                user_profile.email = email
+
+                # 默认注册状态为false
+                user_profile.is_active = False
+
+                # 加密密码
+                user_profile.password = make_password(pass_word)
+                user_profile.save()
+
+                # 发送成功注册消息
+                messages.success(request, "Sign up successfully. Please check your email to activate your account.")
+        except Exception as e:
+            return HttpResponse(
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "InternalError"
+                }),
+                content_type="application/json"
+            )
 
         # 发送正确信息
         return HttpResponse(
@@ -214,7 +234,18 @@ class ForgetPwdView(View):
             )
 
         email = request.POST.get("email", "")
-        send_register_email(email, host, "forget")
+
+        try:
+            send_register_email(email, host, "forget")
+        except Exception as e:
+            return HttpResponse(
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "EmailSendFail"
+                }),
+                content_type="application/json"
+            )
+
         return HttpResponse(
             json.dumps(
                 {
