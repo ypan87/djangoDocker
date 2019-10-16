@@ -43,15 +43,7 @@ export const DOMstrings = {
 export const URLs = {
     checkBlower: "/" + getLang() + "/projects/sizers/check/",
     downloadExcel: "/" + getLang() + "/projects/sizers/excel/",
-    createSizer: window.location.pathname,
-};
-
-export const Units = {
-    length: "length",
-    absPress: "absPress",
-    temp: "temp",
-    flow: "flow",
-    gaugePress: "gaugePress"
+    saveSizer: window.location.pathname + "edit/",
 };
 
 export const colors = {
@@ -136,7 +128,7 @@ const insertGraphSection = function() {
                                     <input type="hidden" name="csrfmiddlewaretoken">
                                     <input type="hidden" name="excelValue">
                                 </form>
-                                <button type="submit" class="btn btn-light ml-24" id="saveSizer">${language[lang]["createSizer"]}</button>
+                                <button type="submit" class="btn btn-light ml-24" id="saveSizer">${language[lang]["saveSizer"]}</button>
                             </div>
                         </div>
                     </div>

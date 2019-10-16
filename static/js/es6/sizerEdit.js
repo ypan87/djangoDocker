@@ -1,11 +1,11 @@
 /**
  * Created by yifan_pan on 2019/10/15.
  */
-import {errorCode, toastrTime, unit, Validation} from "./base";
+import {language, errorCode, unit, Validation, toastrTime} from "./base"
 import * as WorkingCondition from "../sizer_create/models/WorkingCondition";
-import * as cardView from "../sizer_create/views/cardView";
-import * as sizerCreateView from "../sizer_create/views/sizerCreateView";
 import * as workingConditionView from "../sizer_create/views/workingConditionView";
+import * as cardView from "../sizer_create/views/cardView";
+import * as sizerEditView from "../sizer_edit/views/sizerEditView";
 import {
     getLang, renderLoading, removeLoading, unitSelectValue,
     disableBtn, ableBtn, Request, handleResponse
@@ -18,7 +18,7 @@ let conditions = new WorkingCondition.Conditions();
 let conditionTables = new workingConditionView.conditionTables();
 
 const validationInit = function(validator) {
-    validator.add(sizerCreateView.DOMs.form.projectAltitude, [{
+    validator.add(sizerEditView.DOMs.form.projectAltitude, [{
         strategy: 'isNumber',
         errorMsg: {
             "cn": "请填写数字",
@@ -26,7 +26,7 @@ const validationInit = function(validator) {
         },
     }]);
 
-    validator.add(sizerCreateView.DOMs.form.projectInletPres, [{
+    validator.add(sizerEditView.DOMs.form.projectInletPres, [{
         strategy: "isNumber",
         errorMsg: {
             "cn": "请填写数字",
@@ -34,7 +34,7 @@ const validationInit = function(validator) {
         },
     }]);
 
-    validator.add(sizerCreateView.DOMs.form.projectUnitsNum, [{
+    validator.add(sizerEditView.DOMs.form.projectUnitsNum, [{
         strategy: "isNumber",
         errorMsg: {
             "cn": "请填写数字",
@@ -42,7 +42,7 @@ const validationInit = function(validator) {
         },
     }]);
 
-    validator.add(sizerCreateView.DOMs.form.projectSafetyFactor, [{
+    validator.add(sizerEditView.DOMs.form.projectSafetyFactor, [{
         strategy: "isNumber",
         errorMsg: {
             "cn": "请填写数字",
@@ -50,7 +50,7 @@ const validationInit = function(validator) {
         },
     }]);
 
-    validator.add(sizerCreateView.DOMs.form.projectEnvTemp, [{
+    validator.add(sizerEditView.DOMs.form.projectEnvTemp, [{
         strategy: "isNumber",
         errorMsg: {
             "cn": "请填写数字",
@@ -58,7 +58,7 @@ const validationInit = function(validator) {
         },
     }]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingFlow, [
+    validator.add(sizerEditView.DOMs.form.ratingFlow, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -75,7 +75,7 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingPressure, [{
+    validator.add(sizerEditView.DOMs.form.ratingPressure, [{
         strategy: "isNumber",
         errorMsg: {
             "cn": "请填写数字",
@@ -83,7 +83,7 @@ const validationInit = function(validator) {
         },
     }]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingTemp, [
+    validator.add(sizerEditView.DOMs.form.ratingTemp, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -93,51 +93,7 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingHumi, [
-        {
-            strategy: "isNumber",
-            errorMsg: {
-                "cn": "请填写数字",
-                "en": "Please Input Number"
-            },
-        },
-        {
-            strategy: "minValue:0",
-            errorMsg: {
-                "cn": "请填写大于0的数字",
-                "en": "Please Input Number Larger Than 0"
-            },
-        },
-        {
-            strategy: "maxValue:100",
-            errorMsg: {
-                "cn": "请填写小于100的数字",
-                "en": "Please Input Number Smaller Than 100"
-            },
-        }
-    ]);
-
-    validator.add(sizerCreateView.DOMs.form.ratingPointInletPressure, [
-        {
-            strategy: "isNumber",
-            errorMsg: {
-                "cn": "请填写数字",
-                "en": "Please Input Number"
-            },
-        }
-    ]);
-
-    validator.add(sizerCreateView.DOMs.form.ratingPointInletTemp, [
-        {
-            strategy: "isNumber",
-            errorMsg: {
-                "cn": "请填写数字",
-                "en": "Please Input Number"
-            },
-        }
-    ]);
-
-    validator.add(sizerCreateView.DOMs.form.ratingPointHumi, [
+    validator.add(sizerEditView.DOMs.form.ratingHumi, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -161,7 +117,7 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingPointInletLoss, [
+    validator.add(sizerEditView.DOMs.form.ratingPointInletPressure, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -171,7 +127,7 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingPointOutletLoss, [
+    validator.add(sizerEditView.DOMs.form.ratingPointInletTemp, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -181,7 +137,31 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.ratingPointOutPressure, [
+    validator.add(sizerEditView.DOMs.form.ratingPointHumi, [
+        {
+            strategy: "isNumber",
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
+        },
+        {
+            strategy: "minValue:0",
+            errorMsg: {
+                "cn": "请填写大于0的数字",
+                "en": "Please Input Number Larger Than 0"
+            },
+        },
+        {
+            strategy: "maxValue:100",
+            errorMsg: {
+                "cn": "请填写小于100的数字",
+                "en": "Please Input Number Smaller Than 100"
+            },
+        }
+    ]);
+
+    validator.add(sizerEditView.DOMs.form.ratingPointInletLoss, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -191,7 +171,7 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.maxFlowCoeff, [
+    validator.add(sizerEditView.DOMs.form.ratingPointOutletLoss, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -201,7 +181,27 @@ const validationInit = function(validator) {
         }
     ]);
 
-    validator.add(sizerCreateView.DOMs.form.maxPressureCoeff, [
+    validator.add(sizerEditView.DOMs.form.ratingPointOutPressure, [
+        {
+            strategy: "isNumber",
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
+        }
+    ]);
+
+    validator.add(sizerEditView.DOMs.form.maxFlowCoeff, [
+        {
+            strategy: "isNumber",
+            errorMsg: {
+                "cn": "请填写数字",
+                "en": "Please Input Number"
+            },
+        }
+    ]);
+
+    validator.add(sizerEditView.DOMs.form.maxPressureCoeff, [
         {
             strategy: "isNumber",
             errorMsg: {
@@ -236,14 +236,14 @@ const validateFields = function() {
 };
 
 // add event listener
-sizerCreateView.DOMs.form.addEventListener("click", function(event) {
+sizerEditView.DOMs.form.addEventListener("click", function(event) {
     if(event.target.matches('.card-header, .card-header *')) {
         let cardHeader = event.target.closest('.card-header');
         cardView.fold(cardHeader);
     }
 });
 
-sizerCreateView.DOMs.conditionSec.addEventListener('click', function(event) {
+sizerEditView.DOMs.conditionSec.addEventListener('click', function(event) {
     if (event.target.matches('.condition-table-close, .condition-table-close *')) {
         ctrlDeleteWorkingCondition(event);
     } else if (event.target.matches('.row-add, .row-add * ')) {
@@ -257,43 +257,43 @@ sizerCreateView.DOMs.conditionSec.addEventListener('click', function(event) {
     }
 });
 
-sizerCreateView.DOMs.form.addEventListener('keyup', function(event) {
+sizerEditView.DOMs.form.addEventListener('keyup', function(event) {
     if (event.target.matches('.value-input input')) {
-        sizerCreateView.clearFormInputError(event.target);
+        sizerEditView.clearFormInputError(event.target);
     }
 });
 
-sizerCreateView.DOMs.unitSelect.addEventListener("change", function(event) {
-    renderLoading(sizerCreateView.DOMs.loadIcon);
+sizerEditView.DOMs.unitSelect.addEventListener("change", function(event) {
+    renderLoading(sizerEditView.DOMs.loadIcon);
     setupUnits();
-    removeLoading(sizerCreateView.DOMs.loadIcon);
+    removeLoading(sizerEditView.DOMs.loadIcon);
 });
 
-sizerCreateView.DOMs.uploadBtn.addEventListener("click", function(event) {
-    sizerCreateView.DOMs.uploadFile.click();
+sizerEditView.DOMs.uploadBtn.addEventListener("click", function(event) {
+    sizerEditView.DOMs.uploadFile.click();
 });
 
-sizerCreateView.DOMs.uploadFile.addEventListener("change", function(event) {
+sizerEditView.DOMs.uploadFile.addEventListener("change", function(event) {
     let fileName = this.files[0].name;
     let translation = {
         "cn": "文件名：",
         "en": "Filename: "
     };
-    sizerCreateView.DOMs.uploadLb.innerHTML = translation[lang] + fileName;
+    sizerEditView.DOMs.uploadLb.innerHTML = translation[lang] + fileName;
 });
 
-sizerCreateView.DOMs.checkBtn.addEventListener('click', function(event) {
+sizerEditView.DOMs.checkBtn.addEventListener('click', function(event) {
     // 删除图表区域
-    sizerCreateView.deleteGraphSec();
+    sizerEditView.deleteGraphSec();
     // disable提交按钮
-    disableBtn(sizerCreateView.DOMs.checkBtn);
+    disableBtn(sizerEditView.DOMs.checkBtn);
     // loading图标
-    renderLoading(sizerCreateView.DOMs.loadIcon);
+    renderLoading(sizerEditView.DOMs.loadIcon);
     if (!formValidation()) {
         return false;
     }
     // 获取最终传输数据
-    sizerCreateView.DOMs.wkConditionInput.value = JSON.stringify(workingConditionView.getConditionTablesData());
+    sizerEditView.DOMs.wkConditionInput.value = JSON.stringify(workingConditionView.getConditionTablesData());
 
     sendCheckRequest();
 
@@ -301,8 +301,8 @@ sizerCreateView.DOMs.checkBtn.addEventListener('click', function(event) {
 
 const formValidation = function() {
     if (!validateFields()) {
-        removeLoading(sizerCreateView.DOMs.loadIcon);
-        ableBtn(sizerCreateView.DOMs.checkBtn);
+        removeLoading(sizerEditView.DOMs.loadIcon);
+        ableBtn(sizerEditView.DOMs.checkBtn);
         toastr.options = {
             timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
@@ -316,13 +316,13 @@ const formValidation = function() {
 };
 
 const sendCheckRequest = async function() {
-    let formData = new FormData(document.querySelector(`#${sizerCreateView.DOMstrings.turboForm}`));
-    let checkRequest = new Request(sizerCreateView.URLs.checkBlower, formData);
+    let formData = new FormData(document.querySelector(`#${sizerEditView.DOMstrings.turboForm}`));
+    let checkRequest = new Request(sizerEditView.URLs.checkBlower, formData);
 
     try {
         await checkRequest.getResults();
-        removeLoading(sizerCreateView.DOMs.loadIcon);
-        ableBtn(sizerCreateView.DOMs.checkBtn);
+        removeLoading(sizerEditView.DOMs.loadIcon);
+        ableBtn(sizerEditView.DOMs.checkBtn);
         let result = checkRequest.data;
         if (result.status == "failure") {
             toastr.options = {
@@ -333,24 +333,24 @@ const sendCheckRequest = async function() {
             return false;
         }
 
-        sizerCreateView.generateGraph(result);
-        let form = document.getElementById(sizerCreateView.DOMstrings.excelForm);
+        sizerEditView.generateGraph(result);
+        let form = document.getElementById(sizerEditView.DOMstrings.excelForm);
         form.addEventListener('submit', function(event) {
             event.preventDefault();
-            form.querySelector(`[name=${sizerCreateView.DOMstrings.excelField}]`).value = JSON.stringify(result);
+            form.querySelector(`[name=${sizerEditView.DOMstrings.excelField}]`).value = JSON.stringify(result);
             form.submit();
         });
 
-        let saveBtn = document.getElementById(sizerCreateView.DOMstrings.saveBtn);
+        let saveBtn = document.getElementById(sizerEditView.DOMstrings.saveBtn);
         saveBtn.addEventListener("click", function(event) {
-            renderLoading(sizerCreateView.DOMs.loadIcon);
+            renderLoading(sizerEditView.DOMs.loadIcon);
             disableBtn(saveBtn);
             sendSaveRequest(formData, saveBtn);
         });
 
     } catch (err) {
-        removeLoading(sizerCreateView.DOMs.loadIcon);
-        ableBtn(sizerCreateView.DOMs.checkBtn);
+        removeLoading(sizerEditView.DOMs.loadIcon);
+        ableBtn(sizerEditView.DOMs.checkBtn);
         toastr.options = {
             timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
@@ -362,13 +362,13 @@ const sendCheckRequest = async function() {
 };
 
 const sendSaveRequest = async function(formData, btn) {
-    let saveRequest = new Request(sizerCreateView.URLs.createSizer, formData);
+    let saveRequest = new Request(sizerEditView.URLs.saveSizer, formData);
     try {
         await saveRequest.getResults();
-        removeLoading(sizerCreateView.DOMs.loadIcon);
-        handleResponse(saveRequest.data, "createSizerSuccess", lang);
+        removeLoading(sizerEditView.DOMs.loadIcon);
+        handleResponse(saveRequest.data, "updateSizerSuccess", lang);
     } catch (err) {
-        removeLoading(sizerCreateView.DOMs.loadIcon);
+        removeLoading(sizerEditView.DOMs.loadIcon);
         ableBtn(btn);
         toastr.options = {
             timeOut: toastrTime["danger"],
@@ -427,21 +427,16 @@ const ctrlDeleteWorkingPoint = function(event) {
 };
 
 const initTables = function() {
-    let data = [
-        {inletPressure: "0.988", inletTemp: "40", inletReltHumi: "90"},
-        {inletPressure: "0.988", inletTemp: "20", inletReltHumi: "70"},
-        {inletPressure: "0.988", inletTemp: "0", inletReltHumi: "60"},
-    ];
-    data.forEach(function(option) {
-        ctrlAddWorkingCondition(option);
-    })
+    var tables_num = document.querySelectorAll(".condition-sec table").length;
+
+    conditions.initWkConds(tables_num);
 };
 
 const setupUnits = function() {
-    let unitSelection = unitSelectValue(sizerCreateView.DOMs.unitSelect);
-    let allUnits = document.querySelectorAll(`[${sizerCreateView.DOMstrings.unitAttribute}]`);
+    let unitSelection = unitSelectValue(sizerEditView.DOMs.unitSelect);
+    let allUnits = document.querySelectorAll(`[${sizerEditView.DOMstrings.unitAttribute}]`);
     for (let i =0; i < allUnits.length; i++) {
-        let unitValue = allUnits[i].dataset[sizerCreateView.DOMstrings.dataAttribute];
+        let unitValue = allUnits[i].dataset[sizerEditView.DOMstrings.dataAttribute];
         allUnits[i].innerHTML = "(" + unit[unitSelection][unitValue] + ")";
     }
 };

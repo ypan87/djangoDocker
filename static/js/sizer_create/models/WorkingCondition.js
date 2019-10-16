@@ -9,6 +9,13 @@ export class Conditions {
         this.ids = [];
     }
 
+    initWkConds(len) {
+        for (var i = 0; i < len; i++) {
+            this.wkCondsAll.push(i);
+            this.wkCondsInUse.push(i);
+        }
+    }
+
     addWkCond(option) {
         var id;
         // 如果还有id可以使用，则找到对应的Condition然后返回
