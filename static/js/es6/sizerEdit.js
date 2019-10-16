@@ -1,7 +1,7 @@
 /**
  * Created by yifan_pan on 2019/10/15.
  */
-import {language, errorCode, unit, Validation, toastrTime} from "./base"
+import {errorCode, unit, Validation, toastrTime} from "./base";
 import * as WorkingCondition from "../sizer_create/models/WorkingCondition";
 import * as workingConditionView from "../sizer_create/views/workingConditionView";
 import * as cardView from "../sizer_create/views/cardView";

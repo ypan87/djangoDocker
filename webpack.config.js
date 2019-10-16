@@ -11,7 +11,8 @@ module.exports = {
         "projectCreate": ["@babel/polyfill", "./static/js/es6/projectCreate.js"],
         "project": ["@babel/polyfill", "./static/js/es6/project.js"],
         "sizerCreate": ["@babel/polyfill", "./static/js/es6/sizerCreate.js"],
-        "sizerEdit": ["@babel/polyfill", "./static/js/es6/sizerEdit.js"]
+        "sizerEdit": ["@babel/polyfill", "./static/js/es6/sizerEdit.js"],
+        "login": ["@babel/polyfill", "./static/js/es6/login.js"]
     },
     output: {
         path: path.resolve("./static/webpack_bundles/"),
@@ -26,7 +27,19 @@ module.exports = {
             {
                 "test": /\.js$/,
                 exclude: /node_modules/,
-                use: "babel-loader",
+                use: {
+                    loader: "babel-loader",
+                    options: {
+			            presets: [
+                            [
+                              "@babel/preset-env",
+                              {
+                                "useBuiltIns": "entry"
+                              }
+                            ]
+                        ]
+                    }
+                },
             }
         ]
     }
