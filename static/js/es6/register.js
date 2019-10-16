@@ -2,17 +2,23 @@
  * Created by yifan_pan on 2019/10/16.
  */
 import {errorCode, Validation, toastrTime} from "./base";
-import {DOMs, DOMstrings, URLs} from "../login/views/loginView";
+import {DOMs, DOMstrings, URLs} from "../register/views/registerView";
 import {Request, handleResponse} from "../util/util";
 
 let validator = new Validation();
 
-validator.add(DOMs.loginForm.email, [{
-    strategy: 'isNonEmpty',
-    errorMsg: "Input Value Required",
-}]);
+validator.add(DOMs.registerForm.email, [
+    {
+        strategy: 'isNonEmpty',
+        errorMsg: "Input Value Required",
+    },
+    {
+        strategy: "email",
+        errorMsg: "Email Format Wrong",
+    },
+]);
 
-validator.add(DOMs.loginForm.password, [
+validator.add(DOMs.registerForm.password, [
     {
         strategy: "isNonEmpty",
         errorMsg: "Input Value Required",
@@ -53,39 +59,65 @@ const errorClickEvent = function() {
     this.innerHTML="";
     this.classList.add("hidden");
     let input = this.previousElementSibling.firstElementChild;
+    if (this.id == "captchaError") {
+        input = this.previousElementSibling.lastElementChild;
+    }
     input.focus();
 };
 
-// send login request
-const sendLoginRequest = async function() {
-    let formData = $(`#${DOMstrings.loginForm}`).serialize();
-    let url = URLs.login + "/?next=" + this.dataset.url;
+// send register request
+const sendRegisterRequest = async function() {
+    let formData = $(`#${DOMstrings.registerForm}`).serialize();
+    let url = URLs.register;
     let request = new Request(url, formData);
-
     try {
         await request.getResults();
-        handleResponse(request.data, "loginSuccess");
+        handleResponse(request.data, "registerSuccess");
+        if (request.data.status == "failure") {
+            refreshCaptcha();
+        }
     } catch (err) {
         toastr.options = {
             timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
         };
         toastr.error(
-            errorCode[lang]["NetworkError"]
+            errorCode["en"]["NetworkError"]
         );
+        refreshCaptcha();
     }
 };
 
-// setup event listeners
+// add event listener
 DOMs.switchBtn.addEventListener("click", function(event) {
-    location.href = URLs.register;
+    window.location.href = URLs.login;
 });
 
-DOMs.forgetPwdBtn.addEventListener("click", function(event) {
-    window.open(URLs.forget, "_blank");
-});
+DOMs.registerForm.addEventListener("blur", function(event) {
+    if (!event.target.matches("input")) {return false;}
+    if (event.target.value == "") {
+        let error = event.target.parentElement.nextElementSibling;
+        error.className = "register-login-require-error";
+        if (event.target.id == "email") {
+            error.innerHTML = "Please Input Email";
+        } else if (event.target.id == "password") {
+            error.innerHTML = "Please Input Password";
+        } else if (event.target.id == "id_captcha_1") {
+            error.innerHTML = "Please Input Captcha";
+        }
+    }
+}, true);
 
-DOMs.loginBtn.addEventListener("click", function(event) {
+DOMs.registerForm.addEventListener("focus", function(event) {
+    if (!event.target.matches("input")) {return false;}
+    let error = event.target.parentElement.nextElementSibling;
+    if (!error.classList.contains("hidden")) {
+        error.innerHTML = "";
+        error.classList.add("hidden");
+    }
+}, true);
+
+DOMs.registerBtn.addEventListener("click", function(event) {
     if (!validateFields()) {
         toastr.options = {
             timeOut: toastrTime["danger"],
@@ -96,31 +128,29 @@ DOMs.loginBtn.addEventListener("click", function(event) {
         );
         return false;
     }
-    sendLoginRequest.call(this);
+    sendRegisterRequest();
 });
-
-// focus blur event not gonna bubble up, need another parameter "true"
-DOMs.loginForm.addEventListener("blur", function(event) {
-    if (!event.target.matches("input")) {return false;}
-    if (event.target.value == "") {
-        let error = event.target.parentElement.nextElementSibling;
-        error.className = "register-login-require-error";
-        if (event.target.id == "email") {
-            error.innerHTML = "Please Input Email";
-        } else if (event.target.id == "password") {
-            error.innerHTML = "Please Input Password";
-        }
-    }
-}, true);
-
-DOMs.loginForm.addEventListener("focus", function(event) {
-    if (!event.target.matches("input")) {return false;}
-    let error = event.target.parentElement.nextElementSibling;
-    if (!error.classList.contains("hidden")) {
-        error.innerHTML = "";
-        error.classList.add("hidden");
-    }
-}, true);
 
 DOMs.emailError.addEventListener("click", errorClickEvent);
 DOMs.passwordError.addEventListener("click", errorClickEvent);
+DOMs.captchaError.addEventListener("click", errorClickEvent);
+
+// set up captcha
+const setupCaptcha = function() {
+    DOMs.captcha.placeholder = "Captcha";
+
+    $('.captcha').click(function () {
+        refreshCaptcha();
+    });
+};
+
+// refresh captcha
+const refreshCaptcha = function() {
+    $.getJSON("/captcha/refresh/", function (result) {
+        $('.captcha').attr('src', result['image_url']);
+        $('#id_captcha_0').val(result['key'])
+    });
+};
+
+setupCaptcha();
+

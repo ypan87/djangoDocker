@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+{% load render_bundle from webpack_loader %}
 {% load staticfiles %}
 <head>
     <meta charset="UTF-8">
@@ -65,12 +66,9 @@
     </div>
 </div>
 
-<script src="{% static 'js/toastr_time.js' %}"></script>
-<script src="{% static 'js/error_code.js' %}"></script>
-<script src="{% static 'js/validation.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
 <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/vendor/toastr.min.js' %}"></script>
-<script src="{% static 'js/register.js' %}"></script>
+{% render_bundle 'register' 'js' 'DEFAULT' %}
 </body>
 </html>
