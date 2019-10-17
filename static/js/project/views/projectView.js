@@ -3,7 +3,7 @@
  */
 export const DOMs = {
     form: document.querySelector('#projectForm'),
-    loadIcon: document.querySelector('.wrapper'),
+    loadIcon: document.querySelector('.overlay'),
     createBtn: document.querySelector('button'),
     table: document.querySelector("#sizerTable"),
     confirmDeleteBtn: document.querySelector(".confirm-delete"),

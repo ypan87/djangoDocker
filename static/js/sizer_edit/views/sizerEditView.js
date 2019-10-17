@@ -9,7 +9,7 @@ export const DOMs = {
     addCondBtn: document.querySelector('.condition-table-add'),
     condTableWrapper: document.querySelector('.condition-table-wrapper'),
     checkBtn: document.querySelector('#checkBtn'),
-    loadIcon: document.querySelector('.wrapper'),
+    loadIcon: document.querySelector('.overlay'),
     projectSec: document.querySelector('.project-sec'),
     defSec: document.querySelector('.def-sec'),
     rateSec: document.querySelector('.rate-sec'),

@@ -172,56 +172,68 @@ table .form-control {
 
 /* loading */
 .hidden {
-	display: none;
+	display: none !important;
 }
 
-.load-background {
-	display: flex;
-	min-height: 100vh;
-	min-width: 100vh;
-	margin: 0;
+.overlay { /* 用于遮挡背景 */
 	position: fixed;
 	top: 0;
-	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: white;
+	left: 0;
+	background: rgba(0,0,0,.8);
+	z-index: 10;
+	display: flex;
 }
 
-.load {
-	margin: auto;
-	background-color: rgba(0, 0, 0, 0.5);
-	padding: 0.25rem 1rem;
+.loading {
+	width: 150px;
+	height: 15px;
+	margin: auto auto;
+	text-align: center;
 }
 
-.k-line {
-	display:inline-block;
-	width:15px;
-	height:15px;
-	border-radius:15px;
-	background-color:#4b9cdb
+.loading span{
+	border-radius: 50%;
+	display: inline-block;
+	width: 15px;
+	height: 100%;
+	margin-right: 5px;
+	background: white;
+	-webkit-animation: load 1.04s ease infinite;
 }
 
-.k-line1-1 {
-	animation:k-loadingA 1.5s 0s infinite;
+.loading span:last-child{
+	margin-right: 0;
 }
 
-.k-line1-2 {
-	animation:k-loadingA 1.5s .5s infinite;
-}
-
-.k-line1-3 {
-	animation:k-loadingA 1.5s 1s infinite;
-}
-
-@keyframes k-loadingA {
-	0% {
-		height: 15px;
+@-webkit-keyframes load{
+	0%{
+		opacity: 1;
+		-webkit-transform: scale(1.2);
 	}
-	50% {
-		height: 35px;
+	100%{
+		opacity: .2;
+		-webkit-transform: scale(.2);
 	}
-	100% {
-		height: 15px;
-	}
+}
+
+.loading span:nth-child(1){
+	-webkit-animation-delay:0.13s;
+}
+
+.loading span:nth-child(2){
+	-webkit-animation-delay:0.26s;
+}
+
+.loading span:nth-child(3){
+	-webkit-animation-delay:0.39s;
+}
+
+.loading span:nth-child(4){
+	-webkit-animation-delay:0.52s;
+}
+
+.loading span:nth-child(5){
+	-webkit-animation-delay:0.65s;
 }
