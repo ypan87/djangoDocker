@@ -74,7 +74,7 @@ const errorClickEvent = function() {
 
 const sendResetRequest = async function() {
     var formData = $(`#${DOMstrings.resetPwdForm}`).serialize();
-    var url = "/" + lang + URLs.resetPwd;
+    var url = "/" + lang + URLs.resetPwd + DOMs.code.value + "/";
     let request = new Request(url, formData);
 
     try {
@@ -132,7 +132,6 @@ DOMs.password1Error.addEventListener("click", errorClickEvent);
 DOMs.password2Error.addEventListener("click", errorClickEvent);
 
 // initialize tooltip
-
 $('#password1').tooltip({
     title: language[lang]["passwordTip"]
 });

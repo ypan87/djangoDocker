@@ -34,6 +34,7 @@ export const errorCode = {
         "NetworkError": "网络错误",
         "EmailSendFail": "邮件发送失败，请稍后再试",
         "InternalError": "内部错误",
+        "RequestLinkInvalid": "请求链接错误",
     },
     "en": {
         "": "empty message",
@@ -67,5 +68,6 @@ export const errorCode = {
         "NetworkError": "Network Error",
         "EmailSendFail": "Fail To Send Email, Please Try It Later",
         "InternalError": "Internal Error",
+        "RequestLinkInvalid": "Link Incorrect",
     }
 };

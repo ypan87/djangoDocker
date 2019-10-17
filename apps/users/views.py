@@ -248,7 +248,7 @@ class ForgetPwdView(View):
         email = request.POST.get("email", "")
 
         try:
-            send_register_email(email, host, "forget")
+            send_register_email(email, host, "forget", lang)
         except Exception as e:
             return HttpResponse(
                 json.dumps({
@@ -276,19 +276,28 @@ class ResetView(View):
             messages.error(request, get_messages()[lang]["resetLinkInvalid"])
             return HttpResponseRedirect(reverse("forget_pwd", kwargs={"lang": lang}))
 
-        email = all_record[0].email
         lang_urls = get_lang_url("reset_pwd", {"active_code": active_code})
         return render(
             request, "password_reset.html", {
                 "lang": lang,
                 "langCategory": LANGUAGE,
                 "langUrls": lang_urls,
-                "email": email,
+                "activeCode": active_code
             }
         )
 
 class ModifyPwdView(View):
-    def post(self, request, lang="cn"):
+    def post(self, request, lang, active_code):
+        all_record = EmailVerifyRecord.objects.filter(code=active_code, send_type="forget")
+        if not all_record:
+            return HttpResponse(json.dumps(
+                {
+                    "status": "failure",
+                    "errorCode": "RequestLinkInvalid",
+                    "lang": lang,
+                }
+            ), content_type="application/json")
+
         modify_form = ModifyPwdForm(request.POST)
         if not modify_form.is_valid():
             return HttpResponse(json.dumps(
@@ -300,7 +309,7 @@ class ModifyPwdView(View):
             ), content_type="application/json")
         pwd1 = request.POST.get("password1", "")
         pwd2 = request.POST.get("password2", "")
-        email = request.POST.get("email", "")
+        email = all_record[0].email
         if pwd1 != pwd2:
             return HttpResponse(json.dumps(
                 {
@@ -319,18 +328,29 @@ class ModifyPwdView(View):
                 }
             ), content_type="application/json")
 
-        user.password = make_password(pwd2)
-        user.save()
-        messages.success(request, "Update password successfully")
-        url = reverse("login")
-        return HttpResponse(json.dumps(
-            {
-                "status": "success",
-                "errorCode": "",
-                "lang": lang,
-                "url": url,
-            }
-        ), content_type="application/json")
+        try:
+            with transaction.atomic():
+                user.password = make_password(pwd2)
+                user.save()
+                all_record[0].delete()
+                messages.success(request, "Update password successfully")
+                url = reverse("login")
+                return HttpResponse(json.dumps(
+                    {
+                        "status": "success",
+                        "errorCode": "",
+                        "lang": lang,
+                        "url": url,
+                    }
+                ), content_type="application/json")
+        except Exception as e:
+            return HttpResponse(json.dumps(
+                {
+                    "status": "failure",
+                    "errorCode": "InternalError",
+                    "lang": lang,
+                }
+            ), content_type="application/json")
 
 class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):

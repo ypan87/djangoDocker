@@ -6,7 +6,7 @@ export const DOMs = {
     password2Error: document.getElementById("password2Error"),
     password1Error: document.getElementById("password1Error"),
     resetPwdForm: document.getElementById("pwdResetForm"),
-    email: document.getElementById("email"),
+    code: document.getElementById("code"),
     resetPwdBtn: document.getElementsByClassName("forget-pwd-submit-button")[0],
 };
 

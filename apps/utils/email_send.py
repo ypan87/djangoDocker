@@ -16,7 +16,7 @@ def random_str(random_length=8):
         str += chars[random.randint(0, length)]
     return str
 
-def send_register_email(email, host, send_type="register"):
+def send_register_email(email, host, send_type="register", lang="en"):
     if send_type != "register" \
             and send_type != "forget" \
             and send_type != "update_email":
@@ -53,7 +53,8 @@ def send_register_email(email, host, send_type="register"):
             "email_forget.html",
             {
                 "active_code": code,
-                "host": host
+                "host": host,
+                "lang": lang,
             }
         )
     elif send_type == "update_email":
