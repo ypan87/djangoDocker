@@ -3,7 +3,7 @@
  */
 import {errorCode, Validation, toastrTime} from "./base";
 import {DOMs, DOMstrings, URLs} from "../register/views/registerView";
-import {Request, handleResponse} from "../util/util";
+import {Request, handleResponse, disableBtn, ableBtn} from "../util/util";
 
 let validator = new Validation();
 
@@ -55,6 +55,24 @@ const errorClickEvent = function() {
     input.focus();
 };
 
+const renderLoading = function() {
+    let markup = `
+        <div class="loading">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    `;
+    DOMs.registerBtn.textContent = "";
+    DOMs.registerBtn.insertAdjacentHTML("afterbegin", markup);
+};
+
+const removeLoading = function(text) {
+    DOMs.registerBtn.innerHTML = text;
+};
+
 // send register request
 const sendRegisterRequest = async function() {
     let formData = $(`#${DOMstrings.registerForm}`).serialize();
@@ -76,6 +94,8 @@ const sendRegisterRequest = async function() {
         );
         refreshCaptcha();
     }
+    ableBtn(DOMs.registerBtn);
+    removeLoading("SignUp");
 };
 
 // add event listener
@@ -108,6 +128,8 @@ DOMs.registerForm.addEventListener("focus", function(event) {
 }, true);
 
 DOMs.registerBtn.addEventListener("click", function(event) {
+    disableBtn(DOMs.registerBtn);
+    renderLoading();
     if (!validateFields()) {
         toastr.options = {
             timeOut: toastrTime["danger"],
@@ -116,6 +138,8 @@ DOMs.registerBtn.addEventListener("click", function(event) {
         toastr.error(
             "Parameters Wrong, Please Correct"
         );
+        ableBtn(DOMs.registerBtn);
+        removeLoading("SignUp");
         return false;
     }
     sendRegisterRequest();
