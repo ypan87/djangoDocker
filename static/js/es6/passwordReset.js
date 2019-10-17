@@ -131,3 +131,9 @@ DOMs.resetPwdForm.addEventListener("focus", function(event) {
 DOMs.password1Error.addEventListener("click", errorClickEvent);
 DOMs.password2Error.addEventListener("click", errorClickEvent);
 
+// initialize tooltip
+
+$('#password1').tooltip({
+    title: language[lang]["passwordTip"]
+});
+

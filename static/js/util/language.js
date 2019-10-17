@@ -40,6 +40,7 @@ export const language = {
         "captcha": "验证码",
         "password1NonEmpty": "请输入密码",
         "password2NonEmpty": "请输入确认密码",
+        "passwordTip": "密码请至少输入一个大写或小写字母，一位数字，密码长度控制在6到20位"
     },
     "en": {
         "duty": "Duty",
@@ -78,5 +79,6 @@ export const language = {
         "captcha": "Captcha",
         "password1NonEmpty": "Please input password",
         "password2NonEmpty": "Please input confirmed password",
+        "passwordTip": "use at least 1 number, 1 upper or lower character, 6-20 characters"
     }
 };

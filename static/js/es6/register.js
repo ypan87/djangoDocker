@@ -147,3 +147,7 @@ const refreshCaptcha = function() {
 
 setupCaptcha();
 
+// initialize tooltip
+$('#password').tooltip({
+    title: "use at least 1 number, 1 upper or lower character, 6-20 characters",
+});
