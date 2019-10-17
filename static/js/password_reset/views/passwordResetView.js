@@ -8,6 +8,7 @@ export const DOMs = {
     resetPwdForm: document.getElementById("pwdResetForm"),
     code: document.getElementById("code"),
     resetPwdBtn: document.getElementsByClassName("forget-pwd-submit-button")[0],
+    loadIcon: document.querySelector('.overlay'),
 };
 
 export const URLs = {

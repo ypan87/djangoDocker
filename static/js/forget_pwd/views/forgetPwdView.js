@@ -8,6 +8,7 @@ export const DOMs = {
     email: document.getElementById("email"),
     captcha: document.getElementById("id_captcha_1"),
     forgetPwdBtn: document.getElementsByClassName("forget-pwd-submit-button")[0],
+    loadIcon: document.querySelector('.overlay'),
 };
 
 export const URLs = {

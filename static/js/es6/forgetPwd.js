@@ -3,7 +3,7 @@
  */
 import {errorCode, Validation, toastrTime, language} from "./base";
 import {DOMs, DOMstrings, URLs} from "../forget_pwd/views/forgetPwdView";
-import {Request, handleResponse, getLang} from "../util/util";
+import {Request, handleResponse, getLang, renderLoading, removeLoading} from "../util/util";
 
 let validator = new Validation();
 let lang = getLang();
@@ -76,11 +76,14 @@ const sendForgetRequest = async function() {
         );
         refreshCaptcha();
     }
+    removeLoading(DOMs.loadIcon);
 };
 
 // add event listener
 DOMs.forgetPwdBtn.addEventListener("click", function(event) {
+    renderLoading(DOMs.loadIcon);
     if (!validateFields()) {
+        removeLoading(DOMs.loadIcon);
         toastr.options = {
             timeOut: toastrTime["danger"],
             positionClass: 'toast-top-right'
