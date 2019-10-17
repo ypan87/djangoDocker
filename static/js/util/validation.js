@@ -125,7 +125,7 @@ let strategies = {
 		}
 	},
 	password: function(value, errorMsg) {
-		var passwordRegExp = /^[a-zA-Z0-9_-]{6,20}$/;
+		var passwordRegExp = /^(?=.*\d)(?=.*[a-zA-Z])\w{6,16}$/;
 		if (!passwordRegExp.test(value)) {
 			return {
 				dom: this,
