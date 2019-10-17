@@ -40,7 +40,6 @@ def send_register_email(email, host, send_type="register"):
 
     if send_type == "register":
         email_title = "GL-TURBO Activate Link"
-
         email_body = loader.render_to_string(
             "email_register.html",
             {

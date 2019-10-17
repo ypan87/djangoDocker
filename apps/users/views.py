@@ -148,12 +148,24 @@ class ActiveUserView(View):
             messages.error(request, "Your activate link is invalid")
             return HttpResponseRedirect(reverse("register"))
         record = all_record[0]
-        email = record.email
-        user = UserProfile.objects.get(email=email)
-        user.is_active = True
-        user.save()
-        messages.success(request, "Activate successfully，please Log in")
-        return render(request, "login.html")
+        try:
+            with transaction.atomic():
+                record = all_record[0]
+                email = record.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+                record.delete()
+                messages.success(request, "Activate successfully，please Log in")
+                return render(request, "login.html")
+        except Exception as e:
+            return HttpResponse(
+                json.dumps({
+                    "status": "failure",
+                    "errorCode": "InternalError"
+                }),
+                content_type="application/json"
+            )
 
 class LoginView(View):
     @guest_required

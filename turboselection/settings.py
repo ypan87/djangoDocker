@@ -140,12 +140,12 @@ STATICFILES_DIRS = [
 ]
 
 # 邮箱设置
-EMAIL_HOST = "smtp.163.com"
-EMAIL_PORT = 25
-EMAIL_HOST_USER = "panyifan1992@163.com"
-EMAIL_HOST_PASSWORD = "panyifan123"
+EMAIL_HOST = "smtp.office365.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "panyifan1992@outlook.com"
+EMAIL_HOST_PASSWORD = "pyf1965412"
 EMAIL_USE_TLS = True
-EMAIL_FROM = "panyifan1992@163.com"
+EMAIL_FROM = "panyifan1992@outlook.com"
 
 # 设置上传文件路径
 MEDIA_URL = '/media/'
