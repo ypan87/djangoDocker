@@ -51,6 +51,26 @@ export const removeLoading = function(elem) {
     }
 };
 
+export const renderBtnLoading = function(btn) {
+    disableBtn(btn);
+    let markup = `
+        <div class="loading">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    `;
+    btn.textContent = "";
+    btn.insertAdjacentHTML("afterbegin", markup);
+};
+
+export const removeBtnLoading = function(btn, text) {
+    ableBtn(btn);
+    btn.innerHTML = text;
+};
+
 export const disableBtn = function(btn) {
     btn.disabled = true;
 };

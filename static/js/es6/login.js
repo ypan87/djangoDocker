@@ -3,7 +3,7 @@
  */
 import {errorCode, Validation, toastrTime} from "./base";
 import {DOMs, DOMstrings, URLs} from "../login/views/loginView";
-import {Request, handleResponse} from "../util/util";
+import {Request, handleResponse, renderBtnLoading, removeBtnLoading} from "../util/util";
 
 let validator = new Validation();
 
@@ -74,6 +74,7 @@ const sendLoginRequest = async function() {
             errorCode["en"]["NetworkError"]
         );
     }
+    removeBtnLoading(DOMs.loginBtn, "Login");
 };
 
 // setup event listeners
@@ -86,6 +87,7 @@ DOMs.forgetPwdBtn.addEventListener("click", function(event) {
 });
 
 DOMs.loginBtn.addEventListener("click", function(event) {
+    renderBtnLoading(DOMs.loginBtn);
     if (!validateFields()) {
         toastr.options = {
             timeOut: toastrTime["danger"],
@@ -94,6 +96,7 @@ DOMs.loginBtn.addEventListener("click", function(event) {
         toastr.error(
             "Parameters Wrong, Please Correct"
         );
+        removeBtnLoading(DOMs.loginBtn, "Login");
         return false;
     }
     sendLoginRequest.call(this);
