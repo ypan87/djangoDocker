@@ -15,12 +15,13 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import path, include
+from django.contrib import admin
 from users.views import RegisterView, LoginView, LogoutView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, EmailRegisterView
 from selectedturbo.views import GetAllProjectsView, CreateSizerView, ProjectView, CheckBlowerView, ExcelView, \
      SizerView, EditSizerView, EditProjectView, CreateProjectView, GetUserProjectsView, DeleteSizerView, DeleteProjectView
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(), name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('register/', RegisterView.as_view(), name="register"),
