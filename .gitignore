@@ -7,3 +7,4 @@ turboselection/__pycache__/
 static/webpack_bundles/
 node_modules/
 webpack-stats.json
+*.pyc
