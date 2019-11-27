@@ -19,11 +19,8 @@ from users.views import RegisterView, LoginView, LogoutView, ActiveUserView, For
 from selectedturbo.views import GetAllProjectsView, CreateSizerView, ProjectView, CheckBlowerView, ExcelView, \
      SizerView, EditSizerView, EditProjectView, CreateProjectView, GetUserProjectsView, DeleteSizerView, DeleteProjectView
 
-import xadmin
-
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('xadmin/', xadmin.site.urls),
     path('login/', LoginView.as_view(), name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('register/', RegisterView.as_view(), name="register"),

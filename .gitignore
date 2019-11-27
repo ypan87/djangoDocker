@@ -3,8 +3,8 @@ venv
 .idea
 settings.py
 db.sqlite3
-turboselection/__pycache__/
-static/webpack_bundles/
-node_modules/
+/static/webpack_bundles/
+/node_modules/
 webpack-stats.json
 *.pyc
+*/__pycache__/
