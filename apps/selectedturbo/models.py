@@ -62,6 +62,10 @@ class Project(models.Model):
     creator = models.ForeignKey("users.UserProfile", on_delete=models.CASCADE)
     create_time = models.DateTimeField(default=datetime.now, verbose_name=u"创建时间")
 
+    class Meta:
+        verbose_name = "项目"
+        verbose_name_plural = verbose_name
+
 # 选型信息
 class Sizer(models.Model):
     FREQUENCY_CHOICES = [
