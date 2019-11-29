@@ -23,7 +23,10 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = 'nd**0lzmd+bkc26252hxlw(&#)sjgn^1@778j!@6ki=3j6rv)y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.getenv("ENV") == "PRODUCTION":
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -92,7 +95,9 @@ DATABASES = {
         'NAME': 'gl_turbo',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1'
+        'HOST': 'db',
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
@@ -132,6 +137,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

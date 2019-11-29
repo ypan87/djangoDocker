@@ -1,0 +1,25 @@
+version: "3"
+services:
+  app:
+    restart: always
+    build: 
+      context: .
+      dockerfile: compose/local/django/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/turboselection"
+    depends_on:
+      - db
+    command: bash -c "sleep 5 && /start.sh"
+  db:
+    build:
+      context: .
+      dockerfile: ./compose/local/mysql/Dockerfile
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    ports:
+      - "3307:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root

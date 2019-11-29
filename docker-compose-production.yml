@@ -1,0 +1,53 @@
+version: "3"
+services:
+  app:
+    restart: always
+    build:
+      context: .
+      dockerfile: compose/production/django/Dockerfile
+    volumes:
+      - static-volume:/turboselection/collected_static
+    expose:
+      - "8000"
+    depends_on:
+      - db
+    networks:
+      - web_network
+      - db_network
+    environment: 
+      - ENV=PRODUCTION
+    command: bash -c "sleep 5 && /start.sh"
+  db:
+    build:
+      context: .
+      dockerfile: compose/production/mysql/Dockerfile
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    ports:
+      - "3307:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - db_network
+  nginx:
+    restart: always
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - static-volume:/code/collected_static
+      - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - web_network
+
+networks:
+  web_network:
+    driver: bridge
+  db_network:
+    driver: bridge
+
+volumes:
+  static-volume:
